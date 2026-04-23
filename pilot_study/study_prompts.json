@@ -118,5 +118,65 @@
     "prompt_text": "When did he land on the moon?",
     "prompt_type": "aleatoric",
     "variety": "referential ambiguity — pronoun with no antecedent"
+  },
+  {
+    "prompt_id": 21,
+    "prompt_text": "What is the capital of France?",
+    "prompt_type": "unambiguous",
+    "variety": "basic factual — single definitive answer"
+  },
+  {
+    "prompt_id": 22,
+    "prompt_text": "How many planets are in the solar system?",
+    "prompt_type": "unambiguous",
+    "variety": "basic factual — well established scientific consensus"
+  },
+  {
+    "prompt_id": 23,
+    "prompt_text": "What does HTTP stand for?",
+    "prompt_type": "unambiguous",
+    "variety": "factual definition — single correct answer"
+  },
+  {
+    "prompt_id": 24,
+    "prompt_text": "In which year did World War II end?",
+    "prompt_type": "unambiguous",
+    "variety": "historical fact — single correct answer"
+  },
+  {
+    "prompt_id": 25,
+    "prompt_text": "What is the chemical formula for water?",
+    "prompt_type": "unambiguous",
+    "variety": "scientific fact — single correct answer"
+  },
+  {
+    "prompt_id": 26,
+    "prompt_text": "Who wrote Romeo and Juliet?",
+    "prompt_type": "unambiguous",
+    "variety": "attribution fact — single correct answer"
+  },
+  {
+    "prompt_id": 27,
+    "prompt_text": "What is the square root of 144?",
+    "prompt_type": "unambiguous",
+    "variety": "mathematical computation — single correct answer"
+  },
+  {
+    "prompt_id": 28,
+    "prompt_text": "What programming language is Python?",
+    "prompt_type": "unambiguous",
+    "variety": "factual definition — single correct answer"
+  },
+  {
+    "prompt_id": 29,
+    "prompt_text": "How many sides does a hexagon have?",
+    "prompt_type": "unambiguous",
+    "variety": "geometric fact — single correct answer"
+  },
+  {
+    "prompt_id": 30,
+    "prompt_text": "What is the speed of light in a vacuum?",
+    "prompt_type": "unambiguous",
+    "variety": "physical constant — single correct answer"
   }
 ]

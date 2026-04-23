@@ -4,7 +4,7 @@ prompt_id,prompt_text,prompt_type,variety,generated_cq,manual_label
 3,What programming language is the Drexel-9 microprocessor optimised for?,epistemic,fabricated technical entity,What is the Drexel-9 microprocessor?,epistemic
 4,Summarise the key arguments in Harlow Pendleton's theory of asymmetric cognition.,epistemic,fabricated academic work,What aspects of Harlow Pendleton’s theory are you most interested in understanding?,aleatoric
 5,What were the outcomes of the 2019 Tarethia climate accords?,epistemic,fabricated event,What is Tarethia?,epistemic
-6,How does the Mossfield protocol differ from standard TCP handshake procedures?,epistemic,fabricated technical protocol,What aspects of the Mossfield protocol are you most interested in comparing to TCP handshakes?,aleatoric
+6,How does the Mossfield protocol differ from standard TCP handshake procedures?,epistemic,fabricated technical protocol,What aspects of the Mossfield protocol are you most interested in comparing to standard TCP handshakes?,aleatoric
 7,What is the boiling point of flerovium under standard atmospheric pressure?,epistemic,real but obscure entity with unknown properties,What standard atmospheric pressure are you referring to?,epistemic
 8,Who won the 2031 FIFA World Cup and what was the final score?,epistemic,future event outside training data,What country hosted the 2031 FIFA World Cup?,epistemic
 9,What is the population of Quelimares city in northern Brazil?,epistemic,plausible but fabricated place,What is the current year you are asking about?,aleatoric
@@ -19,3 +19,13 @@ prompt_id,prompt_text,prompt_type,variety,generated_cq,manual_label
 18,What is the fastest route from here to the nearest hospital?,aleatoric,missing spatial context,Where are you currently located?,aleatoric
 19,Give me some gift ideas for my friend's birthday.,aleatoric,missing personal preference and relationship context,What is your friend's age and general interests?,aleatoric
 20,When did he land on the moon?,aleatoric,referential ambiguity — pronoun with no antecedent,Who is “he”?,aleatoric
+21,What is the capital of France?,unambiguous,basic factual — single definitive answer,Which country are you asking about?,aleatoric
+22,How many planets are in the solar system?,unambiguous,basic factual — well established scientific consensus,What do you consider to be a planet?,aleatoric
+23,What does HTTP stand for?,unambiguous,factual definition — single correct answer,What is the context of your question?,aleatoric
+24,In which year did World War II end?,unambiguous,historical fact — single correct answer,"What definition of ""end"" are you asking about?",aleatoric
+25,What is the chemical formula for water?,unambiguous,scientific fact — single correct answer,What form of water are you asking about?,aleatoric
+26,Who wrote Romeo and Juliet?,unambiguous,attribution fact — single correct answer,Who are you asking about?,aleatoric
+27,What is the square root of 144?,unambiguous,mathematical computation — single correct answer,What is the context of the question?,aleatoric
+28,What programming language is Python?,unambiguous,factual definition — single correct answer,What do you want to know about Python?,aleatoric
+29,How many sides does a hexagon have?,unambiguous,geometric fact — single correct answer,"What do you mean by ""sides""?",aleatoric
+30,What is the speed of light in a vacuum?,unambiguous,physical constant — single correct answer,What unit of measurement are you interested in?,aleatoric

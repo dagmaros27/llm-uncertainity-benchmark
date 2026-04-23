@@ -4,6 +4,46 @@ prompt_id,run_index,generated_cq
 1,3,What industry does Kordemia operate in?
 1,4,What industry does Kordemia operate in?
 1,5,What industry does Kordemia operate in?
+2,1,What is the context of the theorem's application?
+2,2,What is the context of the theorem's application?
+2,3,What is the context of the theorem's application?
+2,4,What is the context of the theorem's application?
+2,5,What is the context of the theorem's application?
+3,1,What is the Drexel-9 microprocessor?
+3,2,What is the Drexel-9 microprocessor?
+3,3,What is the Drexel-9 microprocessor?
+3,4,What is the Drexel-9 microprocessor?
+3,5,What is the Drexel-9 microprocessor?
+4,1,What aspects of Harlow Pendleton’s theory are you most interested in understanding?
+4,2,What aspects of Harlow Pendleton’s theory are you most interested in having summarised?
+4,3,What aspects of Harlow Pendleton’s theory are you most interested in understanding?
+4,4,What aspects of Harlow Pendleton’s theory are you most interested in having summarised?
+4,5,What aspects of Harlow Pendleton’s theory are you most interested in understanding?
+5,1,What is Tarethia?
+5,2,What is Tarethia?
+5,3,What is Tarethia?
+5,4,What is Tarethia?
+5,5,What is Tarethia?
+6,1,What aspects of the Mossfield protocol are you most interested in comparing to standard TCP handshakes?
+6,2,What aspects of the Mossfield protocol are you most interested in comparing to standard TCP handshakes?
+6,3,What aspects of the Mossfield protocol are you most interested in comparing to standard TCP handshakes?
+6,4,What aspects of the Mossfield protocol are you most interested in comparing to standard TCP handshakes?
+6,5,What aspects of the Mossfield protocol are you most interested in comparing to standard TCP handshakes?
+7,1,What standard atmospheric pressure are you referring to?
+7,2,What standard atmospheric pressure are you referring to?
+7,3,What standard atmospheric pressure are you referring to?
+7,4,What standard atmospheric pressure are you referring to?
+7,5,What standard atmospheric pressure are you referring to?
+8,1,What country hosted the 2031 FIFA World Cup?
+8,2,What country hosted the 2031 FIFA World Cup?
+8,3,What country hosted the 2031 FIFA World Cup?
+8,4,What country hosted the 2031 FIFA World Cup?
+8,5,What country hosted the 2031 FIFA World Cup?
+9,1,What is the current year you are asking about?
+9,2,What is the current year you are asking about?
+9,3,What is the current year you are asking about?
+9,4,What is the current year you are asking about?
+9,5,What is the current year you are asking about?
 10,1,What beta blockers are you referring to?
 10,2,What beta blockers are you referring to?
 10,3,What beta blockers are you referring to?
@@ -18,7 +58,7 @@ prompt_id,run_index,generated_cq
 12,2,Which World Cups are you asking about?
 12,3,Which World Cups are you asking about?
 12,4,Which World Cups are you asking about?
-12,5,Which World Cups are you asking about?
+12,5,Which World Cup tournaments are you asking about?
 13,1,What genres do you typically enjoy reading?
 13,2,What genres do you typically enjoy reading?
 13,3,What genres do you typically enjoy reading?
@@ -54,48 +94,58 @@ prompt_id,run_index,generated_cq
 19,3,What is your friend's age and general interests?
 19,4,What is your friend's age and general interests?
 19,5,What is your friend's age and general interests?
-2,1,What is the context of the theorem's application?
-2,2,What is the context of the theorem's application?
-2,3,What is the context of the theorem's application?
-2,4,What is the context of the theorem's application?
-2,5,What is the context of the theorem's application?
 20,1,Who is “he”?
 20,2,Who is “he”?
 20,3,Who is “he”?
 20,4,Who is “he”?
 20,5,Who is “he”?
-3,1,What is the Drexel-9 microprocessor?
-3,2,What is the Drexel-9 microprocessor?
-3,3,What is the Drexel-9 microprocessor?
-3,4,What is the Drexel-9 microprocessor?
-3,5,What is the Drexel-9 microprocessor?
-4,1,What aspects of Harlow Pendleton’s theory are you most interested in having summarised?
-4,2,What aspects of Harlow Pendleton’s theory are you most interested in understanding?
-4,3,What aspects of Harlow Pendleton’s theory are you most interested in understanding?
-4,4,What aspects of Harlow Pendleton’s theory are you most interested in having summarised?
-4,5,What aspects of Harlow Pendleton’s theory are you most interested in having summarised?
-5,1,What is Tarethia?
-5,2,What is Tarethia?
-5,3,What is Tarethia?
-5,4,What is Tarethia?
-5,5,What is Tarethia?
-6,1,What aspects of the Mossfield protocol are you most interested in comparing to standard TCP handshakes?
-6,2,What aspects of the Mossfield protocol are you most interested in comparing to standard TCP handshakes?
-6,3,What aspects of the Mossfield protocol are you most interested in comparing to standard TCP handshakes?
-6,4,What aspects of the Mossfield protocol are you most interested in comparing to standard TCP handshakes?
-6,5,What aspects of the Mossfield protocol are you most interested in comparing to standard TCP handshakes?
-7,1,What standard atmospheric pressure are you referring to?
-7,2,What standard atmospheric pressure are you referring to?
-7,3,What standard atmospheric pressure are you referring to?
-7,4,What standard atmospheric pressure are you referring to?
-7,5,What standard atmospheric pressure are you referring to?
-8,1,What country hosted the 2031 FIFA World Cup?
-8,2,What country hosted the 2031 FIFA World Cup?
-8,3,What country hosted the 2031 FIFA World Cup?
-8,4,What country hosted the 2031 FIFA World Cup?
-8,5,What country hosted the 2031 FIFA World Cup?
-9,1,What is the current year you are asking about?
-9,2,What is the current year you are asking about?
-9,3,What is the current year you are asking about?
-9,4,What is the current year you are asking about?
-9,5,What is the current year you are asking about?
+21,1,Which country are you asking about?
+21,2,Which country are you asking about?
+21,3,Which country are you asking about?
+21,4,Which country are you asking about?
+21,5,Which country are you asking about?
+22,1,What do you consider to be a planet?
+22,2,What do you consider to be a planet?
+22,3,What do you consider to be a planet?
+22,4,What do you consider to be a planet?
+22,5,What do you consider to be a planet?
+23,1,What is the context of your question?
+23,2,What is the context of your question?
+23,3,What context are you asking about?
+23,4,What is the context of your question?
+23,5,What is the context of your question?
+24,1,"What definition of ""end"" are you asking about?"
+24,2,"What definition of ""end"" are you asking about?"
+24,3,"What definition of ""end"" are you asking about?"
+24,4,"What definition of ""end"" are you asking about?"
+24,5,"What definition of ""end"" are you asking about?"
+25,1,What form of water are you asking about?
+25,2,What form of water are you asking about?
+25,3,What form of water are you asking about?
+25,4,What form of water are you asking about?
+25,5,What form of water are you asking about?
+26,1,Who are you asking about?
+26,2,Who are you asking about?
+26,3,Who are you asking about?
+26,4,Who are you asking about?
+26,5,Who are you asking about?
+27,1,What is the context of the question?
+27,2,What is the context of the question?
+27,3,What is the context of the question?
+27,4,What is the context of the question?
+27,5,What is the context of the question?
+28,1,What do you want to know about Python?
+28,2,What do you want to know about Python?
+28,3,What do you want to know about Python?
+28,4,What do you want to know about Python?
+28,5,What do you want to know about Python?
+29,1,"What do you mean by ""sides""?"
+29,2,"What do you mean by ""sides""?"
+29,3,"What do you mean by ""sides""?"
+29,4,"What do you mean by ""sides""?"
+29,5,"What do you mean by ""sides""?"
+30,1,What unit of measurement are you interested in?
+30,2,What unit of measurement are you interested in?
+30,3,What unit of measurement are you interested in?
+30,4,What unit of measurement are you interested in?
+30,5,What unit of measurement are you interested in?

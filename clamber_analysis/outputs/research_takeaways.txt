@@ -1,0 +1,13 @@
+CLAMBER uncertainty notes
+
+Does CLAMBER map onto the research uncertainty types predictably?
+The mapping is partial rather than deterministic. The subclass-versus-uncertainty heatmap shows where prompt taxonomy and expressed uncertainty align, but the dominant uncertainty framing can diverge from the original CLAMBER subclass, especially when the model defaults to generic specification requests.
+
+Which subclasses look most epistemically interesting?
+The most epistemically interesting subclasses are the ones with both elevated false negative rates and a non-trivial share of epistemic-looking clarifying questions or silent uncertainty cases. These are the places where the model appears uncertain but does not reliably surface ambiguity explicitly.
+
+What framing patterns stand out?
+The opening phrase counts show whether the model tends to frame uncertainty as generic specification, preference elicitation, or concept-definition. Those opening templates should become annotation cues in the new benchmark.
+
+What to do differently for the new dataset?
+Collect or generate multiple clarification variants per prompt, preserve the model's confidence signal, and explicitly label whether the clarification is epistemic, aleatoric-discrete, or preferential-personalized. Silent-uncertainty cases deserve dedicated coverage because they reveal suppressed uncertainty rather than overt clarification behavior.

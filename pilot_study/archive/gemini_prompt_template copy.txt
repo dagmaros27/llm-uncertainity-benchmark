@@ -1,0 +1,4 @@
+Read the user query below. Decide whether clarification is needed before answering. If clarification is needed, ask exactly one clarifying question. If clarification is not needed, respond with exactly: NO_CLARIFICATION_NEEDED
+
+User query:
+{{USER_QUERY}}

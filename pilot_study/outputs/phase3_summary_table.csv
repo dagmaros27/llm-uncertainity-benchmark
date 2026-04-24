@@ -1,0 +1,31 @@
+prompt_id,prompt_type,manual_label,agreement,variation_score,mean_bertscore,generated_cq,variety
+16,aleatoric,aleatoric,True,0.14633691310882568,0.8536630868911743,Which version of Batman are you interested in?,discrete disambiguation — multiple known valid answers
+10,epistemic,epistemic,True,0.14085406064987183,0.8591459393501282,"What is ""Veratinol""?",fabricated drug name
+2,epistemic,unambiguous,False,0.1316884160041809,0.8683115839958191,NO_CLARIFICATION_NEEDED,fabricated concept
+3,epistemic,epistemic,True,0.1286461353302002,0.8713538646697998,What is the Drexel-9 microprocessor?,fabricated technical entity
+5,epistemic,epistemic,True,0.09991765022277832,0.9000823497772217,"What is ""Tarethia""?",fabricated event
+9,epistemic,epistemic,True,0.07728856801986694,0.9227114319801331,What is the correct spelling of the city?,plausible but fabricated place
+1,epistemic,epistemic,True,0.06606274843215942,0.9339372515678406,Could you please specify what Kordemia refers to?,fabricated entity
+20,aleatoric,aleatoric,True,0.05020618438720703,0.949793815612793,Who are you referring to?,referential ambiguity — pronoun with no antecedent
+15,aleatoric,aleatoric,True,0.028880834579467773,0.9711191654205322,What is the age of the person experiencing the fever?,missing personal and clinical context
+18,aleatoric,aleatoric,True,0.02559882402420044,0.9744011759757996,What is your current location?,missing spatial context
+11,aleatoric,aleatoric,True,0.01807469129562378,0.9819253087043762,Which airport are you trying to get to?,missing spatial context
+6,epistemic,epistemic,True,0.016496241092681885,0.9835037589073181,What is the Mossfield protocol?,fabricated technical protocol
+13,aleatoric,aleatoric,True,0.013710200786590576,0.9862897992134094,What genres do you usually enjoy?,missing personal preference context
+19,aleatoric,aleatoric,True,0.013494253158569336,0.9865057468414307,What are your friend's interests or hobbies?,missing personal preference and relationship context
+4,epistemic,epistemic,True,,,Who is Harlow Pendleton?,fabricated academic work
+7,epistemic,unambiguous,False,,,NO_CLARIFICATION_NEEDED,real but obscure entity with unknown properties
+8,epistemic,unambiguous,False,,,NO_CLARIFICATION_NEEDED,future event outside training data
+12,aleatoric,unambiguous,False,,,NO_CLARIFICATION_NEEDED,missing temporal context — multiple valid answers across years
+14,aleatoric,unambiguous,False,,,NO_CLARIFICATION_NEEDED,lexical ambiguity — multiple valid interpretations of a word
+17,aleatoric,unambiguous,False,,,NO_CLARIFICATION_NEEDED,missing personal and situational context
+21,unambiguous,unambiguous,True,,,NO_CLARIFICATION_NEEDED,basic factual — single definitive answer
+22,unambiguous,unambiguous,True,,,NO_CLARIFICATION_NEEDED,basic factual — well established scientific consensus
+23,unambiguous,unambiguous,True,,,NO_CLARIFICATION_NEEDED,factual definition — single correct answer
+24,unambiguous,unambiguous,True,,,NO_CLARIFICATION_NEEDED,historical fact — single correct answer
+25,unambiguous,unambiguous,True,,,NO_CLARIFICATION_NEEDED,scientific fact — single correct answer
+26,unambiguous,unambiguous,True,,,NO_CLARIFICATION_NEEDED,attribution fact — single correct answer
+27,unambiguous,unambiguous,True,,,NO_CLARIFICATION_NEEDED,mathematical computation — single correct answer
+28,unambiguous,unambiguous,True,,,NO_CLARIFICATION_NEEDED,factual definition — single correct answer
+29,unambiguous,unambiguous,True,,,NO_CLARIFICATION_NEEDED,geometric fact — single correct answer
+30,unambiguous,unambiguous,True,,,NO_CLARIFICATION_NEEDED,physical constant — single correct answer

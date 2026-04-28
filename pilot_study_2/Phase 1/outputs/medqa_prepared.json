@@ -1,0 +1,130 @@
+[
+  {
+    "id": "medqa_1",
+    "vignette_full": "A 73-year-old man presents to the office, complaining of “weird blisters” on his right hand, which appeared 2 weeks ago. The patient says that he initially had a rash, which progressed to blisters. He denies any trauma or known contact with sick people. He is worried because he hasn’t been able to garden since the rash appeared, and he was planning on entering his roses into an annual competition this month. His vital signs are stable. On physical exam, the patient has multiple bullae accompanied by red, papular lesions on his right hand, which progress to his forearm. The right axillary lymph nodes are swollen and tender.",
+    "layer_0": "A 73-year-old man presents to the office, complaining of “weird blisters” on his right hand, which appeared 2 weeks ago. The patient says that he initially had a rash, which progressed to blisters. He denies any trauma or known contact with sick people. He is worried because he hasn’t been able to garden since the rash appeared, and he was planning on entering his roses into an annual competition this month.",
+    "layer_1": "His vital signs are stable. On physical exam, the patient has multiple bullae accompanied by red, papular lesions on his right hand, which progress to his forearm. The right axillary lymph nodes are swollen and tender.",
+    "answer_choices": {
+      "A": "Potassium iodide solution",
+      "B": "Azithromycin",
+      "C": "Doxycycline",
+      "D": "Itraconazole",
+      "E": "Topical corticosteroids"
+    },
+    "correct_answer_text": "Itraconazole",
+    "correct_answer_idx": "D",
+    "meta_info": "step1"
+  },
+  {
+    "id": "medqa_3",
+    "vignette_full": "A 33-year-old man presents to the emergency department complaining of weakness and fatigue. He states that his symptoms have worsened over the past day. He has a past medical history of IV drug abuse and alcoholism and he currently smells of alcohol. His temperature is 102°F (38.9°C), blood pressure is 111/68 mmHg, pulse is 110/min, respirations are 17/min, and oxygen saturation is 98% on room air. Physical exam is notable for focal tenderness over the lumbar spine. Initial lab values and blood cultures are drawn and are notable for leukocytosis and an elevated C-reactive protein (CRP).",
+    "layer_0": "A 33-year-old man presents to the emergency department complaining of weakness and fatigue. He states that his symptoms have worsened over the past day. He has a past medical history of IV drug abuse and alcoholism and he currently smells of alcohol.",
+    "layer_1": "His temperature is 102°F (38.9°C), blood pressure is 111/68 mmHg, pulse is 110/min, respirations are 17/min, and oxygen saturation is 98% on room air. Physical exam is notable for focal tenderness over the lumbar spine. Initial lab values and blood cultures are drawn and are notable for leukocytosis and an elevated C-reactive protein (CRP).",
+    "answer_choices": {
+      "A": "Ceftriaxone",
+      "B": "Ibuprofen and warm compresses",
+      "C": "Nafcillin",
+      "D": "Piperacillin-tazobactam",
+      "E": "Vancomycin"
+    },
+    "correct_answer_text": "Vancomycin",
+    "correct_answer_idx": "E",
+    "meta_info": "step2&3"
+  },
+  {
+    "id": "medqa_4",
+    "vignette_full": "A 63-year-old man comes to the physician for evaluation of fever and a nonproductive cough for the past 2 weeks. During this period, he has also had fatigue, myalgia, and difficulty breathing. Five weeks ago, he underwent an aortic prosthetic valve replacement due to high-grade aortic stenosis. The patient has a history of hypertension, asthma, and type 2 diabetes mellitus. A colonoscopy 2 years ago was normal. The patient has smoked one pack of cigarettes daily for the past 40 years. He has never used illicit drugs. Current medications include aspirin, warfarin, lisinopril, metformin, inhaled albuterol, and a multivitamin. The patient appears lethargic. Temperature is 38.6°C (101.5°F), pulse is 105/min, and blood pressure is 140/60 mm Hg. Rales are heard on auscultation of the lungs. A grade 2/6, diastolic blowing murmur is heard over the left sternal border and radiates to the right sternal border. A photograph of his right index finger is shown. Laboratory studies show a leukocyte count of 13,800/mm3 and an erythrocyte sedimentation rate of 48 mm/h.",
+    "layer_0": "A 63-year-old man comes to the physician for evaluation of fever and a nonproductive cough for the past 2 weeks. During this period, he has also had fatigue, myalgia, and difficulty breathing. Five weeks ago, he underwent an aortic prosthetic valve replacement due to high-grade aortic stenosis. The patient has a history of hypertension, asthma, and type 2 diabetes mellitus. A colonoscopy 2 years ago was normal. The patient has smoked one pack of cigarettes daily for the past 40 years. He has never used illicit drugs. Current medications include aspirin, warfarin, lisinopril, metformin, inhaled albuterol, and a multivitamin.",
+    "layer_1": "The patient appears lethargic. Temperature is 38.6°C (101.5°F), pulse is 105/min, and blood pressure is 140/60 mm Hg. Rales are heard on auscultation of the lungs. A grade 2/6, diastolic blowing murmur is heard over the left sternal border and radiates to the right sternal border. A photograph of his right index finger is shown. Laboratory studies show a leukocyte count of 13,800/mm3 and an erythrocyte sedimentation rate of 48 mm/h.",
+    "answer_choices": {
+      "A": "Streptococcus gallolyticus",
+      "B": "Staphylococcus epidermidis",
+      "C": "Enterococcus faecalis",
+      "D": "Viridans streptococci",
+      "E": "Streptococcus pyogenes"
+    },
+    "correct_answer_text": "Staphylococcus epidermidis",
+    "correct_answer_idx": "B",
+    "meta_info": "step2&3"
+  },
+  {
+    "id": "medqa_5",
+    "vignette_full": "A researcher faces the task of calculating the mean height of male students in an undergraduate class containing a total of 2,000 male students and 1,750 female students. The mean height of a sample of male students is computed as 176 cm (69.3 in), with a standard deviation of 7 cm (2.8 in). The researcher now tries to calculate the confidence interval for the mean height of the male students in the undergraduate class. Which additional data will be needed for this calculation?",
+    "layer_0": "A researcher faces the task of calculating the mean height of male students in an undergraduate class containing a total of 2,000 male students and 1,750 female students.",
+    "layer_1": "The mean height of a sample of male students is computed as 176 cm (69.3 in), with a standard deviation of 7 cm (2.8 in). The researcher now tries to calculate the confidence interval for the mean height of the male students in the undergraduate class.",
+    "answer_choices": {
+      "A": "A sampling frame of all of the male students in the undergraduate class",
+      "B": "The given data are adequate, and no more data are needed.",
+      "C": "The mean height of all the male students in the undergraduate class",
+      "D": "Total number of male students in the undergraduate class who did not take part in the study",
+      "E": "Total sample size of the study"
+    },
+    "correct_answer_text": "Total sample size of the study",
+    "correct_answer_idx": "E",
+    "meta_info": "step1"
+  },
+  {
+    "id": "medqa_6",
+    "vignette_full": "A 58-year-old male with a history of congestive heart failure and hypertension comes to you with the chief complaint of new-onset cough as well as increased serum potassium in the setting of a new medication.",
+    "layer_0": "A 58-year-old male with a history of congestive heart failure and hypertension comes to you with the chief complaint of new-onset cough",
+    "layer_1": "as well as increased serum potassium in the setting of a new medication.",
+    "answer_choices": {
+      "A": "Furosemide",
+      "B": "Metoprolol",
+      "C": "Amiodarone",
+      "D": "Digoxin",
+      "E": "Lisinopril"
+    },
+    "correct_answer_text": "Lisinopril",
+    "correct_answer_idx": "E",
+    "meta_info": "step1"
+  },
+  {
+    "id": "medqa_7",
+    "vignette_full": "Three days after undergoing cardiac catheterization and coronary angioplasty for acute myocardial infarction, a 70-year-old man develops shortness of breath at rest. He has hypertension, hyperlipidemia, and type 2 diabetes mellitus. His current medications include aspirin, clopidogrel, atorvastatin, sublingual nitroglycerin, metoprolol, and insulin. He appears diaphoretic. His temperature is 37°C (98.6°F), pulse is 120/min, respirations are 22/min, and blood pressure is 100/55 mm Hg. Crackles are heard at both lung bases. Cardiac examination shows a new grade 3/6 holosystolic murmur heard best at the cardiac apex. An ECG shows sinus rhythm with T wave inversion in leads II, III, and aVF.",
+    "layer_0": "Three days after undergoing cardiac catheterization and coronary angioplasty for acute myocardial infarction, a 70-year-old man develops shortness of breath at rest. He has hypertension, hyperlipidemia, and type 2 diabetes mellitus. His current medications include aspirin, clopidogrel, atorvastatin, sublingual nitroglycerin, metoprolol, and insulin.",
+    "layer_1": "He appears diaphoretic. His temperature is 37°C (98.6°F), pulse is 120/min, respirations are 22/min, and blood pressure is 100/55 mm Hg. Crackles are heard at both lung bases. Cardiac examination shows a new grade 3/6 holosystolic murmur heard best at the cardiac apex. An ECG shows sinus rhythm with T wave inversion in leads II, III, and aVF.",
+    "answer_choices": {
+      "A": "Early infarct-associated pericarditis",
+      "B": "Ventricular septal rupture",
+      "C": "Postmyocardial infarction syndrome",
+      "D": "Coronary artery dissection",
+      "E": "Papillary muscle rupture"
+    },
+    "correct_answer_text": "Papillary muscle rupture",
+    "correct_answer_idx": "E",
+    "meta_info": "step2&3"
+  },
+  {
+    "id": "medqa_9",
+    "vignette_full": "A 4-year-old boy presents with a history of recurrent bacterial infections, including several episodes of pneumococcal sepsis. His family history is significant for 2 maternal uncles who died from similar symptoms. Laboratory tests reveal undetectable serum levels of all isotypes of immunoglobulins and reduced levels of B cells.",
+    "layer_0": "A 4-year-old boy presents with a history of recurrent bacterial infections, including several episodes of pneumococcal sepsis. His family history is significant for 2 maternal uncles who died from similar symptoms.",
+    "layer_1": "Laboratory tests reveal undetectable serum levels of all isotypes of immunoglobulins and reduced levels of B cells.",
+    "answer_choices": {
+      "A": "Bruton agammaglobulinemia",
+      "B": "Common variable immunodeficiency",
+      "C": "DiGeorge syndrome",
+      "D": "Hereditary angioedema",
+      "E": "Chediak-Higashi syndrome"
+    },
+    "correct_answer_text": "Bruton agammaglobulinemia",
+    "correct_answer_idx": "A",
+    "meta_info": "step1"
+  },
+  {
+    "id": "medqa_11",
+    "vignette_full": "A 25-year-old woman, gravida 2, para 1, at 25 weeks' gestation comes to the emergency department because of a 1-day history of fever and right-sided flank pain. During this period, she also had chills, nausea, vomiting, and burning on urination. Her last prenatal visit was 10 weeks ago. Pregnancy and delivery of her first child were uncomplicated. Her temperature is 39°C (102.2°F), pulse is 110/min, respirations are 20/min, and blood pressure is 110/70 mm Hg. Physical examination shows costovertebral angle tenderness on the right. The abdomen is soft and nontender, and no contractions are felt. Pelvic examination shows a uterus consistent in size with a 25-week gestation. Fetal heart rate is 170/min. Laboratory studies show:\nLeukocyte count 15,000/mm3\nUrine\nNitrite 2+\nProtein 1+\nBlood 1+\nRBC 5/hpf\nWBC 500/hpf\nBlood and urine samples are obtained for culture and drug sensitivity.",
+    "layer_0": "A 25-year-old woman, gravida 2, para 1, at 25 weeks' gestation comes to the emergency department because of a 1-day history of fever and right-sided flank pain. During this period, she also had chills, nausea, vomiting, and burning on urination. Her last prenatal visit was 10 weeks ago. Pregnancy and delivery of her first child were uncomplicated.",
+    "layer_1": "Her temperature is 39°C (102.2°F), pulse is 110/min, respirations are 20/min, and blood pressure is 110/70 mm Hg. Physical examination shows costovertebral angle tenderness on the right. The abdomen is soft and nontender, and no contractions are felt. Pelvic examination shows a uterus consistent in size with a 25-week gestation. Fetal heart rate is 170/min. Laboratory studies show:\nLeukocyte count 15,000/mm3\nUrine\nNitrite 2+\nProtein 1+\nBlood 1+\nRBC 5/hpf\nWBC 500/hpf\nBlood and urine samples are obtained for culture and drug sensitivity.",
+    "answer_choices": {
+      "A": "Perform a renal ultrasound",
+      "B": "Outpatient treatment with oral ciprofloxacin",
+      "C": "Admit the patient and request an emergent obstetrical consult",
+      "D": "Inpatient treatment with intravenous ceftriaxone",
+      "E": "Inpatient treatment with intravenous ampicillin and gentamicin\n\""
+    },
+    "correct_answer_text": "Inpatient treatment with intravenous ceftriaxone",
+    "correct_answer_idx": "D",
+    "meta_info": "step2&3"
+  }
+]

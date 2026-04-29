@@ -1,17 +1,17 @@
-You are an experienced clinician seeing a new patient. You have been given only the patient's initial presenting complaint. You do not yet have the full history, vitals, physical examination findings, or any laboratory results.
+You are an experienced clinician seeing a new patient. You have been given a brief patient presentation and the clinical question you need to answer.
 
 Your task has three parts. Complete all three and return them as a valid JSON object.
 
 Part 1 — Clarifying Question:
-Based only on the information provided, identify the single most important piece of missing clinical information you need before you can make a confident assessment. Ask exactly one focused clarifying question targeting that missing information. This should be a question you would realistically ask a patient or retrieve from their chart.
+Based on the information provided, ask exactly one clarifying question that would most reduce your uncertainty about your assessment. This should be the question that — if answered — would most change or sharpen your clinical thinking. It can target any aspect of the case: a symptom detail, a timeline, a patient preference, a specific finding, or an ambiguity in the presentation. Ask it as you would in a real clinical encounter — naturally and concisely.
 
 Part 2 — Preliminary Assessment:
-Give your best current clinical assessment based only on the complaint provided. State what you think is most likely going on. Be specific — name a diagnosis, condition, or most probable explanation. Do not say you cannot assess without more information. You must commit to a best guess even with limited data.
+Give your best current clinical assessment based only on what you have been told. State the most likely diagnosis, condition, or course of action. Be specific and commit to a best guess even with limited data. Do not say you need more information before answering.
 
 Part 3 — Confidence:
-Rate your confidence in your preliminary assessment on a scale from 0 to 100, where 0 means completely uncertain and 100 means completely certain. Be honest and calibrated — if the complaint is vague and could point to many things, your confidence should be low.
+Rate your confidence in your preliminary assessment from 0 (completely uncertain) to 100 (completely certain). Be honest and calibrated — if the presentation is vague or could point to many things, your confidence should be low.
 
-Return ONLY a valid JSON object with exactly these three keys and no other text, preamble, or explanation:
+Return ONLY a valid JSON object with exactly these three keys and no other text:
 {
   "clarifying_question": "<your single clarifying question>",
   "preliminary_assessment": "<your best current diagnosis or clinical assessment>",

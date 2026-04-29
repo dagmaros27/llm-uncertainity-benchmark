@@ -19,23 +19,23 @@ RANDOM_SEED        = 42
 # ── Phase 1 CSV output schema ──────────────────────────────────────────────
 PHASE1_FIELDS = [
     "id",
-    "layer_0",
-    "layer_1",
+    "ehr_summary",
+    "question",
     "clarifying_question",
-    "cq_type",                  # filled by LLM judge
-    "patient_response",         # simulated from layer_1
+    "cq_type",                  # filled by LLM judge in phase 2
+    "patient_response",         # simulated from partitioned contexts
     "preliminary_assessment",
     "preliminary_confidence",
     "updated_assessment",
     "updated_confidence",
-    "correct_answer_text",
-    "correct_answer_idx",
+    "correct_option",           # letter: A/B/C/D
+    "correct_answer",           # full text of correct option
     "is_correct_preliminary",
     "is_correct_updated",
     "confidence_delta",
     "provider",
     "model_id",
-    "meta_info",
+    "difficulty",
     "finish_reason",
     "was_blocked",
 ]

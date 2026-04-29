@@ -1,12 +1,16 @@
 """Phase 1 pipeline: PatientSimulator + Phase1Pipeline.
 
 Pipeline flow per record:
-  1. Show model only layer_0 (chief complaint)
+  1. Show model ehr_summary + question (no answer options)
   2. Model returns: clarifying_question, preliminary_assessment, confidence
-  3. PatientSimulator answers the CQ using layer_1 (hidden clinical details)
-  4. Show model layer_0 + clarifying exchange + answer choices
+  3. PatientSimulator answers the CQ using combined patient/nurse/specialist context
+  4. Show model ehr_summary + question + answer options + clarifying exchange
   5. Model returns: updated_assessment, updated_confidence
   6. Evaluate: correctness + confidence delta
+
+Expected record keys:
+  id, ehr_summary, question, options (dict A-D),
+  correct_option, correct_answer, simulator_context, difficulty
 """
 
 from __future__ import annotations
@@ -38,11 +42,11 @@ TURN_0_SCHEMA = types.Schema(
     properties={
         "clarifying_question": types.Schema(
             type=types.Type.STRING,
-            description="One focused clarifying question targeting the most critical missing clinical information.",
+            description="One clarifying question that would most reduce uncertainty about the assessment.",
         ),
         "preliminary_assessment": types.Schema(
             type=types.Type.STRING,
-            description="Best current clinical assessment or most likely diagnosis given only the complaint.",
+            description="Best current clinical assessment or most likely diagnosis/management given the available information.",
         ),
         "confidence": types.Schema(
             type=types.Type.INTEGER,
@@ -57,7 +61,7 @@ TURN_1_SCHEMA = types.Schema(
     properties={
         "updated_assessment": types.Schema(
             type=types.Type.STRING,
-            description="Updated clinical assessment after receiving clarification.",
+            description="Updated clinical assessment after receiving clarification — must match one of the answer choices.",
         ),
         "updated_confidence": types.Schema(
             type=types.Type.INTEGER,
@@ -78,25 +82,26 @@ SIMULATOR_SCHEMA = types.Schema(
     required=["answer"],
 )
 
-_SIMULATOR_INSTRUCTION = """You are a patient or a patient's chart. You have been given the full clinical details of a case.
-A clinician has asked you a question. Answer it using ONLY information present in the clinical details provided.
-If the question asks about something not mentioned, say "That information is not available."
-Be concise — one or two sentences. Do not volunteer extra information.
+_SIMULATOR_INSTRUCTION = """You are a clinical information source for a patient case. \
+You have been given the complete clinical details available for this case.
+A clinician has asked you a question. Answer it using ONLY information present in the \
+clinical details provided. If the question asks about something not mentioned, say \
+"That information is not available." Be concise — one or two sentences. \
+Do not volunteer extra information.
 
 Return ONLY a JSON object: {"answer": "<your response>"}"""
 
-_POST_CLARIFICATION_INSTRUCTION = """You are an experienced clinician. You have just received an answer to your clarifying question.
-You now have the patient's initial complaint and one additional piece of clinical information.
+_POST_CLARIFICATION_INSTRUCTION = """You are an experienced clinician. \
+You have received an answer to your clarifying question.
 
-Based on all available information, provide:
-1. Your updated clinical assessment — the most likely diagnosis or condition
-2. Your updated confidence (0 to 100)
+Based on all available information, select the most appropriate answer to the clinical \
+question from the choices provided and state your updated confidence.
 
-The answer choices for the clinical question are provided below. Your updated assessment should correspond to one of them.
+Your updated assessment must correspond to one of the answer choices.
 
 Return ONLY a valid JSON object:
 {
-  "updated_assessment": "<your updated diagnosis>",
+  "updated_assessment": "<exact text of your chosen answer>",
   "updated_confidence": <integer 0-100>
 }"""
 
@@ -104,14 +109,14 @@ Return ONLY a valid JSON object:
 # ── Patient Simulator ──────────────────────────────────────────────────────
 
 class PatientSimulator:
-    """Simulates a patient answering a CQ using layer_1 as hidden ground truth."""
+    """Simulates a clinical information source answering a CQ from partitioned context."""
 
     def __init__(self, provider: LLMProvider) -> None:
         self._provider = provider
 
-    def answer(self, clarifying_question: str, layer_1: str) -> str:
+    def answer(self, clarifying_question: str, simulator_context: str) -> str:
         user_message = (
-            f"Clinical details:\n{layer_1.strip()}\n\n"
+            f"Clinical details:\n{simulator_context.strip()}\n\n"
             f"Clinician's question:\n{clarifying_question.strip()}"
         )
         try:
@@ -180,8 +185,11 @@ class Phase1Pipeline:
         with self._output_csv.open("a", encoding="utf-8", newline="") as fh:
             csv.DictWriter(fh, fieldnames=PHASE1_FIELDS).writerow(row)
 
-    def _turn_0(self, layer_0: str) -> Optional[dict]:
-        user_message = f"Patient complaint:\n{layer_0.strip()}"
+    def _turn_0(self, ehr_summary: str, question: str) -> Optional[dict]:
+        user_message = (
+            f"Patient presentation:\n{ehr_summary.strip()}\n\n"
+            f"Clinical question:\n{question.strip()}"
+        )
         try:
             raw = self._provider.call(
                 system_instruction=self._instruction,
@@ -204,16 +212,18 @@ class Phase1Pipeline:
 
     def _turn_1(
         self,
-        layer_0: str,
+        ehr_summary: str,
+        question: str,
         clarifying_question: str,
         patient_response: str,
-        answer_choices: dict,
+        options: dict,
     ) -> Optional[dict]:
         user_message = (
-            f"Patient complaint:\n{layer_0.strip()}\n\n"
+            f"Patient presentation:\n{ehr_summary.strip()}\n\n"
             f"Your clarifying question:\n{clarifying_question.strip()}\n\n"
             f"Patient's answer:\n{patient_response.strip()}\n\n"
-            f"Answer choices:\n{format_answer_choices(answer_choices)}"
+            f"Clinical question:\n{question.strip()}\n\n"
+            f"Answer choices:\n{format_answer_choices(options)}"
         )
         try:
             raw = self._provider.call(
@@ -249,29 +259,39 @@ class Phase1Pipeline:
                 continue
 
             logger.info("[%d/%d] Processing %s", i, total, record_id)
-            layer_0       = record["layer_0"]
-            layer_1       = record["layer_1"]
-            correct_text  = record["correct_answer_text"]
-            correct_idx   = record["correct_answer_idx"]
-            answer_choices = record["answer_choices"]
+            ehr_summary       = record["ehr_summary"]
+            question          = record["question"]
+            options           = record["options"]
+            correct_option    = record["correct_option"]
+            correct_answer    = record["correct_answer"]
+            simulator_context = record["simulator_context"]
+            difficulty        = record.get("difficulty", "")
 
-            turn0 = self._turn_0(layer_0)
+            turn0 = self._turn_0(ehr_summary, question)
             if turn0 is None:
                 failed += 1
                 continue
 
             if turn0.get("_blocked"):
                 self._append_row({
-                    "id": record_id, "layer_0": layer_0, "layer_1": layer_1,
-                    "clarifying_question": "BLOCKED", "cq_type": "",
-                    "patient_response": "", "preliminary_assessment": "BLOCKED",
-                    "preliminary_confidence": -1, "updated_assessment": "BLOCKED",
-                    "updated_confidence": -1, "correct_answer_text": correct_text,
-                    "correct_answer_idx": correct_idx,
-                    "is_correct_preliminary": False, "is_correct_updated": False,
-                    "confidence_delta": 0, "provider": self._provider.provider_name,
+                    "id": record_id,
+                    "ehr_summary": ehr_summary,
+                    "question": question,
+                    "clarifying_question": "BLOCKED",
+                    "cq_type": "",
+                    "patient_response": "",
+                    "preliminary_assessment": "BLOCKED",
+                    "preliminary_confidence": -1,
+                    "updated_assessment": "BLOCKED",
+                    "updated_confidence": -1,
+                    "correct_option": correct_option,
+                    "correct_answer": correct_answer,
+                    "is_correct_preliminary": False,
+                    "is_correct_updated": False,
+                    "confidence_delta": 0,
+                    "provider": self._provider.provider_name,
                     "model_id": self._provider.model_name,
-                    "meta_info": record.get("meta_info", ""),
+                    "difficulty": difficulty,
                     "finish_reason": turn0.get("_reason", "SAFETY"),
                     "was_blocked": True,
                 })
@@ -286,12 +306,39 @@ class Phase1Pipeline:
             logger.info("  Prelim: %s (conf=%d)", prelim[:80], prelim_conf)
             time.sleep(self._request_interval)
 
-            patient_response = self._simulator.answer(cq, layer_1)
+            patient_response = self._simulator.answer(cq, simulator_context)
             logger.info("  Patient: %s", patient_response[:100])
             time.sleep(self._request_interval)
 
-            turn1 = self._turn_1(layer_0, cq, patient_response, answer_choices)
+            turn1 = self._turn_1(ehr_summary, question, cq, patient_response, options)
             if turn1 is None:
+                failed += 1
+                continue
+
+            if turn1.get("_blocked"):
+                self._append_row({
+                    "id": record_id,
+                    "ehr_summary": ehr_summary,
+                    "question": question,
+                    "clarifying_question": cq,
+                    "cq_type": "",
+                    "patient_response": patient_response,
+                    "preliminary_assessment": prelim,
+                    "preliminary_confidence": prelim_conf,
+                    "updated_assessment": "BLOCKED",
+                    "updated_confidence": -1,
+                    "correct_option": correct_option,
+                    "correct_answer": correct_answer,
+                    "is_correct_preliminary": is_assessment_correct(prelim, correct_answer),
+                    "is_correct_updated": False,
+                    "confidence_delta": 0,
+                    "provider": self._provider.provider_name,
+                    "model_id": self._provider.model_name,
+                    "difficulty": difficulty,
+                    "finish_reason": turn1.get("_reason", "SAFETY"),
+                    "was_blocked": True,
+                })
+                processed_ids.add(record_id)
                 failed += 1
                 continue
 
@@ -301,8 +348,8 @@ class Phase1Pipeline:
 
             self._append_row({
                 "id": record_id,
-                "layer_0": layer_0,
-                "layer_1": layer_1,
+                "ehr_summary": ehr_summary,
+                "question": question,
                 "clarifying_question": cq,
                 "cq_type": "",
                 "patient_response": patient_response,
@@ -310,14 +357,14 @@ class Phase1Pipeline:
                 "preliminary_confidence": prelim_conf,
                 "updated_assessment": updated,
                 "updated_confidence": updated_conf,
-                "correct_answer_text": correct_text,
-                "correct_answer_idx": correct_idx,
-                "is_correct_preliminary": is_assessment_correct(prelim, correct_text),
-                "is_correct_updated": is_assessment_correct(updated, correct_text),
+                "correct_option": correct_option,
+                "correct_answer": correct_answer,
+                "is_correct_preliminary": is_assessment_correct(prelim, correct_answer),
+                "is_correct_updated": is_assessment_correct(updated, correct_answer),
                 "confidence_delta": updated_conf - prelim_conf,
                 "provider": self._provider.provider_name,
                 "model_id": self._provider.model_name,
-                "meta_info": record.get("meta_info", ""),
+                "difficulty": difficulty,
                 "finish_reason": "STOP",
                 "was_blocked": False,
             })

@@ -99,21 +99,11 @@ class GeminiProvider(LLMProvider):
     ) -> str:
         full_prompt = f"{system_instruction.strip()}\n\n{user_message.strip()}"
 
-        # Build a fallback list: try primary model/version first, then alternatives.
-        attempts: list[tuple[str, str]] = [(self._model_id, self._api_version)]
-        if self._model_id.startswith("gemini-2.5"):
-            attempts.append(("gemini-2.0-flash", self._api_version))
+        # Try primary model first; fall back to v1beta only if a different version
+        # was requested. No model substitution — tenacity handles transient retries.
+        unique: list[tuple[str, str]] = [(self._model_id, self._api_version)]
         if self._api_version != "v1beta":
-            attempts.append((self._model_id, "v1beta"))
-            if self._model_id.startswith("gemini-2.5"):
-                attempts.append(("gemini-2.0-flash", "v1beta"))
-        # Deduplicate preserving order.
-        seen: set[tuple[str, str]] = set()
-        unique: list[tuple[str, str]] = []
-        for a in attempts:
-            if a not in seen:
-                seen.add(a)
-                unique.append(a)
+            unique.append((self._model_id, "v1beta"))
 
         last_error: Optional[Exception] = None
         for model_id, api_version in unique:

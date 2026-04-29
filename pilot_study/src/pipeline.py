@@ -1,12 +1,12 @@
 """Phase 1 pipeline: PatientSimulator + Phase1Pipeline.
 
 Pipeline flow per record:
-  1. Show model ehr_summary + question (no answer options)
-  2. Model returns: clarifying_question, preliminary_assessment, confidence
+  1. Show model ehr_summary + question + answer options (A-D)
+  2. Model returns: clarifying_question, preliminary_assessment (letter A/B/C/D), confidence
   3. PatientSimulator answers the CQ using combined patient/nurse/specialist context
-  4. Show model ehr_summary + question + answer options + clarifying exchange
-  5. Model returns: updated_assessment, updated_confidence
-  6. Evaluate: correctness + confidence delta
+  4. Show model full context + clarifying exchange + answer options again
+  5. Model returns: updated_assessment (letter A/B/C/D), updated_confidence
+  6. Evaluate: correctness (exact letter match) + confidence delta
 
 Expected record keys:
   id, ehr_summary, question, options (dict A-D),
@@ -27,7 +27,6 @@ from .providers import LLMProvider
 from .utils import (
     SafetyBlockError,
     format_answer_choices,
-    is_assessment_correct,
     parse_json_response,
 )
 from config import PHASE1_FIELDS, REQUEST_INTERVAL
@@ -42,15 +41,16 @@ TURN_0_SCHEMA = types.Schema(
     properties={
         "clarifying_question": types.Schema(
             type=types.Type.STRING,
-            description="One clarifying question that would most reduce uncertainty about the assessment.",
+            description="One clarifying question that would most help discriminate between the answer options.",
         ),
         "preliminary_assessment": types.Schema(
             type=types.Type.STRING,
-            description="Best current clinical assessment or most likely diagnosis/management given the available information.",
+            enum=["A", "B", "C", "D"],
+            description="Best current answer — exactly one letter: A, B, C, or D.",
         ),
         "confidence": types.Schema(
             type=types.Type.INTEGER,
-            description="Confidence in the preliminary assessment from 0 (no idea) to 100 (certain).",
+            description="Confidence in the preliminary answer from 0 (no idea) to 100 (certain).",
         ),
     },
     required=["clarifying_question", "preliminary_assessment", "confidence"],
@@ -61,7 +61,8 @@ TURN_1_SCHEMA = types.Schema(
     properties={
         "updated_assessment": types.Schema(
             type=types.Type.STRING,
-            description="Updated clinical assessment after receiving clarification — must match one of the answer choices.",
+            enum=["A", "B", "C", "D"],
+            description="Updated answer after receiving clarification — exactly one letter: A, B, C, or D.",
         ),
         "updated_confidence": types.Schema(
             type=types.Type.INTEGER,
@@ -97,11 +98,9 @@ You have received an answer to your clarifying question.
 Based on all available information, select the most appropriate answer to the clinical \
 question from the choices provided and state your updated confidence.
 
-Your updated assessment must correspond to one of the answer choices.
-
 Return ONLY a valid JSON object:
 {
-  "updated_assessment": "<exact text of your chosen answer>",
+  "updated_assessment": "<A, B, C, or D>",
   "updated_confidence": <integer 0-100>
 }"""
 
@@ -124,7 +123,7 @@ class PatientSimulator:
                 system_instruction=_SIMULATOR_INSTRUCTION,
                 user_message=user_message,
                 temperature=0.0,
-                max_tokens=256,
+                max_tokens=2048,
                 expect_json=SIMULATOR_SCHEMA,
             )
         except SafetyBlockError:
@@ -185,17 +184,18 @@ class Phase1Pipeline:
         with self._output_csv.open("a", encoding="utf-8", newline="") as fh:
             csv.DictWriter(fh, fieldnames=PHASE1_FIELDS).writerow(row)
 
-    def _turn_0(self, ehr_summary: str, question: str) -> Optional[dict]:
+    def _turn_0(self, ehr_summary: str, question: str, options: dict) -> Optional[dict]:
         user_message = (
             f"Patient presentation:\n{ehr_summary.strip()}\n\n"
-            f"Clinical question:\n{question.strip()}"
+            f"Clinical question:\n{question.strip()}\n\n"
+            f"Answer options:\n{format_answer_choices(options)}"
         )
         try:
             raw = self._provider.call(
                 system_instruction=self._instruction,
                 user_message=user_message,
                 temperature=0.0,
-                max_tokens=1024,
+                max_tokens=4096,
                 expect_json=TURN_0_SCHEMA,
             )
         except SafetyBlockError as exc:
@@ -230,7 +230,7 @@ class Phase1Pipeline:
                 system_instruction=_POST_CLARIFICATION_INSTRUCTION,
                 user_message=user_message,
                 temperature=0.0,
-                max_tokens=512,
+                max_tokens=4096,
                 expect_json=TURN_1_SCHEMA,
             )
         except SafetyBlockError as exc:
@@ -267,7 +267,7 @@ class Phase1Pipeline:
             simulator_context = record["simulator_context"]
             difficulty        = record.get("difficulty", "")
 
-            turn0 = self._turn_0(ehr_summary, question)
+            turn0 = self._turn_0(ehr_summary, question, options)
             if turn0 is None:
                 failed += 1
                 continue
@@ -329,7 +329,7 @@ class Phase1Pipeline:
                     "updated_confidence": -1,
                     "correct_option": correct_option,
                     "correct_answer": correct_answer,
-                    "is_correct_preliminary": is_assessment_correct(prelim, correct_answer),
+                    "is_correct_preliminary": prelim.upper() == correct_option.upper(),
                     "is_correct_updated": False,
                     "confidence_delta": 0,
                     "provider": self._provider.provider_name,
@@ -359,8 +359,8 @@ class Phase1Pipeline:
                 "updated_confidence": updated_conf,
                 "correct_option": correct_option,
                 "correct_answer": correct_answer,
-                "is_correct_preliminary": is_assessment_correct(prelim, correct_answer),
-                "is_correct_updated": is_assessment_correct(updated, correct_answer),
+                "is_correct_preliminary": prelim.upper() == correct_option.upper(),
+                "is_correct_updated": updated.upper() == correct_option.upper(),
                 "confidence_delta": updated_conf - prelim_conf,
                 "provider": self._provider.provider_name,
                 "model_id": self._provider.model_name,

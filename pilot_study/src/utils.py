@@ -103,7 +103,7 @@ def extract_non_thinking_text(response) -> ModelResponse:
             text = getattr(part, "text", "")
             if text:
                 parts_text.append(text)
-    except (IndexError, AttributeError):
+    except (IndexError, AttributeError, TypeError):
         pass
 
     text = clean_text("\n".join(parts_text)) if parts_text else clean_text(getattr(response, "text", ""))

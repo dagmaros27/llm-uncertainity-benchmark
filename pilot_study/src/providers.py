@@ -34,8 +34,27 @@ class LLMProvider(abc.ABC):
         max_tokens: int = 512,
         expect_json: Union[bool, types.Schema] = False,
     ) -> str:
-        """Make a single call and return the response text."""
+        """Make a single (one-shot) call and return the response text."""
         ...
+
+    def call_multiturn(
+        self,
+        system_instruction: str,
+        contents: list[dict],
+        temperature: float = 0.0,
+        max_tokens: int = 512,
+        expect_json: Union[bool, types.Schema] = False,
+    ) -> str:
+        """Multi-turn call with proper conversation history.
+
+        ``contents`` is a list of ``{"role": "user"|"model", "text": str}``
+        dicts representing the accumulated conversation so far (must end with
+        a user turn).  The provider appends the model reply and returns it.
+
+        Default implementation raises NotImplementedError — concrete providers
+        must override this to participate in the multi-turn pipeline.
+        """
+        raise NotImplementedError(f"{type(self).__name__} does not implement call_multiturn")
 
     @property
     @abc.abstractmethod
@@ -147,3 +166,61 @@ class GeminiProvider(LLMProvider):
                 logger.warning("Gemini call failed (model=%s api_version=%s): %s", model_id, api_version, exc)
 
         raise RuntimeError(f"All Gemini call attempts failed. Last error: {last_error}") from last_error
+
+    @tenacity.retry(
+        wait=tenacity.wait_exponential(multiplier=2, min=4, max=60),
+        stop=tenacity.stop_after_attempt(6),
+        retry=tenacity.retry_if_not_exception_type(SafetyBlockError),
+        before_sleep=lambda rs: logger.warning(
+            "Gemini multi-turn retry — sleeping %.0fs (attempt %d)",
+            rs.next_action.sleep if rs.next_action else 0,
+            rs.attempt_number,
+        ),
+        reraise=True,
+    )
+    def call_multiturn(
+        self,
+        system_instruction: str,
+        contents: list[dict],
+        temperature: float = 0.0,
+        max_tokens: int = 512,
+        expect_json: Union[bool, types.Schema] = False,
+    ) -> str:
+        """Multi-turn call using the Gemini ``contents`` API.
+
+        ``contents`` is a list of ``{"role": "user"|"model", "text": str}``
+        dicts.  The list must end with a user turn; the model's reply is
+        returned as a string (NOT appended to the list — callers manage state).
+        ``system_instruction`` is injected via ``GenerateContentConfig`` so it
+        is never exposed as a user message in the conversation history.
+        """
+        content_objects = [
+            types.Content(
+                role=c["role"],
+                parts=[types.Part(text=c["text"])],
+            )
+            for c in contents
+        ]
+
+        config_kwargs: dict = {
+            "system_instruction": system_instruction,
+            "temperature": temperature,
+            "max_output_tokens": max_tokens,
+            "top_p": 0.95,
+        }
+        if expect_json is not False:
+            config_kwargs["response_mime_type"] = "application/json"
+            if isinstance(expect_json, types.Schema):
+                config_kwargs["response_schema"] = expect_json
+
+        response = self._client.models.generate_content(
+            model=self._model_id,
+            contents=content_objects,
+            config=types.GenerateContentConfig(**config_kwargs),
+        )
+
+        model_response = extract_non_thinking_text(response)
+        if model_response.was_blocked:
+            raise SafetyBlockError(f"Response blocked: finish_reason={model_response.finish_reason}")
+        logger.debug("call_multiturn — %d turns in context", len(contents))
+        return model_response.text

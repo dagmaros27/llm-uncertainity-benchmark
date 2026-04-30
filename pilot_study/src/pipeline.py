@@ -455,103 +455,139 @@ class MultiTurnPhase1Pipeline:
         with self._output_csv.open("a", encoding="utf-8", newline="") as fh:
             csv.DictWriter(fh, fieldnames=PHASE1_MULTITURN_FIELDS).writerow(row)
 
-    def _build_history_text(self, history: list[tuple[str, str]]) -> str:
-        """Format completed (cq, sim_response) pairs as a readable block."""
-        parts = []
-        for i, (cq, resp) in enumerate(history, start=1):
-            parts.append(f"Clarifying question {i}: {cq}\nPatient's answer: {resp}")
-        return "\n\n".join(parts)
+    def _run_conversation(
+        self,
+        ehr_summary: str,
+        question: str,
+        options: dict,
+        simulator_context: str,
+    ) -> Optional[dict]:
+        """Run the full multi-turn conversation using proper role-alternating history.
 
-    def _turn_0(self, ehr_summary: str, question: str, options: dict) -> Optional[dict]:
-        user_message = (
+        The Gemini ``contents`` list grows with each turn:
+          Turn 0 :  [user(EHR+options)]
+          After sim1: [user, model(CQ1+prelim), user(sim1)]
+          After sim2: [..., model(CQ2+upd1), user(sim2)]
+          ...
+          Final:    [..., model(CQn+updn), user(simn)]  → final answer
+
+        The ``system_instruction`` changes per API call (Turn-0 instruction for
+        Turn 0, continuation instruction for intermediate turns, post-clarification
+        for the final turn) but is never inserted into ``contents`` — it is passed
+        via ``GenerateContentConfig`` so the conversation history stays clean.
+
+        Returns a dict with keys: cqs, assessments, confidences, sim_responses.
+        Returns None on parse failure, {"_blocked": True} on safety block.
+        """
+        formatted_options = format_answer_choices(options)
+
+        # ── Turn 0 ────────────────────────────────────────────────────────
+        turn0_user_text = (
             f"Patient presentation:\n{ehr_summary.strip()}\n\n"
             f"Clinical question:\n{question.strip()}\n\n"
-            f"Answer options:\n{format_answer_choices(options)}"
+            f"Answer options:\n{formatted_options}"
         )
+        contents: list[dict] = [{"role": "user", "text": turn0_user_text}]
+
         try:
-            raw = self._provider.call(
+            raw0 = self._provider.call_multiturn(
                 system_instruction=self._instruction,
-                user_message=user_message,
+                contents=contents,
                 temperature=0.0,
                 max_tokens=4096,
                 expect_json=TURN_0_SCHEMA,
             )
-        except SafetyBlockError as exc:
-            return {"_blocked": True, "_reason": str(exc)}
-        parsed = parse_json_response(raw)
-        if parsed is None:
-            logger.error("Turn 0 JSON parse failed. Raw: %.300s", raw)
-            return None
-        if not {"clarifying_question", "preliminary_assessment", "confidence"}.issubset(parsed.keys()):
-            logger.error("Turn 0 missing keys. Got: %s", list(parsed.keys()))
-            return None
-        return parsed
+        except SafetyBlockError:
+            return {"_blocked": True}
 
-    def _continuation_turn(
-        self,
-        ehr_summary: str,
-        question: str,
-        options: dict,
-        history: list[tuple[str, str]],
-    ) -> Optional[dict]:
-        history_text = self._build_history_text(history)
-        user_message = (
-            f"Patient presentation:\n{ehr_summary.strip()}\n\n"
-            f"Clinical question:\n{question.strip()}\n\n"
-            f"Answer options:\n{format_answer_choices(options)}\n\n"
-            f"{history_text}"
-        )
-        try:
-            raw = self._provider.call(
-                system_instruction=self._continuation_instruction,
-                user_message=user_message,
-                temperature=0.0,
-                max_tokens=4096,
-                expect_json=TURN_CONTINUATION_SCHEMA,
-            )
-        except SafetyBlockError as exc:
-            return {"_blocked": True, "_reason": str(exc)}
-        parsed = parse_json_response(raw)
-        if parsed is None:
-            logger.error("Continuation turn JSON parse failed. Raw: %.300s", raw)
+        parsed0 = parse_json_response(raw0)
+        if not parsed0 or not {"clarifying_question", "preliminary_assessment", "confidence"}.issubset(parsed0.keys()):
+            logger.error("Turn 0 parse failed. Raw: %.300s", raw0)
             return None
-        if not {"updated_assessment", "confidence", "clarifying_question"}.issubset(parsed.keys()):
-            logger.error("Continuation turn missing keys. Got: %s", list(parsed.keys()))
-            return None
-        return parsed
 
-    def _final_turn(
-        self,
-        ehr_summary: str,
-        question: str,
-        options: dict,
-        history: list[tuple[str, str]],
-    ) -> Optional[dict]:
-        history_text = self._build_history_text(history)
-        user_message = (
-            f"Patient presentation:\n{ehr_summary.strip()}\n\n"
-            f"Clinical question:\n{question.strip()}\n\n"
-            f"Answer options:\n{format_answer_choices(options)}\n\n"
-            f"{history_text}"
-        )
-        try:
-            raw = self._provider.call(
-                system_instruction=_POST_CLARIFICATION_INSTRUCTION,
-                user_message=user_message,
-                temperature=0.0,
-                max_tokens=4096,
-                expect_json=TURN_1_SCHEMA,
-            )
-        except SafetyBlockError as exc:
-            return {"_blocked": True, "_reason": str(exc)}
-        parsed = parse_json_response(raw)
-        if parsed is None:
-            logger.error("Final turn JSON parse failed. Raw: %.300s", raw)
-            return None
-        if not {"updated_assessment", "updated_confidence"}.issubset(parsed.keys()):
-            logger.error("Final turn missing keys. Got: %s", list(parsed.keys()))
-            return None
-        return parsed
+        # Append model reply — raw JSON text becomes the model turn in history
+        contents.append({"role": "model", "text": raw0})
+
+        prelim      = str(parsed0["preliminary_assessment"]).strip().upper()
+        prelim_conf = int(parsed0["confidence"])
+        cqs         = [str(parsed0["clarifying_question"]).strip()]
+        assessments = [prelim]
+        confidences = [prelim_conf]
+        sim_responses: list[str] = []
+
+        logger.info("  Prelim=%s(conf=%d) CQ1=%s", prelim, prelim_conf, cqs[0][:80])
+        time.sleep(self._request_interval)
+
+        # ── Clarification rounds ───────────────────────────────────────────
+        for turn_idx in range(1, self._n_turns + 1):
+            sim_resp = self._simulator.answer(cqs[turn_idx - 1], simulator_context)
+            sim_responses.append(sim_resp)
+            logger.info("  Sim[%d]: %s", turn_idx, sim_resp[:80])
+            time.sleep(self._request_interval)
+
+            # Simulator answer is the next user turn in the conversation
+            contents.append({"role": "user", "text": f"Patient's answer: {sim_resp}"})
+
+            if turn_idx < self._n_turns:
+                # ── Continuation turn (ask another CQ) ────────────────────
+                try:
+                    raw_cont = self._provider.call_multiturn(
+                        system_instruction=self._continuation_instruction,
+                        contents=contents,
+                        temperature=0.0,
+                        max_tokens=4096,
+                        expect_json=TURN_CONTINUATION_SCHEMA,
+                    )
+                except SafetyBlockError:
+                    return {"_blocked": True}
+
+                parsed_cont = parse_json_response(raw_cont)
+                if not parsed_cont or not {"updated_assessment", "confidence", "clarifying_question"}.issubset(parsed_cont.keys()):
+                    logger.error("Continuation turn %d parse failed. Raw: %.300s", turn_idx, raw_cont)
+                    return None
+
+                contents.append({"role": "model", "text": raw_cont})
+
+                upd      = str(parsed_cont["updated_assessment"]).strip().upper()
+                conf     = int(parsed_cont["confidence"])
+                next_cq  = str(parsed_cont["clarifying_question"]).strip()
+                assessments.append(upd)
+                confidences.append(conf)
+                cqs.append(next_cq)
+                logger.info("  Turn%d=%s(conf=%d) CQ%d=%s", turn_idx, upd, conf, turn_idx + 1, next_cq[:80])
+
+            else:
+                # ── Final turn (commit to answer, no more CQs) ─────────────
+                try:
+                    raw_final = self._provider.call_multiturn(
+                        system_instruction=_POST_CLARIFICATION_INSTRUCTION,
+                        contents=contents,
+                        temperature=0.0,
+                        max_tokens=4096,
+                        expect_json=TURN_1_SCHEMA,
+                    )
+                except SafetyBlockError:
+                    return {"_blocked": True}
+
+                parsed_final = parse_json_response(raw_final)
+                if not parsed_final or not {"updated_assessment", "updated_confidence"}.issubset(parsed_final.keys()):
+                    logger.error("Final turn parse failed. Raw: %.300s", raw_final)
+                    return None
+
+                final      = str(parsed_final["updated_assessment"]).strip().upper()
+                final_conf = int(parsed_final["updated_confidence"])
+                assessments.append(final)
+                confidences.append(final_conf)
+                logger.info("  Final=%s(conf=%d)", final, final_conf)
+
+            time.sleep(self._request_interval)
+
+        return {
+            "cqs": cqs,
+            "assessments": assessments,
+            "confidences": confidences,
+            "sim_responses": sim_responses,
+        }
 
     def run(self, records: list[dict]) -> None:
         processed_ids = self._load_processed_ids()
@@ -566,7 +602,7 @@ class MultiTurnPhase1Pipeline:
                 skipped += 1
                 continue
 
-            logger.info("[%d/%d] Processing %s (difficulty=%s)", i, total, record_id, record.get("difficulty",""))
+            logger.info("[%d/%d] Processing %s (difficulty=%s)", i, total, record_id, record.get("difficulty", ""))
             ehr_summary       = record["ehr_summary"]
             question          = record["question"]
             options           = record["options"]
@@ -575,72 +611,27 @@ class MultiTurnPhase1Pipeline:
             simulator_context = record["simulator_context"]
             difficulty        = record.get("difficulty", "")
 
-            # ── Turn 0 ────────────────────────────────────────────────────
-            turn0 = self._turn_0(ehr_summary, question, options)
-            if turn0 is None or turn0.get("_blocked"):
+            result = self._run_conversation(ehr_summary, question, options, simulator_context)
+
+            if result is None or result.get("_blocked"):
                 self._append_row({f: "" for f in PHASE1_MULTITURN_FIELDS} | {
                     "id": record_id, "ehr_summary": ehr_summary, "question": question,
                     "difficulty": difficulty, "correct_option": correct_option,
                     "correct_answer": correct_answer,
-                    "preliminary_assessment": "BLOCKED",
-                    "was_blocked": True,
-                    "finish_reason": (turn0 or {}).get("_reason", "PARSE_ERROR"),
+                    "preliminary_assessment": "BLOCKED" if result and result.get("_blocked") else "PARSE_ERROR",
+                    "was_blocked": bool(result and result.get("_blocked")),
+                    "finish_reason": "SAFETY" if result and result.get("_blocked") else "PARSE_ERROR",
                     "provider": self._provider.provider_name,
                     "model_id": self._provider.model_name,
                 })
                 failed += 1
                 continue
 
-            prelim      = str(turn0["preliminary_assessment"]).strip().upper()
-            prelim_conf = int(turn0["confidence"])
-            cqs         = [str(turn0["clarifying_question"]).strip()]
-            assessments = [prelim]
-            confidences = [prelim_conf]
-            sim_responses: list[str] = []
+            cqs           = result["cqs"]
+            assessments   = result["assessments"]
+            confidences   = result["confidences"]
+            sim_responses = result["sim_responses"]
 
-            logger.info("  Prelim=%s(conf=%d) CQ1=%s", prelim, prelim_conf, cqs[0][:80])
-            time.sleep(self._request_interval)
-
-            # ── Clarification rounds ───────────────────────────────────────
-            failed_mid = False
-            for turn_idx in range(1, self._n_turns + 1):
-                sim_resp = self._simulator.answer(cqs[turn_idx - 1], simulator_context)
-                sim_responses.append(sim_resp)
-                logger.info("  Sim[%d]: %s", turn_idx, sim_resp[:80])
-                time.sleep(self._request_interval)
-
-                history = list(zip(cqs, sim_responses))
-
-                if turn_idx < self._n_turns:
-                    result = self._continuation_turn(ehr_summary, question, options, history)
-                    if result is None or result.get("_blocked"):
-                        failed_mid = True
-                        break
-                    upd = str(result["updated_assessment"]).strip().upper()
-                    conf = int(result["confidence"])
-                    next_cq = str(result["clarifying_question"]).strip()
-                    assessments.append(upd)
-                    confidences.append(conf)
-                    cqs.append(next_cq)
-                    logger.info("  Turn%d=%s(conf=%d) CQ%d=%s", turn_idx, upd, conf, turn_idx + 1, next_cq[:80])
-                else:
-                    result = self._final_turn(ehr_summary, question, options, history)
-                    if result is None or result.get("_blocked"):
-                        failed_mid = True
-                        break
-                    final = str(result["updated_assessment"]).strip().upper()
-                    final_conf = int(result["updated_confidence"])
-                    assessments.append(final)
-                    confidences.append(final_conf)
-                    logger.info("  Final=%s(conf=%d)", final, final_conf)
-
-                time.sleep(self._request_interval)
-
-            if failed_mid:
-                failed += 1
-                continue
-
-            # ── Build and write row ────────────────────────────────────────
             def is_correct(letter: str) -> bool:
                 return letter == correct_option.upper()
 
@@ -651,9 +642,9 @@ class MultiTurnPhase1Pipeline:
                 "difficulty": difficulty,
                 "correct_option": correct_option,
                 "correct_answer": correct_answer,
-                "preliminary_assessment":  assessments[0],
-                "preliminary_confidence":  confidences[0],
-                "is_correct_preliminary":  is_correct(assessments[0]),
+                "preliminary_assessment": assessments[0],
+                "preliminary_confidence": confidences[0],
+                "is_correct_preliminary": is_correct(assessments[0]),
                 "cq_1": cqs[0],
                 "patient_response_1": sim_responses[0],
                 "assessment_1":  assessments[1],
@@ -669,10 +660,10 @@ class MultiTurnPhase1Pipeline:
                 "final_assessment":  assessments[3],
                 "final_confidence":  confidences[3],
                 "is_correct_final":  is_correct(assessments[3]),
-                "provider":     self._provider.provider_name,
-                "model_id":     self._provider.model_name,
+                "provider":      self._provider.provider_name,
+                "model_id":      self._provider.model_name,
                 "finish_reason": "STOP",
-                "was_blocked":  False,
+                "was_blocked":   False,
             }
             self._append_row(row)
             processed_ids.add(record_id)

@@ -8,9 +8,9 @@ GEMINI_API_VERSION = "v1beta"
 
 # ── Request settings ───────────────────────────────────────────────────────
 TEMPERATURE        = 0.0
-REQUEST_INTERVAL   = 3.0    # seconds between API calls (rate-limit courtesy)
+REQUEST_INTERVAL   = 1.0    # seconds between API calls (rate-limit courtesy)
 MAX_RETRIES        = 6
-MAX_OUTPUT_TOKENS  = 1024
+MAX_OUTPUT_TOKENS  = 4096
 
 # ── Experiment defaults ────────────────────────────────────────────────────
 N_RECORDS          = 20

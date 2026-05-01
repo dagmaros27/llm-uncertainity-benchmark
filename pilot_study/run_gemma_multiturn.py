@@ -2,7 +2,7 @@
 
 Clinician model  : gemma-3-12b-it  (GemmaProvider)
 Simulator model  : gemini-2.5-flash (GeminiProvider)
-Judge model      : gemini-2.5-flash (unchanged — run separately)
+Judge model      : gemini-3.1-pro-preview (run separately via run_gemma_judge.py)
 
 Usage:
     python run_gemma_multiturn.py

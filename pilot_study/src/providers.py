@@ -1,7 +1,12 @@
-"""LLM provider abstraction: LLMProvider ABC + GeminiProvider.
+"""LLM provider abstraction: LLMProvider ABC + GeminiProvider + GemmaProvider.
 
 To add a new provider (e.g. a local Ollama model), subclass LLMProvider
 and implement `call`, `provider_name`, and `model_name`.
+
+GemmaProvider wraps Gemma models served through the Gemini API.
+Gemma does not support system_instruction or JSON mode, so this provider:
+  - Prepends the system instruction as a prefix to the first user turn
+  - Returns raw text (JSON parsing is handled downstream by parse_json_response)
 """
 
 from __future__ import annotations
@@ -223,4 +228,110 @@ class GeminiProvider(LLMProvider):
         if model_response.was_blocked:
             raise SafetyBlockError(f"Response blocked: finish_reason={model_response.finish_reason}")
         logger.debug("call_multiturn — %d turns in context", len(contents))
+        return model_response.text
+
+
+# ── Gemma (via Gemini API) ─────────────────────────────────────────────────
+
+class GemmaProvider(GeminiProvider):
+    """Gemma models accessed through the Google Gemini API.
+
+    Limitations vs GeminiProvider:
+      - system_instruction is NOT supported — it is prepended to the first user
+        turn as a plain text prefix instead.
+      - JSON mode (response_mime_type / response_schema) is NOT supported —
+        the model is instructed via prompt to return JSON, and the raw text is
+        returned for downstream parsing by parse_json_response().
+    """
+
+    @property
+    def provider_name(self) -> str:
+        return "gemma"
+
+    @tenacity.retry(
+        wait=tenacity.wait_exponential(multiplier=2, min=4, max=60),
+        stop=tenacity.stop_after_attempt(6),
+        retry=tenacity.retry_if_not_exception_type(SafetyBlockError),
+        before_sleep=lambda rs: logger.warning(
+            "Gemma retry — sleeping %.0fs (attempt %d)",
+            rs.next_action.sleep if rs.next_action else 0,
+            rs.attempt_number,
+        ),
+        reraise=True,
+    )
+    def call(
+        self,
+        system_instruction: str,
+        user_message: str,
+        temperature: float = 0.0,
+        max_tokens: int = 512,
+        expect_json: Union[bool, types.Schema] = False,
+    ) -> str:
+        """Single-turn call. system_instruction is prepended to user_message."""
+        combined = f"{system_instruction.strip()}\n\n{user_message.strip()}"
+        response = self._client.models.generate_content(
+            model=self._model_id,
+            contents=combined,
+            config=types.GenerateContentConfig(
+                temperature=temperature,
+                max_output_tokens=max_tokens,
+                top_p=0.95,
+            ),
+        )
+        model_response = extract_non_thinking_text(response)
+        if model_response.was_blocked:
+            raise SafetyBlockError(f"Response blocked: finish_reason={model_response.finish_reason}")
+        return model_response.text
+
+    @tenacity.retry(
+        wait=tenacity.wait_exponential(multiplier=2, min=4, max=60),
+        stop=tenacity.stop_after_attempt(6),
+        retry=tenacity.retry_if_not_exception_type(SafetyBlockError),
+        before_sleep=lambda rs: logger.warning(
+            "Gemma multi-turn retry — sleeping %.0fs (attempt %d)",
+            rs.next_action.sleep if rs.next_action else 0,
+            rs.attempt_number,
+        ),
+        reraise=True,
+    )
+    def call_multiturn(
+        self,
+        system_instruction: str,
+        contents: list[dict],
+        temperature: float = 0.0,
+        max_tokens: int = 512,
+        expect_json: Union[bool, types.Schema] = False,
+    ) -> str:
+        """Multi-turn call. system_instruction is prepended to the LAST user turn.
+
+        Gemma does not support a system turn, so the instruction is injected
+        as a prefix to the final user message in the conversation (the one that
+        requests the model's next response).
+        """
+        if not contents:
+            raise ValueError("contents must not be empty")
+
+        # Build Content objects; prepend instruction to the last user turn
+        content_objects: list[types.Content] = []
+        for idx, c in enumerate(contents):
+            text = c["text"]
+            if idx == len(contents) - 1 and c["role"] == "user" and system_instruction:
+                text = f"{system_instruction.strip()}\n\n{text}"
+            content_objects.append(
+                types.Content(role=c["role"], parts=[types.Part(text=text)])
+            )
+
+        response = self._client.models.generate_content(
+            model=self._model_id,
+            contents=content_objects,
+            config=types.GenerateContentConfig(
+                temperature=temperature,
+                max_output_tokens=max_tokens,
+                top_p=0.95,
+            ),
+        )
+        model_response = extract_non_thinking_text(response)
+        if model_response.was_blocked:
+            raise SafetyBlockError(f"Response blocked: finish_reason={model_response.finish_reason}")
+        logger.debug("Gemma call_multiturn — %d turns in context", len(contents))
         return model_response.text

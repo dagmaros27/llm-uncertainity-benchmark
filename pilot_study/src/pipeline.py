@@ -176,18 +176,21 @@ class Phase1Pipeline:
         instruction_file: Path,
         output_csv: Path,
         request_interval: float = REQUEST_INTERVAL,
+        simulator_provider: Optional[LLMProvider] = None,
     ) -> None:
         if not instruction_file.exists():
             raise FileNotFoundError(f"Instruction file not found: {instruction_file}")
         self._instruction = instruction_file.read_text(encoding="utf-8").strip()
         self._provider = provider
-        self._simulator = PatientSimulator(provider)
+        self._simulator = PatientSimulator(simulator_provider or provider)
         self._output_csv = output_csv
         self._request_interval = request_interval
         self._output_csv.parent.mkdir(parents=True, exist_ok=True)
+        sim_prov = simulator_provider or provider
         logger.info(
-            "Phase1Pipeline ready — provider=%s model=%s output=%s",
-            provider.provider_name, provider.model_name, output_csv,
+            "Phase1Pipeline ready — clinician=%s/%s simulator=%s/%s output=%s",
+            provider.provider_name, provider.model_name,
+            sim_prov.provider_name, sim_prov.model_name, output_csv,
         )
 
     def _load_processed_ids(self) -> set[str]:
@@ -423,6 +426,7 @@ class MultiTurnPhase1Pipeline:
         output_csv: Path,
         n_turns: int = N_CQ_TURNS,
         request_interval: float = REQUEST_INTERVAL,
+        simulator_provider: Optional[LLMProvider] = None,
     ) -> None:
         if not instruction_file.exists():
             raise FileNotFoundError(f"Instruction file not found: {instruction_file}")
@@ -431,14 +435,16 @@ class MultiTurnPhase1Pipeline:
         self._instruction = instruction_file.read_text(encoding="utf-8").strip()
         self._continuation_instruction = continuation_instruction_file.read_text(encoding="utf-8").strip()
         self._provider = provider
-        self._simulator = PatientSimulator(provider)
+        self._simulator = PatientSimulator(simulator_provider or provider)
         self._output_csv = output_csv
         self._n_turns = n_turns
         self._request_interval = request_interval
         self._output_csv.parent.mkdir(parents=True, exist_ok=True)
+        sim_prov = simulator_provider or provider
         logger.info(
-            "MultiTurnPhase1Pipeline ready — provider=%s model=%s n_turns=%d output=%s",
-            provider.provider_name, provider.model_name, n_turns, output_csv,
+            "MultiTurnPhase1Pipeline ready — clinician=%s/%s simulator=%s/%s n_turns=%d output=%s",
+            provider.provider_name, provider.model_name,
+            sim_prov.provider_name, sim_prov.model_name, n_turns, output_csv,
         )
 
     def _load_processed_ids(self) -> set[str]:

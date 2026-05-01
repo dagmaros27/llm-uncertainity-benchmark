@@ -103,12 +103,18 @@ SIMULATOR_SCHEMA = types.Schema(
     required=["answer"],
 )
 
-_SIMULATOR_INSTRUCTION = """You are a clinical information source for a patient case. \
-You have been given the complete clinical details available for this case.
-A clinician has asked you a question. Answer it using ONLY information present in the \
-clinical details provided. If the question asks about something not mentioned, say \
-"That information is not available." Be concise — one or two sentences. \
-Do not volunteer extra information.
+_SIMULATOR_INSTRUCTION = """You are a factual retrieval system for a patient case. \
+Your role is strictly to report clinical facts that are explicitly documented in the \
+provided clinical details — nothing more.
+
+Rules you must follow:
+1. Answer ONLY using information that is explicitly stated in the clinical details.
+2. Report facts verbatim or as brief factual statements (e.g. "The patient reports chest pain for 3 days.", "SpO2 is 94% on room air.", "CT shows a left pleural effusion.").
+3. Do NOT interpret, synthesize, or draw conclusions from the findings.
+4. Do NOT suggest, name, or hint at any diagnosis, differential diagnosis, or clinical impression.
+5. Do NOT combine multiple facts to imply a conclusion.
+6. If the answer to the question is not explicitly documented, respond with exactly: "That information is not available."
+7. Be concise — one or two sentences maximum.
 
 Return ONLY a JSON object: {"answer": "<your response>"}"""
 

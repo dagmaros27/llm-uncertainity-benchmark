@@ -110,6 +110,99 @@ def extract_non_thinking_text(response) -> ModelResponse:
     return ModelResponse(text=text, finish_reason=finish_reason)
 
 
+# ── Simulator context cleaning ─────────────────────────────────────────────
+
+# Section headers that contain diagnostic conclusions and must be stripped.
+# Handles patterns like:
+#   **Summary Statement:**   ### Summary/Impression   **Diagnosis:**
+#   ### Summary/Diagnosis    **Summary/Clinical Reasoning:**   etc.
+_CONCLUSION_HEADER_RE = re.compile(
+    r"^\s*(?:#{1,4}\s*)?"               # optional markdown heading (###)
+    r"(?:\*\*)?"                          # optional bold open  (**)
+    r"(?:"
+    r"Summary(?:\s*(?:Statement|Table|and\s+Diagnostic\s+Reasoning"
+    r"|/\s*(?:Impression|Diagnosis|Clinical\s+Reasoning|Assessment)))?"
+    r"|(?:Final\s+)?(?:Assessment|Diagnosis|Impression|Interpretation|Conclusion)"
+    r"(?:\s*\([^)]*\))?"                  # optional parenthetical
+    r")"
+    r"(?:\*\*)?"                          # optional bold close (**)
+    r"[:\s*]*$",                          # trailing :  **  whitespace (handles :** )
+    re.IGNORECASE,
+)
+
+# Inline patterns that state a conclusion (line-level or sentence-level).
+# These are applied WITHIN sections that are otherwise kept.
+_DIAG_INLINE_RES = [
+    # **Diagnosis:** … or **Diagnosis** … lines (bold label, with or without **)
+    # handles both "**Diagnosis:**" and "**Diagnosis:** text" and "- **Diagnosis:**"
+    re.compile(
+        r"^[^\S\r\n]*(?:[-*]\s*)?\*\*Diagnosis[^*\n]*(?:\*\*)?[:\s].*$",
+        re.IGNORECASE | re.MULTILINE,
+    ),
+    # Bare "Diagnosis:" lines (no bold markers)
+    re.compile(
+        r"^[^\S\r\n]*(?:[-*]\s*)?Diagnosis\s*:.*$",
+        re.IGNORECASE | re.MULTILINE,
+    ),
+    # "- **Best next step:**" and similar treatment-hint lines
+    re.compile(
+        r"^[^\S\r\n]*(?:[-*]\s*)?\*\*(?:Best next step|Treatment|Management)[^*\n]*\*\*[:\s].*$",
+        re.IGNORECASE | re.MULTILINE,
+    ),
+    # Sentences containing explicit conclusion language
+    re.compile(
+        r"[^.\n]*\b(?:"
+        r"most consistent with"
+        r"|consistent with a diagnosis of"
+        r"|The findings are consistent with"
+        r"|most likely (?:represents?|diagnosis is)"
+        r"|findings are most consistent"
+        r")[^.\n]*\.",
+        re.IGNORECASE,
+    ),
+]
+
+
+def clean_simulator_context(text: str) -> str:
+    """Strip diagnostic conclusions and summary sections from a context string.
+
+    Designed to turn LLM-generated clinical contexts into a strict
+    information-retrieval source — like a RAG document — that contains only
+    observable clinical facts (symptoms, vitals, labs, imaging findings) and
+    no interpretive conclusions or diagnoses.
+
+    Two passes:
+    1. Drop entire sections whose header matches a conclusion keyword
+       (Summary Statement, Diagnosis, Assessment, Impression, …).
+    2. Remove individual lines / sentences within kept sections that
+       explicitly state a diagnostic conclusion.
+    """
+    if not text:
+        return text
+
+    # ── Pass 1: strip entire conclusion sections ───────────────────────────
+    # Sections are delimited by lines consisting solely of dashes (---)
+    parts = re.split(r"\n(?:-{3,})\n", text)
+    kept_parts: list[str] = []
+    for part in parts:
+        stripped = part.strip()
+        if not stripped:
+            continue
+        first_line = stripped.splitlines()[0].strip()
+        if _CONCLUSION_HEADER_RE.match(first_line):
+            continue  # drop this section entirely
+        kept_parts.append(part)
+    text = "\n---\n".join(kept_parts)
+
+    # ── Pass 2: strip inline diagnostic lines / sentences ─────────────────
+    for pattern in _DIAG_INLINE_RES:
+        text = pattern.sub("", text)
+
+    # Tidy up excess blank lines left by removals
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()
+
+
 # ── Domain helpers ─────────────────────────────────────────────────────────
 
 def is_assessment_correct(assessment: str, correct_text: str) -> bool:

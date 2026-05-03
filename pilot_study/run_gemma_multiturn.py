@@ -1,7 +1,7 @@
 """Run Phase 1 multi-turn experiment with Gemma clinician + Gemini simulator.
 
 Clinician model  : gemma-3-12b-it  (GemmaProvider)
-Simulator model  : gemini-2.5-flash (GeminiProvider)
+Simulator model  : see config.SIMULATOR_MODEL_ID (GeminiProvider)
 Judge model      : gemini-3.1-pro-preview (run separately via run_gemma_judge.py)
 
 Usage:
@@ -25,10 +25,10 @@ ROOT = Path(__file__).parent.resolve()
 sys.path.insert(0, str(ROOT))
 
 # ── Config ────────────────────────────────────────────────────────────────────
+from config import SIMULATOR_MODEL_ID, N_CQ_TURNS, REQUEST_INTERVAL as _CFG_INTERVAL
+
 DATASET             = "medqa"
 CLINICIAN_MODEL_ID  = "gemma-3-12b-it"
-SIMULATOR_MODEL_ID  = "gemini-2.5-flash"
-N_CQ_TURNS          = 3
 
 DATASETS_DIR        = ROOT / "datasets" / DATASET
 PROMPTS_DIR         = ROOT / "prompts"  / DATASET
@@ -39,7 +39,7 @@ INSTRUCTION_FILE    = PROMPTS_DIR  / "phase1_instruction.txt"
 CONTINUATION_FILE   = PROMPTS_DIR  / "phase1_continuation_instruction.txt"
 OUTPUT_CSV          = OUTPUTS_DIR  / "phase1_multiturn_results.csv"
 
-REQUEST_INTERVAL    = 1.0
+REQUEST_INTERVAL    = _CFG_INTERVAL
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 logging.basicConfig(

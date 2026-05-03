@@ -3,8 +3,13 @@
 # ═══════════════════════════════════════════════════════════════════════════
 
 # ── Model ──────────────────────────────────────────────────────────────────
-GEMINI_MODEL_ID    = "gemini-2.5-flash"
+GEMINI_MODEL_ID    = "gemini-2.5-flash"      # clinician model (gemini experiments)
 GEMINI_API_VERSION = "v1beta"
+
+# ── Shared infrastructure models (constant across all experiments) ──────────
+# Change these two to swap judge/simulator for every script and notebook at once.
+JUDGE_MODEL_ID     = "gemini-3.1-pro-preview"  # 98.5% CLAMBER accuracy vs 94.5% flash
+SIMULATOR_MODEL_ID = "gemini-3.1-pro-preview"  # patient responder
 
 # ── Request settings ───────────────────────────────────────────────────────
 TEMPERATURE        = 0.0

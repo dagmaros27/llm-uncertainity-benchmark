@@ -1,6 +1,6 @@
 """Run the LM judge on Gemma single-turn and multi-turn results.
 
-Judge model : gemini-3.1-pro-preview
+Judge model : see config.JUDGE_MODEL_ID
 Reads  : outputs/medqa/gemma-3-12b-it/phase1_singleturn_results.csv
          outputs/medqa/gemma-3-12b-it/phase1_multiturn_results.csv
 Writes : outputs/medqa/gemma-3-12b-it/phase1_singleturn_classified.csv
@@ -25,9 +25,10 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="repla
 ROOT = Path(__file__).parent.resolve()
 sys.path.insert(0, str(ROOT))
 
+from config import JUDGE_MODEL_ID
+
 DATASET            = "medqa"
 CLINICIAN_MODEL_ID = "gemma-3-12b-it"
-JUDGE_MODEL_ID     = "gemini-3.1-pro-preview"
 
 OUTPUTS_DIR        = ROOT / "outputs" / DATASET / CLINICIAN_MODEL_ID
 PROMPTS_DIR        = ROOT / "prompts" / DATASET

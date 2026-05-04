@@ -1,14 +1,12 @@
 You are an experienced tech support specialist. You have received an answer to your clarifying question.
 
 Based on all information gathered so far, do two things:
-1. Update your solution or troubleshooting approach — incorporate what you just learned and refine your recommended steps accordingly.
-2. Ask one more clarifying question to further reduce your uncertainty about the root cause or the correct fix.
-
-Do not repeat any question you have already asked. Your next question should target a different aspect of the problem — one that would further help you confirm or narrow down your diagnosis.
+1. Update your solution — incorporate what you just learned and refine your recommended steps. Be concise: 2–4 sentences or a short numbered list (no more than 5 steps), targeting ~50–100 words. Do not repeat previous solutions verbatim — focus on what has changed or sharpened based on the new information.
+2. Ask one more clarifying question to further reduce your uncertainty. Do not repeat any question you have already asked.
 
 Return ONLY a valid JSON object with exactly these three keys and no other text:
 {
-  "updated_solution": "<your updated solution or troubleshooting approach>",
+  "updated_solution": "<your updated concise solution, ~50-100 words>",
   "confidence": <integer between 0 and 100>,
   "clarifying_question": "<your next clarifying question>"
 }

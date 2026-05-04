@@ -1,0 +1,101 @@
+id,clarifying_question
+msd_001,Can you still find Microsoft Solitaire in your Start Menu or by searching for it on your computer?
+msd_002,Are you referring to the desktop calculator application or the full-screen app from the Start screen?
+msd_003,Have you tried resetting the Bing News app data or reinstalling the app from the Windows Store since the issue began?
+msd_004,"Has there been any recent software installation, update (Windows or Office), or new Excel add-in enabled on your system?"
+msd_005,Have you tried creating a new user account and attempting to launch 'Back up your computer' from the Control Panel while logged into that new account?
+msd_006,"Are you using a VPN, proxy server, or any specific network security software that might be interfering with Skype's connection, especially since you've changed locations?"
+msd_007,"Are you using multiple monitors, or have you recently changed your display setup (e.g., disconnected an external monitor or projector)?"
+msd_008,"Does this page reloading issue occur only when you try to copy content on YouTube, or does it happen on other websites in Microsoft Edge as well?"
+msd_009,Is the last argument of your VLOOKUP function set to FALSE for an exact match?
+msd_010,"Could you please tell me where exactly you saw the promise for the Amazon gift card when creating your Hotmail account (e.g., a specific website, email, or advertisement)?"
+msd_011,"Have you tried updating your Windows 10 operating system and Microsoft Edge browser to the latest available versions, and does the issue persist after the updates?"
+msd_012,"Are you using the standard 'Sort & Filter' function from the Data tab, or are you attempting to sort using a different method, such as a macro or a specific table feature?"
+msd_013,"When did this issue with ComboBoxes start occurring, and did it coincide with any specific update to Office for Mac or your macOS version?"
+msd_014,"Are you encountering any issues or inconsistencies when using the method you've described, or are you primarily seeking confirmation that this is the standard approach?"
+msd_015,"Does the high memory usage begin immediately when you open the Calculator app, or does it gradually increase over time while the app is running, especially in the background?"
+msd_016,"Does clicking on any other web link (e.g., in an email or document) successfully open a web browser?"
+msd_017,"Which web browser are you using (e.g., Microsoft Edge, Chrome, Firefox) and does this issue occur in other browsers as well?"
+msd_018,"When you right-click an icon and 'Properties' cannot be selected, is the 'Properties' option greyed out in the context menu, or does clicking it simply do nothing?"
+msd_019,Does the issue with Bing Video search persist if you try accessing it from a different web browser or in a private browsing window in Firefox?
+msd_020,Have you checked PowerPoint's preferences or account settings to see if OneDrive is listed as a connected service or default save location?
+msd_021,"Are you open to using Camtasia Studio 7 to record your screen and webcam, or do you specifically need to achieve this effect directly within PowerPoint 2010?"
+msd_022,"For the mean, are you looking to highlight only cells with the exact calculated average, or values that are closest to it if an exact match isn't present?"
+msd_023,"Is the PowerPoint file stored locally on your computer, on a network drive, or in a cloud storage service like OneDrive or SharePoint?"
+msd_024,Could you please tell me what graphics card (GPU) your computer has and if its drivers are up to date?
+msd_025,"Are you using the official Bing Wallpaper application, Windows Spotlight, or another method to set the Bing Daily Photo as your background?"
+msd_026,"Are you currently experiencing issues receiving calls on Skype, or are you simply asking about the general functionality of calling via email?"
+msd_027,"How are you currently integrating your SQL data with Bing Maps (e.g., specific API, SDK, or a third-party tool)?"
+msd_028,Does the crashing behavior persist if you disconnect your external monitors and use PowerPoint only on your MacBook's built-in display?
+msd_029,Are you looking for the Bing app to be available in a specific country or language?
+msd_030,"Are you referring to the PowerPoint 'Status Bar' that typically shows the slide number, zoom slider, and view options at the very bottom of the PowerPoint window?"
+msd_031,Could you please confirm the exact Skype Name or Microsoft account email you are currently logged in with on the new Skype app?
+msd_032,"Have you tried clearing your browser's cache and cookies in Firefox, or does this inconsistent behavior also occur if you try Bing Image Search in a different web browser?"
+msd_033,"When you try to open Word, does it display any error messages, crash reports, or does nothing happen at all?"
+msd_034,Are you actively logged into the Skype app on your Android device and is your device connected to the internet when these calls are being made?
+msd_035,"Does this video playback issue occur on other websites (e.g., YouTube, Netflix) when using Microsoft Edge, or is it specific to MSN and similar news sites?"
+msd_036,Have you confirmed that the Thanksgiving 2x points offer has been explicitly activated on your Microsoft Rewards dashboard?
+msd_037,"Are your parents typing 'amazon.com' into the address bar of their web browser, or specifically into the search box on the Bing homepage?"
+msd_038,Have you already tried running Disk Cleanup and specifically selected the 'Clean up system files' option to remove old Windows Update files?
+msd_039,Are you currently signed into your Microsoft account when you are using Bing Maps?
+msd_040,"From which row should the search for the first non-'NO' value in column AJ begin, or should it always start from row 1?"
+msd_041,"Are the line breaks within your Excel cells created using Alt+Enter, or are they simply text wrapping within a single cell?"
+msd_042,Does this issue persist if you try to open PowerPoint in Safe Mode or after creating a new user profile on your Mac?
+msd_043,"Did you use the 'Package Presentation for CD' feature in PowerPoint 2016, or did you manually copy the .pptx file and the .mp3 files to the memory stick?"
+msd_044,Have you tried pressing Ctrl+Alt+Del at the login screen to see if it brings up a different login prompt or options?
+msd_045,"Could you describe the 'line, highlight, border' more precisely? For example, is it a thin line, a colored highlight, or a full cell border, and does it appear on the active cell, row, or column?"
+msd_046,"Are you looking to have two separate users actively using the computer simultaneously, one locally and one remotely from your phone, without interfering with each other's work?"
+msd_047,Have you explored the in-app settings for options to customize sounds and the main screen layout?
+msd_048,"Could you describe the exact steps you take to 'split a single row into multiple columns' within your table, including which cells you select before performing the action?"
+msd_049,Are your Skype contacts visible when you log into Skype on a different device or via the web browser at web.skype.com?
+msd_050,Are you looking for a keyboard shortcut or a specific button within the slideshow view to reset the current slide's animations?
+msd_051,Does the vibration feature work in any other games or controller test applications on your Windows 10 PC?
+msd_052,"Does this 'BT ad' only appear when you're using your web browser, or does it also pop up when you're trying to use other apps that require internet access?"
+msd_053,"Are you intentionally using a proxy server on your network, or is your computer connected directly to the internet?"
+msd_054,Could you please provide the exact error message you see when Skype fails to start?
+msd_055,"What specific error or unexpected result did you get when you tried using VLOOKUP, and could you provide the exact formula you used?"
+msd_056,Could you please provide the exact version and build number of PowerPoint 2016 on both your desktop and laptop? You can find this by going to File > Account > About PowerPoint.
+msd_057,"Have you recently adjusted your display scaling settings (e.g., to 125%, 150%, or higher) or are you using a high-resolution monitor?"
+msd_058,"Are you looking for a setting that applies to all newly created tabs, or specifically for links that open in a new tab?"
+msd_059,"On each individual unit worksheet (e.g., 'Box A'), is there a specific, consistent cell (e.g., A1, B5, or a named range) where you want the total quantity from your new summary sheet to be linked?"
+msd_060,"Does the microphone work correctly in other applications on your Samsung Galaxy S6, such as the default voice recorder or during a regular phone call?"
+msd_061,"Are you trying to convert the JPG into editable vector shapes (where you can modify individual lines and curves), or are you looking to apply artistic effects to make it appear more like a drawing?"
+msd_062,"When you say 'not getting any voice,' do you mean you cannot hear the person you are calling, they cannot hear you, or neither of you can hear each other?"
+msd_063,"Does your microphone work correctly in other applications on your iPhone 6, such as voice memos or video calls?"
+msd_064,"Does iTunes display any error messages or codes before it stops responding, or does it simply hang indefinitely after clicking the icon?"
+msd_065,Have you already explored the 'Feedback' or 'Report a problem' options available directly within the Bing Maps interface?
+msd_066,"What version of Excel are you currently using (e.g., Excel 365, Excel 2019, Excel 2016)?"
+msd_067,"Are you trying to submit the URLs of specific pages on your website (e.g., a blog post, a product page, or a category page), or are you asking about submitting a sitemap?"
+msd_068,Have you tried performing a System Restore to a point before you deleted the Temp and Start Menu folders?
+msd_069,Could you describe the exact steps you take to add a source to Bing News in Windows 8?
+msd_070,Is the Excel application window currently maximized?
+msd_071,"Are you referring to Adobe Flash Player used within Microsoft Edge/Internet Explorer, or a separate installation of Flash Player for another web browser like Chrome or Firefox?"
+msd_072,"Do the blank tiles show any loading indicators, error messages, or are they just completely empty where stock information should be?"
+msd_073,"When you insert the DOB field into your Word document, are you inserting it directly or using any specific field codes?"
+msd_074,Is this a personal Outlook.com account or a work/school account managed by an organization?
+msd_075,"Do other apps or system notifications produce sound on your Surface 2, or is the issue specific to email notifications?"
+msd_076,"Does the issue persist if you manually set a specific city as your primary location within the app, rather than relying on automatic location detection?"
+msd_077,Is the existing PowerPoint instance running under the same user account as the application attempting to create the object?
+msd_078,Could you please tell me the name of the specific app that is displaying this error message?
+msd_079,"What specific type of measurement are you trying to perform (e.g., distance, area, elevation)?"
+msd_080,"What application are you using to open these downloaded documents, and what are their file extensions (e.g., .pdf, .docx)?"
+msd_081,Is your Windows 7 product key an OEM key (pre-installed by the computer manufacturer) or a retail key (purchased separately)?
+msd_082,"Are the custom audio instructions embedded directly into the PowerPoint file, or are they linked from an external file?"
+msd_083,"When you observe that both 'Duplicate' and 'Copy+Paste' place objects in the 'same place,' are you referring to duplicating individual objects or entire slides?"
+msd_084,"Has your girlfriend already created a Bing Rewards account and started accumulating points, or has she only installed the app?"
+msd_085,"After uninstalling update KB4034674, did Microsoft Edge start working again, or did the issue persist?"
+msd_086,"When you visited account.microsoft.com/family, did you confirm that your account is not listed as a child in any family group, or that you are the organizer of your own family group?"
+msd_087,"What 'Reference type' are you selecting in the 'Insert Cross-reference' window (e.g., Numbered item, Heading, Bookmark)?"
+msd_088,"When dialing, are you including the full international dialing code (e.g., +44 for UK, +33 for France) and omitting any leading zero from the local number?"
+msd_089,"When the COUNTIF formula 'will not work' for the last 20% of your data, what specific value or error does it display (e.g., 0, #VALUE!, #N/A)?"
+msd_090,Could you please tell me the exact name and version of the 'old Digital suite software' you are currently using?
+msd_091,Could you tell me which specific Bing app or website you are using to manage your favorite cities?
+msd_092,"Does this issue occur in all Excel workbooks, including newly created ones, or only in specific existing spreadsheets?"
+msd_093,What specific error message or prompt do you receive when you try to refresh the data connection in Excel?
+msd_094,Does the file size also increase significantly if you manually adjust the brightness and temperature of a few pictures using the Picture Format pane and then save the presentation?
+msd_095,"Does this issue occur when trying to insert a hyperlink in a brand new, blank PowerPoint presentation, or only with existing files?"
+msd_096,"Does this issue occur with other PowerPoint presentations, or only this specific 91-slide presentation?"
+msd_097,"Are you currently logging into your previous Skype version with a Microsoft account (e.g., Outlook.com, Hotmail.com) or a legacy Skype Name?"
+msd_098,"Were you previously able to use this exact Outlook email address on USAA and Nextdoor without issues, or have you recently changed your email address or its domain?"
+msd_099,"When you say 'same meaning words,' are you looking for near-exact matches with minor variations (like singular/plural or slight rephrasing), or do you need to identify titles that convey the same general topic even if the wording is significantly different?"
+msd_100,"Are you encountering this issue when searching directly on the Bing Maps website, or when using a Bing Maps API within your company's application?"

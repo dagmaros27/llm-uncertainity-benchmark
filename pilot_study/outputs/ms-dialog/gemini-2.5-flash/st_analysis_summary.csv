@@ -1,0 +1,101 @@
+id,category,preliminary_confidence,updated_confidence,clarifying_question,conf_delta,cq_type
+msd_001,Windows_8.1,95,95,Can you still find Microsoft Solitaire in your Start Menu or by searching for it on your computer?,0,EPISTEMIC
+msd_002,Windows_8.1,90,95,Are you referring to the desktop calculator application or the full-screen app from the Start screen?,5,EPISTEMIC
+msd_003,Bing_Apps,75,90,Have you tried resetting the Bing News app data or reinstalling the app from the Windows Store since the issue began?,15,EPISTEMIC
+msd_004,Excel,75,80,"Has there been any recent software installation, update (Windows or Office), or new Excel add-in enabled on your system?",5,EPISTEMIC
+msd_005,Windows_7,75,85,Have you tried creating a new user account and attempting to launch 'Back up your computer' from the Control Panel while logged into that new account?,10,EPISTEMIC
+msd_006,Skype_Windows_Desktop,80,90,"Are you using a VPN, proxy server, or any specific network security software that might be interfering with Skype's connection, especially since you've changed locations?",10,EPISTEMIC
+msd_007,Windows_10,75,90,"Are you using multiple monitors, or have you recently changed your display setup (e.g., disconnected an external monitor or projector)?",15,EPISTEMIC
+msd_008,Apps_Windows_10,65,90,"Does this page reloading issue occur only when you try to copy content on YouTube, or does it happen on other websites in Microsoft Edge as well?",25,EPISTEMIC
+msd_009,Excel,90,95,Is the last argument of your VLOOKUP function set to FALSE for an exact match?,5,EPISTEMIC
+msd_010,Bing,60,100,"Could you please tell me where exactly you saw the promise for the Amazon gift card when creating your Hotmail account (e.g., a specific website, email, or advertisement)?",40,EPISTEMIC
+msd_011,Apps_Windows_10,80,90,"Have you tried updating your Windows 10 operating system and Microsoft Edge browser to the latest available versions, and does the issue persist after the updates?",10,EPISTEMIC
+msd_012,Excel,60,90,"Are you using the standard 'Sort & Filter' function from the Data tab, or are you attempting to sort using a different method, such as a macro or a specific table feature?",30,EPISTEMIC
+msd_013,Word,85,90,"When did this issue with ComboBoxes start occurring, and did it coincide with any specific update to Office for Mac or your macOS version?",5,EPISTEMIC
+msd_014,Word,95,100,"Are you encountering any issues or inconsistencies when using the method you've described, or are you primarily seeking confirmation that this is the standard approach?",5,ALEATORIC
+msd_015,Apps_Windows_10,75,90,"Does the high memory usage begin immediately when you open the Calculator app, or does it gradually increase over time while the app is running, especially in the background?",15,EPISTEMIC
+msd_016,Bing_Search,85,90,"Does clicking on any other web link (e.g., in an email or document) successfully open a web browser?",5,EPISTEMIC
+msd_017,Bing_Search,75,85,"Which web browser are you using (e.g., Microsoft Edge, Chrome, Firefox) and does this issue occur in other browsers as well?",10,EPISTEMIC
+msd_018,Windows_10,65,95,"When you right-click an icon and 'Properties' cannot be selected, is the 'Properties' option greyed out in the context menu, or does clicking it simply do nothing?",30,EPISTEMIC
+msd_019,Bing,75,90,Does the issue with Bing Video search persist if you try accessing it from a different web browser or in a private browsing window in Firefox?,15,EPISTEMIC
+msd_020,PowerPoint,85,90,Have you checked PowerPoint's preferences or account settings to see if OneDrive is listed as a connected service or default save location?,5,EPISTEMIC
+msd_021,PowerPoint,90,95,"Are you open to using Camtasia Studio 7 to record your screen and webcam, or do you specifically need to achieve this effect directly within PowerPoint 2010?",5,ALEATORIC
+msd_022,Excel,90,95,"For the mean, are you looking to highlight only cells with the exact calculated average, or values that are closest to it if an exact match isn't present?",5,ALEATORIC
+msd_023,PowerPoint,70,75,"Is the PowerPoint file stored locally on your computer, on a network drive, or in a cloud storage service like OneDrive or SharePoint?",5,EPISTEMIC
+msd_024,Windows_8.1,80,90,Could you please tell me what graphics card (GPU) your computer has and if its drivers are up to date?,10,EPISTEMIC
+msd_025,Bing,85,90,"Are you using the official Bing Wallpaper application, Windows Spotlight, or another method to set the Bing Daily Photo as your background?",5,EPISTEMIC
+msd_026,Skype_Windows_10,95,95,"Are you currently experiencing issues receiving calls on Skype, or are you simply asking about the general functionality of calling via email?",0,ALEATORIC
+msd_027,Bing_Maps,85,90,"How are you currently integrating your SQL data with Bing Maps (e.g., specific API, SDK, or a third-party tool)?",5,EPISTEMIC
+msd_028,PowerPoint,65,85,Does the crashing behavior persist if you disconnect your external monitors and use PowerPoint only on your MacBook's built-in display?,20,EPISTEMIC
+msd_029,Bing_Apps,90,90,Are you looking for the Bing app to be available in a specific country or language?,0,ALEATORIC
+msd_030,PowerPoint,85,95,"Are you referring to the PowerPoint 'Status Bar' that typically shows the slide number, zoom slider, and view options at the very bottom of the PowerPoint window?",10,ALEATORIC
+msd_031,Skype_iOS,90,90,Could you please confirm the exact Skype Name or Microsoft account email you are currently logged in with on the new Skype app?,0,EPISTEMIC
+msd_032,Bing_Search,75,90,"Have you tried clearing your browser's cache and cookies in Firefox, or does this inconsistent behavior also occur if you try Bing Image Search in a different web browser?",15,EPISTEMIC
+msd_033,Word,75,90,"When you try to open Word, does it display any error messages, crash reports, or does nothing happen at all?",15,EPISTEMIC
+msd_034,Skype_Android,75,90,Are you actively logged into the Skype app on your Android device and is your device connected to the internet when these calls are being made?,15,EPISTEMIC
+msd_035,Apps_Windows_10,85,85,"Does this video playback issue occur on other websites (e.g., YouTube, Netflix) when using Microsoft Edge, or is it specific to MSN and similar news sites?",0,EPISTEMIC
+msd_036,Bing_Search,80,95,Have you confirmed that the Thanksgiving 2x points offer has been explicitly activated on your Microsoft Rewards dashboard?,15,EPISTEMIC
+msd_037,Bing,95,95,"Are your parents typing 'amazon.com' into the address bar of their web browser, or specifically into the search box on the Bing homepage?",0,EPISTEMIC
+msd_038,Windows_RT_8.1,90,90,Have you already tried running Disk Cleanup and specifically selected the 'Clean up system files' option to remove old Windows Update files?,0,EPISTEMIC
+msd_039,Bing_Maps,85,95,Are you currently signed into your Microsoft account when you are using Bing Maps?,10,EPISTEMIC
+msd_040,Excel,90,95,"From which row should the search for the first non-'NO' value in column AJ begin, or should it always start from row 1?",5,ALEATORIC
+msd_041,PowerPoint,90,95,"Are the line breaks within your Excel cells created using Alt+Enter, or are they simply text wrapping within a single cell?",5,EPISTEMIC
+msd_042,PowerPoint,70,90,Does this issue persist if you try to open PowerPoint in Safe Mode or after creating a new user profile on your Mac?,20,EPISTEMIC
+msd_043,PowerPoint,85,90,"Did you use the 'Package Presentation for CD' feature in PowerPoint 2016, or did you manually copy the .pptx file and the .mp3 files to the memory stick?",5,EPISTEMIC
+msd_044,Windows_8.1,75,85,Have you tried pressing Ctrl+Alt+Del at the login screen to see if it brings up a different login prompt or options?,10,EPISTEMIC
+msd_045,Excel,75,80,"Could you describe the 'line, highlight, border' more precisely? For example, is it a thin line, a colored highlight, or a full cell border, and does it appear on the active cell, row, or column?",5,ALEATORIC
+msd_046,Windows_7,85,95,"Are you looking to have two separate users actively using the computer simultaneously, one locally and one remotely from your phone, without interfering with each other's work?",10,ALEATORIC
+msd_047,Skype_Android,65,95,Have you explored the in-app settings for options to customize sounds and the main screen layout?,30,EPISTEMIC
+msd_048,Word,65,85,"Could you describe the exact steps you take to 'split a single row into multiple columns' within your table, including which cells you select before performing the action?",20,EPISTEMIC
+msd_049,Skype_iOS,70,88,Are your Skype contacts visible when you log into Skype on a different device or via the web browser at web.skype.com?,18,EPISTEMIC
+msd_050,PowerPoint,90,95,Are you looking for a keyboard shortcut or a specific button within the slideshow view to reset the current slide's animations?,5,ALEATORIC
+msd_051,Games_Windows_10,75,90,Does the vibration feature work in any other games or controller test applications on your Windows 10 PC?,15,EPISTEMIC
+msd_052,Bing_Search,65,85,"Does this 'BT ad' only appear when you're using your web browser, or does it also pop up when you're trying to use other apps that require internet access?",20,EPISTEMIC
+msd_053,Windows_10,75,90,"Are you intentionally using a proxy server on your network, or is your computer connected directly to the internet?",15,EPISTEMIC
+msd_054,Skype_Windows_Desktop,70,90,Could you please provide the exact error message you see when Skype fails to start?,20,EPISTEMIC
+msd_055,Excel,90,95,"What specific error or unexpected result did you get when you tried using VLOOKUP, and could you provide the exact formula you used?",5,EPISTEMIC
+msd_056,PowerPoint,75,100,Could you please provide the exact version and build number of PowerPoint 2016 on both your desktop and laptop? You can find this by going to File > Account > About PowerPoint.,25,EPISTEMIC
+msd_057,Word,85,90,"Have you recently adjusted your display scaling settings (e.g., to 125%, 150%, or higher) or are you using a high-resolution monitor?",5,EPISTEMIC
+msd_058,Apps_Windows_10,85,95,"Are you looking for a setting that applies to all newly created tabs, or specifically for links that open in a new tab?",10,ALEATORIC
+msd_059,Excel,75,95,"On each individual unit worksheet (e.g., 'Box A'), is there a specific, consistent cell (e.g., A1, B5, or a named range) where you want the total quantity from your new summary sheet to be linked?",20,ALEATORIC
+msd_060,Skype_Android,75,80,"Does the microphone work correctly in other applications on your Samsung Galaxy S6, such as the default voice recorder or during a regular phone call?",5,EPISTEMIC
+msd_061,PowerPoint,90,95,"Are you trying to convert the JPG into editable vector shapes (where you can modify individual lines and curves), or are you looking to apply artistic effects to make it appear more like a drawing?",5,ALEATORIC
+msd_062,Skype_iOS,65,85,"When you say 'not getting any voice,' do you mean you cannot hear the person you are calling, they cannot hear you, or neither of you can hear each other?",20,ALEATORIC
+msd_063,Skype_iOS,80,90,"Does your microphone work correctly in other applications on your iPhone 6, such as voice memos or video calls?",10,EPISTEMIC
+msd_064,Windows_7,65,85,"Does iTunes display any error messages or codes before it stops responding, or does it simply hang indefinitely after clicking the icon?",20,EPISTEMIC
+msd_065,Bing_Maps,95,90,Have you already explored the 'Feedback' or 'Report a problem' options available directly within the Bing Maps interface?,-5,EPISTEMIC
+msd_066,Excel,85,80,"What version of Excel are you currently using (e.g., Excel 365, Excel 2019, Excel 2016)?",-5,EPISTEMIC
+msd_067,Bing,90,95,"Are you trying to submit the URLs of specific pages on your website (e.g., a blog post, a product page, or a category page), or are you asking about submitting a sitemap?",5,ALEATORIC
+msd_068,Windows_8.1,75,95,Have you tried performing a System Restore to a point before you deleted the Temp and Start Menu folders?,20,EPISTEMIC
+msd_069,Bing_Apps,70,85,Could you describe the exact steps you take to add a source to Bing News in Windows 8?,15,EPISTEMIC
+msd_070,Excel,95,95,Is the Excel application window currently maximized?,0,EPISTEMIC
+msd_071,Windows_10,95,95,"Are you referring to Adobe Flash Player used within Microsoft Edge/Internet Explorer, or a separate installation of Flash Player for another web browser like Chrome or Firefox?",0,EPISTEMIC
+msd_072,Windows_RT_8.1,65,85,"Do the blank tiles show any loading indicators, error messages, or are they just completely empty where stock information should be?",20,EPISTEMIC
+msd_073,Word,90,95,"When you insert the DOB field into your Word document, are you inserting it directly or using any specific field codes?",5,EPISTEMIC
+msd_074,Outlook_Email,70,90,Is this a personal Outlook.com account or a work/school account managed by an organization?,20,EPISTEMIC
+msd_075,Windows_RT_8.1,75,95,"Do other apps or system notifications produce sound on your Surface 2, or is the issue specific to email notifications?",20,EPISTEMIC
+msd_076,Bing_Apps,75,80,"Does the issue persist if you manually set a specific city as your primary location within the app, rather than relying on automatic location detection?",5,EPISTEMIC
+msd_077,PowerPoint,75,90,Is the existing PowerPoint instance running under the same user account as the application attempting to create the object?,15,EPISTEMIC
+msd_078,Apps_Windows_10,85,80,Could you please tell me the name of the specific app that is displaying this error message?,-5,EPISTEMIC
+msd_079,Bing_Maps,90,95,"What specific type of measurement are you trying to perform (e.g., distance, area, elevation)?",5,ALEATORIC
+msd_080,Bing,90,90,"What application are you using to open these downloaded documents, and what are their file extensions (e.g., .pdf, .docx)?",0,EPISTEMIC
+msd_081,Windows_7,85,90,Is your Windows 7 product key an OEM key (pre-installed by the computer manufacturer) or a retail key (purchased separately)?,5,EPISTEMIC
+msd_082,PowerPoint,75,95,"Are the custom audio instructions embedded directly into the PowerPoint file, or are they linked from an external file?",20,EPISTEMIC
+msd_083,PowerPoint,90,95,"When you observe that both 'Duplicate' and 'Copy+Paste' place objects in the 'same place,' are you referring to duplicating individual objects or entire slides?",5,ALEATORIC
+msd_084,Bing_Apps,65,90,"Has your girlfriend already created a Bing Rewards account and started accumulating points, or has she only installed the app?",25,EPISTEMIC
+msd_085,Apps_Windows_10,70,90,"After uninstalling update KB4034674, did Microsoft Edge start working again, or did the issue persist?",20,EPISTEMIC
+msd_086,Skype_iOS,75,90,"When you visited account.microsoft.com/family, did you confirm that your account is not listed as a child in any family group, or that you are the organizer of your own family group?",15,EPISTEMIC
+msd_087,Word,80,95,"What 'Reference type' are you selecting in the 'Insert Cross-reference' window (e.g., Numbered item, Heading, Bookmark)?",15,EPISTEMIC
+msd_088,Skype_Mac,75,95,"When dialing, are you including the full international dialing code (e.g., +44 for UK, +33 for France) and omitting any leading zero from the local number?",20,EPISTEMIC
+msd_089,Excel,75,90,"When the COUNTIF formula 'will not work' for the last 20% of your data, what specific value or error does it display (e.g., 0, #VALUE!, #N/A)?",15,EPISTEMIC
+msd_090,Apps_Windows_10,85,95,Could you please tell me the exact name and version of the 'old Digital suite software' you are currently using?,10,EPISTEMIC
+msd_091,Bing_Apps,90,95,Could you tell me which specific Bing app or website you are using to manage your favorite cities?,5,EPISTEMIC
+msd_092,Excel,75,90,"Does this issue occur in all Excel workbooks, including newly created ones, or only in specific existing spreadsheets?",15,EPISTEMIC
+msd_093,Excel,85,85,What specific error message or prompt do you receive when you try to refresh the data connection in Excel?,0,EPISTEMIC
+msd_094,PowerPoint,85,95,Does the file size also increase significantly if you manually adjust the brightness and temperature of a few pictures using the Picture Format pane and then save the presentation?,10,EPISTEMIC
+msd_095,PowerPoint,75,90,"Does this issue occur when trying to insert a hyperlink in a brand new, blank PowerPoint presentation, or only with existing files?",15,EPISTEMIC
+msd_096,PowerPoint,75,85,"Does this issue occur with other PowerPoint presentations, or only this specific 91-slide presentation?",10,EPISTEMIC
+msd_097,Skype_Windows_10,90,95,"Are you currently logging into your previous Skype version with a Microsoft account (e.g., Outlook.com, Hotmail.com) or a legacy Skype Name?",5,EPISTEMIC
+msd_098,Outlook_Email,65,80,"Were you previously able to use this exact Outlook email address on USAA and Nextdoor without issues, or have you recently changed your email address or its domain?",15,EPISTEMIC
+msd_099,Excel,75,90,"When you say 'same meaning words,' are you looking for near-exact matches with minor variations (like singular/plural or slight rephrasing), or do you need to identify titles that convey the same general topic even if the wording is significantly different?",15,ALEATORIC
+msd_100,Bing_Maps,80,90,"Are you encountering this issue when searching directly on the Bing Maps website, or when using a Bing Maps API within your company's application?",10,EPISTEMIC

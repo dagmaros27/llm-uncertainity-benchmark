@@ -174,7 +174,15 @@ def run_judge_for_model(model_id: str, judge, FewShotExample, CSVBatchClassifier
     ).run()
     logger.info("Multi-turn judge complete → %s", mt_output)
 
+    # Re-join turn number from input CSV so analysis can group by turn
     clf_mt = pd.read_csv(mt_output)
+    turn_map = pd.read_csv(mt_input)[["id", "turn", "clarifying_question"]]
+    q_col = "question" if "question" in clf_mt.columns else "clarifying_question"
+    clf_mt = clf_mt.merge(
+        turn_map.rename(columns={"clarifying_question": q_col}),
+        on=["id", q_col], how="left",
+    )
+    clf_mt.to_csv(mt_output, index=False)
     logger.info("Multi-turn label distribution:\n%s", clf_mt["label"].value_counts().to_string())
 
 

@@ -774,13 +774,13 @@ Return ONLY a JSON object: {"answer": "<your response as the user>"}"""
 _MSDIALOG_FINAL_INSTRUCTION = """You are an experienced tech support specialist. \
 You have now gathered all the information you need from the user.
 
-Based on everything you know about the user's problem, provide your final, definitive solution. \
-Be specific and actionable — give the user concrete steps to follow in plain language. \
-If multiple steps are needed, list them clearly.
+Provide your final, definitive solution. Be concise and direct: 2–4 sentences or a short \
+numbered list (no more than 5 steps), targeting ~50–100 words — matching the length of a \
+typical forum support reply. Do not pad with preamble, explanations of root cause, or disclaimers.
 
 Return ONLY a valid JSON object:
 {
-  "final_solution": "<your complete, actionable solution>",
+  "final_solution": "<your concise, actionable solution, ~50-100 words>",
   "confidence": <integer 0-100>
 }"""
 
@@ -803,7 +803,7 @@ class UserSimulator:
                 system_instruction=_USER_SIMULATOR_INSTRUCTION,
                 user_message=user_message,
                 temperature=0.0,
-                max_tokens=5000,
+                max_tokens=1000,
                 expect_json=SIMULATOR_SCHEMA,
             )
         except SafetyBlockError:
@@ -882,7 +882,7 @@ class MsDialogPhase1Pipeline:
                 system_instruction=self._instruction,
                 user_message=_format_problem(title, category, original_question),
                 temperature=0.0,
-                max_tokens=5000,
+                max_tokens=3000,
                 expect_json=MSDIALOG_TURN_0_SCHEMA,
             )
         except SafetyBlockError as exc:
@@ -915,7 +915,7 @@ class MsDialogPhase1Pipeline:
                 system_instruction=_MSDIALOG_FINAL_INSTRUCTION,
                 user_message=user_message,
                 temperature=0.0,
-                max_tokens=5000,
+                max_tokens=3000,
                 expect_json=MSDIALOG_FINAL_SCHEMA,
             )
         except SafetyBlockError as exc:
@@ -1112,7 +1112,7 @@ class MsDialogMultiTurnPhase1Pipeline:
                 system_instruction=self._instruction,
                 contents=contents,
                 temperature=0.0,
-                max_tokens=5000,
+                max_tokens=3000,
                 expect_json=MSDIALOG_TURN_0_SCHEMA,
             )
         except SafetyBlockError:
@@ -1151,7 +1151,7 @@ class MsDialogMultiTurnPhase1Pipeline:
                         system_instruction=self._continuation_instruction,
                         contents=contents,
                         temperature=0.0,
-                        max_tokens=5000,
+                        max_tokens=3000,
                         expect_json=MSDIALOG_CONTINUATION_SCHEMA,
                     )
                 except SafetyBlockError:
@@ -1179,7 +1179,7 @@ class MsDialogMultiTurnPhase1Pipeline:
                         system_instruction=_MSDIALOG_FINAL_INSTRUCTION,
                         contents=contents,
                         temperature=0.0,
-                        max_tokens=5000,
+                        max_tokens=3000,
                         expect_json=MSDIALOG_FINAL_SCHEMA,
                     )
                 except SafetyBlockError:

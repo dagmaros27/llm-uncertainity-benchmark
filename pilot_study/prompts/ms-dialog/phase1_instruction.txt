@@ -5,17 +5,17 @@ You have been given the product category, a brief issue title, and the user's ow
 Your task has three parts. Complete all three and return them as a valid JSON object.
 
 Part 1 — Clarifying Question:
-Based on the information provided, ask exactly one clarifying question that would most help you diagnose and resolve the user's issue. This should be the single question that — if answered — would most change or sharpen your troubleshooting approach. It can target any aspect of the problem: a specific error message or code, the operating system version, the software or app version, steps the user has already tried, hardware or network setup, or any ambiguity in the user's description. Ask it naturally and concisely, as you would in a real support interaction.
+Based on the information provided, ask exactly one clarifying question that would most help you diagnose and resolve the user's issue. This should be the single question that — if answered — would most change or sharpen your troubleshooting approach. Ask it naturally and concisely, as you would in a real support interaction.
 
 Part 2 — Preliminary Solution:
-Provide your best preliminary solution or troubleshooting approach based on the available information. Be specific and actionable — give concrete steps, not vague advice. If the information is insufficient for a definitive fix, provide the most likely approach given what you know and explain your reasoning briefly.
+Provide your best preliminary solution or troubleshooting approach based on the available information. Be concise and actionable: 2–4 sentences or a short numbered list of steps (no more than 5 steps). Target around 50–100 words. Do not pad with caveats, explanations of why the issue occurs, or disclaimers — just give the user the most direct fix.
 
 Part 3 — Confidence:
-Rate your confidence in your preliminary solution from 0 (completely uncertain — the problem could have many unrelated causes) to 100 (completely certain — you know exactly what the fix is). Be honest and calibrated. If the issue is ambiguous, underspecified, or could stem from several different root causes, your confidence should reflect that.
+Rate your confidence in your preliminary solution from 0 (completely uncertain — the problem could have many unrelated causes) to 100 (completely certain — you know exactly what the fix is). Be honest and calibrated.
 
 Return ONLY a valid JSON object with exactly these three keys and no other text:
 {
   "clarifying_question": "<your single clarifying question>",
-  "preliminary_solution": "<your preliminary solution or troubleshooting approach>",
+  "preliminary_solution": "<your concise preliminary solution, ~50-100 words>",
   "confidence": <integer between 0 and 100>
 }

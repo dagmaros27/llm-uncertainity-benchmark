@@ -3,8 +3,9 @@
 # ═══════════════════════════════════════════════════════════════════════════
 
 # ── Model ──────────────────────────────────────────────────────────────────
-GEMINI_MODEL_ID    = "gemini-2.5-flash"      # clinician model (gemini experiments)
-GEMINI_API_VERSION = "v1beta"
+GEMINI_MODEL_ID         = "gemini-2.5-flash"          # MedQA clinician model
+MSDIALOG_GEMINI_MODEL_ID = "gemini-2.5-flash"         # MS-Dialog clinician model (update to preview ID here)
+GEMINI_API_VERSION      = "v1beta"
 
 # ── Shared infrastructure models (constant across all experiments) ──────────
 # Change these two to swap judge/simulator for every script and notebook at once.
@@ -21,6 +22,58 @@ MAX_OUTPUT_TOKENS  = 4096
 N_RECORDS          = 20
 RANDOM_SEED        = 42
 N_CQ_TURNS         = 3   # number of clarifying question rounds in multi-turn pipeline
+
+# ── MS-Dialog Phase 1 CSV output schemas ──────────────────────────────────
+
+MSDIALOG_PHASE1_FIELDS = [
+    "id",
+    "title",
+    "category",
+    "original_question",
+    "clarifying_question",
+    "cq_type",               # filled by LLM judge
+    "user_response",         # simulated from synthesised context
+    "preliminary_solution",
+    "preliminary_confidence",
+    "updated_solution",
+    "updated_confidence",
+    "accepted_answer",       # ground truth for semantic evaluator
+    "provider",
+    "model_id",
+    "finish_reason",
+    "was_blocked",
+]
+
+MSDIALOG_PHASE1_MULTITURN_FIELDS = [
+    "id",
+    "title",
+    "category",
+    "original_question",
+    # Turn 0 — model sees problem, no history
+    "preliminary_solution",
+    "preliminary_confidence",
+    # Turn 1
+    "cq_1",
+    "user_response_1",
+    "solution_1",
+    "confidence_1",
+    # Turn 2
+    "cq_2",
+    "user_response_2",
+    "solution_2",
+    "confidence_2",
+    # Turn 3 — final
+    "cq_3",
+    "user_response_3",
+    "final_solution",
+    "final_confidence",
+    # Ground truth & metadata
+    "accepted_answer",
+    "provider",
+    "model_id",
+    "finish_reason",
+    "was_blocked",
+]
 
 # ── Phase 1 single-turn CSV output schema ─────────────────────────────────
 PHASE1_FIELDS = [

@@ -29,7 +29,11 @@ from .utils import (
     format_answer_choices,
     parse_json_response,
 )
-from config import PHASE1_FIELDS, PHASE1_MULTITURN_FIELDS, N_CQ_TURNS, REQUEST_INTERVAL
+from config import (
+    PHASE1_FIELDS, PHASE1_MULTITURN_FIELDS,
+    MSDIALOG_PHASE1_FIELDS, MSDIALOG_PHASE1_MULTITURN_FIELDS,
+    N_CQ_TURNS, REQUEST_INTERVAL,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -686,3 +690,591 @@ class MultiTurnPhase1Pipeline:
             total, succeeded, skipped, failed,
         )
         logger.info("Results saved to: %s", self._output_csv)
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# MS-Dialog Pipeline
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# Key differences from MedQA:
+#   • No MCQ options — solutions are free-text
+#   • Ground truth is accepted_answer text (semantic eval done separately)
+#   • No difficulty field; records have title + category
+#   • UserSimulator plays a non-technical user, not a clinical information source
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── MS-Dialog JSON schemas ─────────────────────────────────────────────────
+
+MSDIALOG_TURN_0_SCHEMA = types.Schema(
+    type=types.Type.OBJECT,
+    properties={
+        "clarifying_question": types.Schema(
+            type=types.Type.STRING,
+            description="One clarifying question that would most help diagnose the user's issue.",
+        ),
+        "preliminary_solution": types.Schema(
+            type=types.Type.STRING,
+            description="Best current troubleshooting approach or solution given available information.",
+        ),
+        "confidence": types.Schema(
+            type=types.Type.INTEGER,
+            description="Confidence in the preliminary solution from 0 (no idea) to 100 (certain).",
+        ),
+    },
+    required=["clarifying_question", "preliminary_solution", "confidence"],
+)
+
+MSDIALOG_CONTINUATION_SCHEMA = types.Schema(
+    type=types.Type.OBJECT,
+    properties={
+        "updated_solution": types.Schema(
+            type=types.Type.STRING,
+            description="Updated troubleshooting approach incorporating the new information.",
+        ),
+        "confidence": types.Schema(
+            type=types.Type.INTEGER,
+            description="Updated confidence from 0 to 100.",
+        ),
+        "clarifying_question": types.Schema(
+            type=types.Type.STRING,
+            description="Next clarifying question — must differ from all previous questions.",
+        ),
+    },
+    required=["updated_solution", "confidence", "clarifying_question"],
+)
+
+MSDIALOG_FINAL_SCHEMA = types.Schema(
+    type=types.Type.OBJECT,
+    properties={
+        "final_solution": types.Schema(
+            type=types.Type.STRING,
+            description="Complete, actionable final solution based on all gathered information.",
+        ),
+        "confidence": types.Schema(
+            type=types.Type.INTEGER,
+            description="Final confidence from 0 to 100.",
+        ),
+    },
+    required=["final_solution", "confidence"],
+)
+
+_USER_SIMULATOR_INSTRUCTION = """You are playing the role of a user who has submitted a tech support request. \
+You have a specific technical problem and you are responding to a support specialist's question.
+
+Answer based ONLY on the documented details of your situation. Follow these rules:
+1. Respond naturally as a non-technical user — use plain, everyday language.
+2. Answer ONLY what the question asks — do not volunteer extra information.
+3. Do NOT reveal the solution to your problem or anything the support agent suggested.
+4. If the question asks about something not mentioned in your situation summary, say: \
+"I'm not sure about that" or "I haven't checked."
+5. Be concise — two or three sentences maximum.
+
+Return ONLY a JSON object: {"answer": "<your response as the user>"}"""
+
+_MSDIALOG_FINAL_INSTRUCTION = """You are an experienced tech support specialist. \
+You have now gathered all the information you need from the user.
+
+Based on everything you know about the user's problem, provide your final, definitive solution. \
+Be specific and actionable — give the user concrete steps to follow in plain language. \
+If multiple steps are needed, list them clearly.
+
+Return ONLY a valid JSON object:
+{
+  "final_solution": "<your complete, actionable solution>",
+  "confidence": <integer 0-100>
+}"""
+
+
+# ── User Simulator ─────────────────────────────────────────────────────────
+
+class UserSimulator:
+    """Simulates a tech-support user answering a CQ from the synthesised situation summary."""
+
+    def __init__(self, provider: LLMProvider) -> None:
+        self._provider = provider
+
+    def answer(self, clarifying_question: str, simulator_context: str) -> str:
+        user_message = (
+            f"Your situation summary:\n{simulator_context.strip()}\n\n"
+            f"Support specialist's question:\n{clarifying_question.strip()}"
+        )
+        try:
+            raw = self._provider.call(
+                system_instruction=_USER_SIMULATOR_INSTRUCTION,
+                user_message=user_message,
+                temperature=0.0,
+                max_tokens=5000,
+                expect_json=SIMULATOR_SCHEMA,
+            )
+        except SafetyBlockError:
+            logger.warning("User simulator blocked by safety filter.")
+            return "I'm not sure about that."
+
+        parsed = parse_json_response(raw)
+        if parsed and "answer" in parsed:
+            return str(parsed["answer"]).strip()
+
+        import re as _re
+        match = _re.search(r'"answer"\s*:\s*"([^"]+)"', raw)
+        return match.group(1) if match else "I'm not sure about that."
+
+
+def _format_problem(title: str, category: str, original_question: str) -> str:
+    """Format the user's problem as the model's input message."""
+    return (
+        f"Product category: {category}\n"
+        f"Issue title: {title}\n\n"
+        f"User's problem description:\n{original_question.strip()}"
+    )
+
+
+# ── MS-Dialog Single-Turn Pipeline ────────────────────────────────────────
+
+class MsDialogPhase1Pipeline:
+    """Single-turn pipeline for MS-Dialog: one CQ round then updated solution."""
+
+    def __init__(
+        self,
+        provider: LLMProvider,
+        instruction_file: Path,
+        output_csv: Path,
+        request_interval: float = REQUEST_INTERVAL,
+        simulator_provider: Optional[LLMProvider] = None,
+    ) -> None:
+        if not instruction_file.exists():
+            raise FileNotFoundError(f"Instruction file not found: {instruction_file}")
+        self._instruction = instruction_file.read_text(encoding="utf-8").strip()
+        self._provider = provider
+        self._simulator = UserSimulator(simulator_provider or provider)
+        self._output_csv = output_csv
+        self._request_interval = request_interval
+        self._output_csv.parent.mkdir(parents=True, exist_ok=True)
+        sim_prov = simulator_provider or provider
+        logger.info(
+            "MsDialogPhase1Pipeline ready — specialist=%s/%s simulator=%s/%s output=%s",
+            provider.provider_name, provider.model_name,
+            sim_prov.provider_name, sim_prov.model_name, output_csv,
+        )
+
+    def _load_processed_ids(self) -> set[str]:
+        processed: set[str] = set()
+        if not self._output_csv.exists():
+            return processed
+        with self._output_csv.open("r", encoding="utf-8", newline="") as fh:
+            for row in csv.DictReader(fh):
+                if row.get("id"):
+                    processed.add(row["id"])
+        logger.info("Resumability: %d records already processed.", len(processed))
+        return processed
+
+    def _write_header_if_needed(self) -> None:
+        if not self._output_csv.exists():
+            with self._output_csv.open("w", encoding="utf-8", newline="") as fh:
+                csv.DictWriter(fh, fieldnames=MSDIALOG_PHASE1_FIELDS).writeheader()
+
+    def _append_row(self, row: dict) -> None:
+        with self._output_csv.open("a", encoding="utf-8", newline="") as fh:
+            csv.DictWriter(fh, fieldnames=MSDIALOG_PHASE1_FIELDS).writerow(row)
+
+    def _turn_0(self, title: str, category: str, original_question: str) -> Optional[dict]:
+        try:
+            raw = self._provider.call(
+                system_instruction=self._instruction,
+                user_message=_format_problem(title, category, original_question),
+                temperature=0.0,
+                max_tokens=5000,
+                expect_json=MSDIALOG_TURN_0_SCHEMA,
+            )
+        except SafetyBlockError as exc:
+            return {"_blocked": True, "_reason": str(exc)}
+        parsed = parse_json_response(raw)
+        if parsed is None:
+            logger.error("Turn 0 JSON parse failed. Raw: %.300s", raw)
+            return None
+        if not {"clarifying_question", "preliminary_solution", "confidence"}.issubset(parsed.keys()):
+            logger.error("Turn 0 missing keys. Got: %s", list(parsed.keys()))
+            return None
+        return parsed
+
+    def _turn_1(
+        self,
+        title: str,
+        category: str,
+        original_question: str,
+        clarifying_question: str,
+        user_response: str,
+    ) -> Optional[dict]:
+        user_message = (
+            f"{_format_problem(title, category, original_question)}\n\n"
+            f"Your clarifying question:\n{clarifying_question.strip()}\n\n"
+            f"User's answer:\n{user_response.strip()}\n\n"
+            f"Based on this additional information, provide your updated solution."
+        )
+        try:
+            raw = self._provider.call(
+                system_instruction=_MSDIALOG_FINAL_INSTRUCTION,
+                user_message=user_message,
+                temperature=0.0,
+                max_tokens=5000,
+                expect_json=MSDIALOG_FINAL_SCHEMA,
+            )
+        except SafetyBlockError as exc:
+            return {"_blocked": True, "_reason": str(exc)}
+        parsed = parse_json_response(raw)
+        if parsed is None:
+            logger.error("Turn 1 JSON parse failed. Raw: %.300s", raw)
+            return None
+        if not {"final_solution", "confidence"}.issubset(parsed.keys()):
+            logger.error("Turn 1 missing keys. Got: %s", list(parsed.keys()))
+            return None
+        return parsed
+
+    def run(self, records: list[dict]) -> None:
+        processed_ids = self._load_processed_ids()
+        self._write_header_if_needed()
+        total = len(records)
+        succeeded = skipped = failed = 0
+
+        for i, record in enumerate(records, start=1):
+            record_id = record.get("id") or record.get("case_id")
+            if record_id in processed_ids:
+                logger.info("[%d/%d] SKIP — %s already done.", i, total, record_id)
+                skipped += 1
+                continue
+
+            title             = record["title"]
+            category          = record["category"]
+            original_question = record["original_question"]
+            simulator_context = record["simulator_context"]
+            accepted_answer   = record["accepted_answer"]
+
+            logger.info("[%d/%d] Processing %s (%s)", i, total, record_id, category)
+
+            turn0 = self._turn_0(title, category, original_question)
+            if turn0 is None:
+                failed += 1
+                continue
+
+            if turn0.get("_blocked"):
+                self._append_row({
+                    "id": record_id, "title": title, "category": category,
+                    "original_question": original_question,
+                    "clarifying_question": "BLOCKED", "cq_type": "",
+                    "user_response": "", "preliminary_solution": "BLOCKED",
+                    "preliminary_confidence": -1, "updated_solution": "BLOCKED",
+                    "updated_confidence": -1, "accepted_answer": accepted_answer,
+                    "provider": self._provider.provider_name,
+                    "model_id": self._provider.model_name,
+                    "finish_reason": turn0.get("_reason", "SAFETY"),
+                    "was_blocked": True,
+                })
+                processed_ids.add(record_id)
+                failed += 1
+                continue
+
+            cq          = str(turn0["clarifying_question"]).strip()
+            prelim_sol  = str(turn0["preliminary_solution"]).strip()
+            prelim_conf = int(turn0["confidence"])
+            logger.info("  CQ: %s", cq[:100])
+            logger.info("  Prelim conf=%d", prelim_conf)
+            time.sleep(self._request_interval)
+
+            user_response = self._simulator.answer(cq, simulator_context)
+            logger.info("  User: %s", user_response[:100])
+            time.sleep(self._request_interval)
+
+            turn1 = self._turn_1(title, category, original_question, cq, user_response)
+            if turn1 is None:
+                failed += 1
+                continue
+
+            if turn1.get("_blocked"):
+                self._append_row({
+                    "id": record_id, "title": title, "category": category,
+                    "original_question": original_question,
+                    "clarifying_question": cq, "cq_type": "",
+                    "user_response": user_response,
+                    "preliminary_solution": prelim_sol,
+                    "preliminary_confidence": prelim_conf,
+                    "updated_solution": "BLOCKED", "updated_confidence": -1,
+                    "accepted_answer": accepted_answer,
+                    "provider": self._provider.provider_name,
+                    "model_id": self._provider.model_name,
+                    "finish_reason": turn1.get("_reason", "SAFETY"),
+                    "was_blocked": True,
+                })
+                processed_ids.add(record_id)
+                failed += 1
+                continue
+
+            updated_sol  = str(turn1["final_solution"]).strip()
+            updated_conf = int(turn1["confidence"])
+            logger.info("  Updated conf=%d", updated_conf)
+
+            self._append_row({
+                "id": record_id, "title": title, "category": category,
+                "original_question": original_question,
+                "clarifying_question": cq, "cq_type": "",
+                "user_response": user_response,
+                "preliminary_solution": prelim_sol,
+                "preliminary_confidence": prelim_conf,
+                "updated_solution": updated_sol,
+                "updated_confidence": updated_conf,
+                "accepted_answer": accepted_answer,
+                "provider": self._provider.provider_name,
+                "model_id": self._provider.model_name,
+                "finish_reason": "STOP",
+                "was_blocked": False,
+            })
+            processed_ids.add(record_id)
+            succeeded += 1
+            time.sleep(self._request_interval)
+
+        logger.info(
+            "MsDialog Phase1 complete — total=%d succeeded=%d skipped=%d failed=%d",
+            total, succeeded, skipped, failed,
+        )
+
+
+# ── MS-Dialog Multi-Turn Pipeline ─────────────────────────────────────────
+
+class MsDialogMultiTurnPhase1Pipeline:
+    """Three-round clarifying-question pipeline for MS-Dialog.
+
+    Turn 0 : model sees problem → preliminary_solution + CQ1 + confidence
+    Turn 1–2: model sees history → updated_solution + CQ + confidence
+    Turn 3 : model sees full history → final_solution + confidence (no more CQs)
+    """
+
+    def __init__(
+        self,
+        provider: LLMProvider,
+        instruction_file: Path,
+        continuation_instruction_file: Path,
+        output_csv: Path,
+        n_turns: int = N_CQ_TURNS,
+        request_interval: float = REQUEST_INTERVAL,
+        simulator_provider: Optional[LLMProvider] = None,
+    ) -> None:
+        if not instruction_file.exists():
+            raise FileNotFoundError(f"Instruction file not found: {instruction_file}")
+        if not continuation_instruction_file.exists():
+            raise FileNotFoundError(f"Continuation instruction not found: {continuation_instruction_file}")
+        self._instruction = instruction_file.read_text(encoding="utf-8").strip()
+        self._continuation_instruction = continuation_instruction_file.read_text(encoding="utf-8").strip()
+        self._provider = provider
+        self._simulator = UserSimulator(simulator_provider or provider)
+        self._output_csv = output_csv
+        self._n_turns = n_turns
+        self._request_interval = request_interval
+        self._output_csv.parent.mkdir(parents=True, exist_ok=True)
+        sim_prov = simulator_provider or provider
+        logger.info(
+            "MsDialogMultiTurnPhase1Pipeline ready — specialist=%s/%s simulator=%s/%s n_turns=%d",
+            provider.provider_name, provider.model_name,
+            sim_prov.provider_name, sim_prov.model_name, n_turns,
+        )
+
+    def _load_processed_ids(self) -> set[str]:
+        processed: set[str] = set()
+        if not self._output_csv.exists():
+            return processed
+        with self._output_csv.open("r", encoding="utf-8", newline="") as fh:
+            for row in csv.DictReader(fh):
+                if row.get("id"):
+                    processed.add(row["id"])
+        logger.info("Resumability: %d records already processed.", len(processed))
+        return processed
+
+    def _write_header_if_needed(self) -> None:
+        if not self._output_csv.exists():
+            with self._output_csv.open("w", encoding="utf-8", newline="") as fh:
+                csv.DictWriter(fh, fieldnames=MSDIALOG_PHASE1_MULTITURN_FIELDS).writeheader()
+
+    def _append_row(self, row: dict) -> None:
+        with self._output_csv.open("a", encoding="utf-8", newline="") as fh:
+            csv.DictWriter(fh, fieldnames=MSDIALOG_PHASE1_MULTITURN_FIELDS).writerow(row)
+
+    def _run_conversation(
+        self,
+        title: str,
+        category: str,
+        original_question: str,
+        simulator_context: str,
+    ) -> Optional[dict]:
+        """Full multi-turn conversation with role-alternating history."""
+        problem_text = _format_problem(title, category, original_question)
+        contents: list[dict] = [{"role": "user", "text": problem_text}]
+
+        # ── Turn 0 ────────────────────────────────────────────────────────
+        try:
+            raw0 = self._provider.call_multiturn(
+                system_instruction=self._instruction,
+                contents=contents,
+                temperature=0.0,
+                max_tokens=5000,
+                expect_json=MSDIALOG_TURN_0_SCHEMA,
+            )
+        except SafetyBlockError:
+            return {"_blocked": True}
+
+        parsed0 = parse_json_response(raw0)
+        if not parsed0 or not {"clarifying_question", "preliminary_solution", "confidence"}.issubset(parsed0.keys()):
+            logger.error("Turn 0 parse failed. Raw: %.300s", raw0)
+            return None
+
+        contents.append({"role": "model", "text": raw0})
+
+        prelim_sol  = str(parsed0["preliminary_solution"]).strip()
+        prelim_conf = int(parsed0["confidence"])
+        cqs         = [str(parsed0["clarifying_question"]).strip()]
+        solutions   = [prelim_sol]
+        confidences = [prelim_conf]
+        sim_responses: list[str] = []
+
+        logger.info("  Prelim conf=%d | CQ1: %s", prelim_conf, cqs[0][:80])
+        time.sleep(self._request_interval)
+
+        # ── Clarification rounds ───────────────────────────────────────────
+        for turn_idx in range(1, self._n_turns + 1):
+            sim_resp = self._simulator.answer(cqs[turn_idx - 1], simulator_context)
+            sim_responses.append(sim_resp)
+            logger.info("  User[%d]: %s", turn_idx, sim_resp[:80])
+            time.sleep(self._request_interval)
+
+            contents.append({"role": "user", "text": f"User's answer: {sim_resp}"})
+
+            if turn_idx < self._n_turns:
+                # ── Continuation turn ──────────────────────────────────────
+                try:
+                    raw_cont = self._provider.call_multiturn(
+                        system_instruction=self._continuation_instruction,
+                        contents=contents,
+                        temperature=0.0,
+                        max_tokens=5000,
+                        expect_json=MSDIALOG_CONTINUATION_SCHEMA,
+                    )
+                except SafetyBlockError:
+                    return {"_blocked": True}
+
+                parsed_cont = parse_json_response(raw_cont)
+                if not parsed_cont or not {"updated_solution", "confidence", "clarifying_question"}.issubset(parsed_cont.keys()):
+                    logger.error("Continuation turn %d parse failed. Raw: %.300s", turn_idx, raw_cont)
+                    return None
+
+                contents.append({"role": "model", "text": raw_cont})
+
+                upd_sol  = str(parsed_cont["updated_solution"]).strip()
+                conf     = int(parsed_cont["confidence"])
+                next_cq  = str(parsed_cont["clarifying_question"]).strip()
+                solutions.append(upd_sol)
+                confidences.append(conf)
+                cqs.append(next_cq)
+                logger.info("  Turn%d conf=%d | CQ%d: %s", turn_idx, conf, turn_idx + 1, next_cq[:80])
+
+            else:
+                # ── Final turn — commit to solution, no more CQs ───────────
+                try:
+                    raw_final = self._provider.call_multiturn(
+                        system_instruction=_MSDIALOG_FINAL_INSTRUCTION,
+                        contents=contents,
+                        temperature=0.0,
+                        max_tokens=5000,
+                        expect_json=MSDIALOG_FINAL_SCHEMA,
+                    )
+                except SafetyBlockError:
+                    return {"_blocked": True}
+
+                parsed_final = parse_json_response(raw_final)
+                if not parsed_final or not {"final_solution", "confidence"}.issubset(parsed_final.keys()):
+                    logger.error("Final turn parse failed. Raw: %.300s", raw_final)
+                    return None
+
+                final_sol  = str(parsed_final["final_solution"]).strip()
+                final_conf = int(parsed_final["confidence"])
+                solutions.append(final_sol)
+                confidences.append(final_conf)
+                logger.info("  Final conf=%d", final_conf)
+
+            time.sleep(self._request_interval)
+
+        return {
+            "cqs": cqs,
+            "solutions": solutions,
+            "confidences": confidences,
+            "sim_responses": sim_responses,
+        }
+
+    def run(self, records: list[dict]) -> None:
+        processed_ids = self._load_processed_ids()
+        self._write_header_if_needed()
+        total = len(records)
+        succeeded = skipped = failed = 0
+
+        for i, record in enumerate(records, start=1):
+            record_id = record.get("id") or record.get("case_id")
+            if record_id in processed_ids:
+                logger.info("[%d/%d] SKIP — %s", i, total, record_id)
+                skipped += 1
+                continue
+
+            title             = record["title"]
+            category          = record["category"]
+            original_question = record["original_question"]
+            simulator_context = record["simulator_context"]
+            accepted_answer   = record["accepted_answer"]
+
+            logger.info("[%d/%d] Processing %s (%s)", i, total, record_id, category)
+
+            result = self._run_conversation(title, category, original_question, simulator_context)
+
+            if result is None or result.get("_blocked"):
+                self._append_row({f: "" for f in MSDIALOG_PHASE1_MULTITURN_FIELDS} | {
+                    "id": record_id, "title": title, "category": category,
+                    "original_question": original_question,
+                    "accepted_answer": accepted_answer,
+                    "preliminary_solution": "BLOCKED" if result and result.get("_blocked") else "PARSE_ERROR",
+                    "was_blocked": bool(result and result.get("_blocked")),
+                    "finish_reason": "SAFETY" if result and result.get("_blocked") else "PARSE_ERROR",
+                    "provider": self._provider.provider_name,
+                    "model_id": self._provider.model_name,
+                })
+                failed += 1
+                continue
+
+            cqs           = result["cqs"]
+            solutions     = result["solutions"]
+            confidences   = result["confidences"]
+            sim_responses = result["sim_responses"]
+
+            row: dict = {
+                "id": record_id, "title": title, "category": category,
+                "original_question": original_question,
+                "preliminary_solution": solutions[0],
+                "preliminary_confidence": confidences[0],
+                "cq_1": cqs[0],
+                "user_response_1": sim_responses[0],
+                "solution_1": solutions[1],
+                "confidence_1": confidences[1],
+                "cq_2": cqs[1],
+                "user_response_2": sim_responses[1],
+                "solution_2": solutions[2],
+                "confidence_2": confidences[2],
+                "cq_3": cqs[2],
+                "user_response_3": sim_responses[2],
+                "final_solution": solutions[3],
+                "final_confidence": confidences[3],
+                "accepted_answer": accepted_answer,
+                "provider": self._provider.provider_name,
+                "model_id": self._provider.model_name,
+                "finish_reason": "STOP",
+                "was_blocked": False,
+            }
+            self._append_row(row)
+            processed_ids.add(record_id)
+            succeeded += 1
+
+        logger.info(
+            "MsDialog MultiTurn Phase1 complete — total=%d succeeded=%d skipped=%d failed=%d",
+            total, succeeded, skipped, failed,
+        )

@@ -75,6 +75,46 @@ MSDIALOG_PHASE1_MULTITURN_FIELDS = [
     "was_blocked",
 ]
 
+# ── MS-Dialog Flex (optional-CQ) CSV output schema ────────────────────────
+# One row per case; CQ columns are empty when that turn was not reached.
+# needed_clarification_N = did the model choose to ask CQ(N+1)?
+# n_cqs_asked = 0..3 (number of CQs actually asked before final solution)
+
+MSDIALOG_FLEX_FIELDS = [
+    "id",
+    "title",
+    "category",
+    "original_question",
+    # Turn 0 — model sees problem only
+    "preliminary_solution",
+    "preliminary_confidence",
+    "needed_clarification_0",       # True → model asked CQ1
+    # After CQ1
+    "cq_1",
+    "user_response_1",
+    "solution_1",
+    "confidence_1",
+    "needed_clarification_1",       # True → model asked CQ2
+    # After CQ2
+    "cq_2",
+    "user_response_2",
+    "solution_2",
+    "confidence_2",
+    "needed_clarification_2",       # True → model wanted CQ3 (may have been forced)
+    # After CQ3 (forced final if reached)
+    "cq_3",
+    "user_response_3",
+    "final_solution",               # always the last solution produced
+    "final_confidence",
+    # Summary
+    "n_cqs_asked",                  # 0 / 1 / 2 / 3
+    "accepted_answer",
+    "provider",
+    "model_id",
+    "finish_reason",
+    "was_blocked",
+]
+
 # ── Phase 1 single-turn CSV output schema ─────────────────────────────────
 PHASE1_FIELDS = [
     "id",

@@ -32,6 +32,7 @@ from .utils import (
 from config import (
     PHASE1_FIELDS, PHASE1_MULTITURN_FIELDS,
     MSDIALOG_PHASE1_FIELDS, MSDIALOG_PHASE1_MULTITURN_FIELDS,
+    MSDIALOG_FLEX_FIELDS,
     N_CQ_TURNS, REQUEST_INTERVAL,
 )
 
@@ -758,18 +759,66 @@ MSDIALOG_FINAL_SCHEMA = types.Schema(
     required=["final_solution", "confidence"],
 )
 
-_USER_SIMULATOR_INSTRUCTION = """You are playing the role of a user who has submitted a tech support request. \
-You have a specific technical problem and you are responding to a support specialist's question.
+# ── MS-Dialog Flex schemas (optional-CQ pipeline) ─────────────────────────
 
-Answer based ONLY on the documented details of your situation. Follow these rules:
-1. Respond naturally as a non-technical user — use plain, everyday language.
-2. Answer ONLY what the question asks — do not volunteer extra information.
-3. Do NOT reveal the solution to your problem or anything the support agent suggested.
-4. If the question asks about something not mentioned in your situation summary, say: \
-"I'm not sure about that" or "I haven't checked."
-5. Be concise — two or three sentences maximum.
+MSDIALOG_FLEX_TURN_0_SCHEMA = types.Schema(
+    type=types.Type.OBJECT,
+    properties={
+        "needed_clarification": types.Schema(
+            type=types.Type.BOOLEAN,
+            description="True if asking a clarifying question would meaningfully help; False if you can already provide a good solution.",
+        ),
+        "clarifying_question": types.Schema(
+            type=types.Type.STRING,
+            description="Your single clarifying question if needed_clarification is true; empty string otherwise.",
+        ),
+        "preliminary_solution": types.Schema(
+            type=types.Type.STRING,
+            description="Your best current solution based on available information.",
+        ),
+        "confidence": types.Schema(
+            type=types.Type.INTEGER,
+            description="Confidence in the preliminary solution from 0 to 100.",
+        ),
+    },
+    required=["needed_clarification", "clarifying_question", "preliminary_solution", "confidence"],
+)
 
-Return ONLY a JSON object: {"answer": "<your response as the user>"}"""
+MSDIALOG_FLEX_CONTINUATION_SCHEMA = types.Schema(
+    type=types.Type.OBJECT,
+    properties={
+        "needed_clarification": types.Schema(
+            type=types.Type.BOOLEAN,
+            description="True if another clarifying question would meaningfully help; False if you are ready to commit to a final solution.",
+        ),
+        "clarifying_question": types.Schema(
+            type=types.Type.STRING,
+            description="Your next clarifying question if needed_clarification is true; empty string otherwise.",
+        ),
+        "updated_solution": types.Schema(
+            type=types.Type.STRING,
+            description="Your updated solution incorporating all information gathered so far.",
+        ),
+        "confidence": types.Schema(
+            type=types.Type.INTEGER,
+            description="Confidence in the updated solution from 0 to 100.",
+        ),
+    },
+    required=["needed_clarification", "clarifying_question", "updated_solution", "confidence"],
+)
+
+_USER_SIMULATOR_INSTRUCTION = """You are a factual retrieval system for a tech support case. \
+Your role is strictly to report facts that are explicitly documented in the provided situation summary — nothing more.
+
+Rules you must follow:
+1. Answer ONLY using information that is explicitly stated in the situation summary.
+2. Report facts as brief, plain statements in everyday language (e.g. "The error started after the Windows update.", "I am using the desktop app.").
+3. Do NOT interpret, synthesize, or draw conclusions from the facts.
+4. Do NOT suggest or hint at any solution or diagnosis.
+5. If the answer to the question is not explicitly documented, respond with exactly: "That information is not available."
+6. Be concise — one sentence maximum.
+
+Return ONLY a JSON object: {"answer": "<your response>"}"""
 
 _MSDIALOG_FINAL_INSTRUCTION = """You are an experienced tech support specialist. \
 You have now gathered all the information you need from the user.
@@ -808,7 +857,7 @@ class UserSimulator:
             )
         except SafetyBlockError:
             logger.warning("User simulator blocked by safety filter.")
-            return "I'm not sure about that."
+            return "That information is not available."
 
         parsed = parse_json_response(raw)
         if parsed and "answer" in parsed:
@@ -1276,5 +1325,311 @@ class MsDialogMultiTurnPhase1Pipeline:
 
         logger.info(
             "MsDialog MultiTurn Phase1 complete — total=%d succeeded=%d skipped=%d failed=%d",
+            total, succeeded, skipped, failed,
+        )
+
+
+# ── MS-Dialog Flex Pipeline (optional clarifying questions, 0–3 turns) ─────
+
+class MsDialogFlexPipeline:
+    """MS-Dialog pipeline where the model decides at each turn whether to ask
+    a clarifying question or commit to a final solution.
+
+    Turn 0 : model sees problem → needed_clarification + preliminary_solution + confidence
+             (+ clarifying_question if needed_clarification=True)
+    Turn 1–2: model sees history → needed_clarification + updated_solution + confidence
+             (+ clarifying_question if needed_clarification=True)
+    Turn 3 : forced final — model must commit regardless of needed_clarification.
+
+    The pipeline stops as soon as the model sets needed_clarification=False or
+    after the maximum number of CQ turns is exhausted.
+    """
+
+    MAX_CQ_TURNS: int = 3
+
+    def __init__(
+        self,
+        provider: LLMProvider,
+        instruction_file: Path,
+        continuation_instruction_file: Path,
+        output_csv: Path,
+        request_interval: float = REQUEST_INTERVAL,
+        simulator_provider: Optional[LLMProvider] = None,
+    ) -> None:
+        if not instruction_file.exists():
+            raise FileNotFoundError(f"Instruction file not found: {instruction_file}")
+        if not continuation_instruction_file.exists():
+            raise FileNotFoundError(f"Continuation instruction not found: {continuation_instruction_file}")
+        self._instruction = instruction_file.read_text(encoding="utf-8").strip()
+        self._continuation_instruction = continuation_instruction_file.read_text(encoding="utf-8").strip()
+        self._provider = provider
+        self._simulator = UserSimulator(simulator_provider or provider)
+        self._output_csv = output_csv
+        self._request_interval = request_interval
+        self._output_csv.parent.mkdir(parents=True, exist_ok=True)
+        sim_prov = simulator_provider or provider
+        logger.info(
+            "MsDialogFlexPipeline ready — specialist=%s/%s simulator=%s/%s max_cq=%d output=%s",
+            provider.provider_name, provider.model_name,
+            sim_prov.provider_name, sim_prov.model_name,
+            self.MAX_CQ_TURNS, output_csv,
+        )
+
+    def _load_processed_ids(self) -> set[str]:
+        processed: set[str] = set()
+        if not self._output_csv.exists():
+            return processed
+        with self._output_csv.open("r", encoding="utf-8", newline="") as fh:
+            for row in csv.DictReader(fh):
+                if row.get("id"):
+                    processed.add(row["id"])
+        logger.info("Resumability: %d records already processed.", len(processed))
+        return processed
+
+    def _write_header_if_needed(self) -> None:
+        if not self._output_csv.exists():
+            with self._output_csv.open("w", encoding="utf-8", newline="") as fh:
+                csv.DictWriter(fh, fieldnames=MSDIALOG_FLEX_FIELDS).writeheader()
+
+    def _append_row(self, row: dict) -> None:
+        with self._output_csv.open("a", encoding="utf-8", newline="") as fh:
+            csv.DictWriter(fh, fieldnames=MSDIALOG_FLEX_FIELDS).writerow(row)
+
+    def _run_conversation(
+        self,
+        title: str,
+        category: str,
+        original_question: str,
+        simulator_context: str,
+    ) -> Optional[dict]:
+        """Run the flexible conversation and return accumulated results."""
+        problem_text = _format_problem(title, category, original_question)
+        contents: list[dict] = [{"role": "user", "text": problem_text}]
+
+        solutions: list[str] = []
+        confidences: list[int] = []
+        cqs: list[str] = []
+        sim_responses: list[str] = []
+        nc_flags: list[bool] = []   # needed_clarification decision at each non-final turn
+
+        # ── Turn 0 ────────────────────────────────────────────────────────
+        try:
+            raw0 = self._provider.call_multiturn(
+                system_instruction=self._instruction,
+                contents=contents,
+                temperature=0.0,
+                max_tokens=4000,
+                expect_json=MSDIALOG_FLEX_TURN_0_SCHEMA,
+            )
+        except SafetyBlockError:
+            return {"_blocked": True}
+
+        parsed0 = parse_json_response(raw0)
+        if not parsed0 or not {"needed_clarification", "preliminary_solution", "confidence"}.issubset(parsed0.keys()):
+            logger.error("Flex turn 0 parse failed. Raw: %.300s", raw0)
+            return None
+
+        nc0       = bool(parsed0["needed_clarification"])
+        prelim    = str(parsed0["preliminary_solution"]).strip()
+        prelim_c  = int(parsed0["confidence"])
+        cq0       = str(parsed0.get("clarifying_question", "")).strip()
+
+        solutions.append(prelim)
+        confidences.append(prelim_c)
+        nc_flags.append(nc0)
+        contents.append({"role": "model", "text": raw0})
+
+        if not nc0 or not cq0:
+            if nc0 and not cq0:
+                logger.warning("Turn 0: needed_clarification=True but clarifying_question empty — treating as False.")
+                nc_flags[-1] = False
+            logger.info("  Turn0 conf=%d nc=False — no CQs asked.", prelim_c)
+            # Return immediately: final_solution = preliminary_solution
+            return {
+                "solutions": solutions,
+                "confidences": confidences,
+                "cqs": cqs,
+                "sim_responses": sim_responses,
+                "nc_flags": nc_flags,
+            }
+
+        cqs.append(cq0)
+        logger.info("  Turn0 conf=%d nc=True | CQ1: %s", prelim_c, cq0[:80])
+        time.sleep(self._request_interval)
+
+        # ── Clarification rounds ───────────────────────────────────────────
+        for turn_idx in range(1, self.MAX_CQ_TURNS + 1):
+            # Simulate user answering the last CQ
+            sim_resp = self._simulator.answer(cqs[-1], simulator_context)
+            sim_responses.append(sim_resp)
+            logger.info("  User[%d]: %s", turn_idx, sim_resp[:80])
+            time.sleep(self._request_interval)
+            contents.append({"role": "user", "text": f"User's answer: {sim_resp}"})
+
+            if turn_idx == self.MAX_CQ_TURNS:
+                # ── Forced final: no more CQs regardless of model preference ──
+                try:
+                    raw_final = self._provider.call_multiturn(
+                        system_instruction=_MSDIALOG_FINAL_INSTRUCTION,
+                        contents=contents,
+                        temperature=0.0,
+                        max_tokens=4000,
+                        expect_json=MSDIALOG_FINAL_SCHEMA,
+                    )
+                except SafetyBlockError:
+                    return {"_blocked": True}
+
+                parsed_final = parse_json_response(raw_final)
+                if not parsed_final or not {"final_solution", "confidence"}.issubset(parsed_final.keys()):
+                    logger.error("Flex forced-final parse failed. Raw: %.300s", raw_final)
+                    return None
+
+                solutions.append(str(parsed_final["final_solution"]).strip())
+                confidences.append(int(parsed_final["confidence"]))
+                logger.info("  ForcedFinal conf=%d", confidences[-1])
+
+            else:
+                # ── Optional continuation ──────────────────────────────────
+                try:
+                    raw_cont = self._provider.call_multiturn(
+                        system_instruction=self._continuation_instruction,
+                        contents=contents,
+                        temperature=0.0,
+                        max_tokens=4000,
+                        expect_json=MSDIALOG_FLEX_CONTINUATION_SCHEMA,
+                    )
+                except SafetyBlockError:
+                    return {"_blocked": True}
+
+                parsed_cont = parse_json_response(raw_cont)
+                if not parsed_cont or not {"needed_clarification", "updated_solution", "confidence"}.issubset(parsed_cont.keys()):
+                    logger.error("Flex continuation turn %d parse failed. Raw: %.300s", turn_idx, raw_cont)
+                    return None
+
+                nc       = bool(parsed_cont["needed_clarification"])
+                upd_sol  = str(parsed_cont["updated_solution"]).strip()
+                conf     = int(parsed_cont["confidence"])
+                next_cq  = str(parsed_cont.get("clarifying_question", "")).strip()
+
+                solutions.append(upd_sol)
+                confidences.append(conf)
+                nc_flags.append(nc)
+                contents.append({"role": "model", "text": raw_cont})
+
+                if not nc or not next_cq:
+                    if nc and not next_cq:
+                        logger.warning(
+                            "Turn%d: needed_clarification=True but clarifying_question empty — treating as False.",
+                            turn_idx,
+                        )
+                        nc_flags[-1] = False
+                    logger.info("  Turn%d conf=%d nc=False — stopping.", turn_idx, conf)
+                    break
+
+                cqs.append(next_cq)
+                logger.info("  Turn%d conf=%d nc=True | CQ%d: %s", turn_idx, conf, turn_idx + 1, next_cq[:80])
+
+            time.sleep(self._request_interval)
+
+        return {
+            "solutions": solutions,
+            "confidences": confidences,
+            "cqs": cqs,
+            "sim_responses": sim_responses,
+            "nc_flags": nc_flags,
+        }
+
+    def run(self, records: list[dict]) -> None:
+        processed_ids = self._load_processed_ids()
+        self._write_header_if_needed()
+        total = len(records)
+        succeeded = skipped = failed = 0
+
+        def _get(lst: list, idx: int, default=""):
+            return lst[idx] if idx < len(lst) else default
+
+        for i, record in enumerate(records, start=1):
+            record_id = record.get("id") or record.get("case_id")
+            if record_id in processed_ids:
+                logger.info("[%d/%d] SKIP — %s", i, total, record_id)
+                skipped += 1
+                continue
+
+            title             = record["title"]
+            category          = record["category"]
+            original_question = record["original_question"]
+            simulator_context = record["simulator_context"]
+            accepted_answer   = record["accepted_answer"]
+
+            logger.info("[%d/%d] Processing %s (%s)", i, total, record_id, category)
+
+            result = self._run_conversation(title, category, original_question, simulator_context)
+
+            if result is None or result.get("_blocked"):
+                self._append_row({f: "" for f in MSDIALOG_FLEX_FIELDS} | {
+                    "id": record_id, "title": title, "category": category,
+                    "original_question": original_question,
+                    "accepted_answer": accepted_answer,
+                    "preliminary_solution": "BLOCKED" if result and result.get("_blocked") else "PARSE_ERROR",
+                    "n_cqs_asked": -1,
+                    "was_blocked": bool(result and result.get("_blocked")),
+                    "finish_reason": "SAFETY" if result and result.get("_blocked") else "PARSE_ERROR",
+                    "provider": self._provider.provider_name,
+                    "model_id": self._provider.model_name,
+                })
+                failed += 1
+                continue
+
+            solutions     = result["solutions"]
+            confidences   = result["confidences"]
+            cqs           = result["cqs"]
+            sim_responses = result["sim_responses"]
+            nc_flags      = result["nc_flags"]
+            n_cqs         = len(cqs)
+
+            row: dict = {
+                "id": record_id,
+                "title": title,
+                "category": category,
+                "original_question": original_question,
+                # Turn 0
+                "preliminary_solution":   solutions[0],
+                "preliminary_confidence": confidences[0],
+                "needed_clarification_0": nc_flags[0],
+                # After CQ1
+                "cq_1":                   _get(cqs, 0),
+                "user_response_1":        _get(sim_responses, 0),
+                "solution_1":             _get(solutions, 1),
+                "confidence_1":           _get(confidences, 1),
+                "needed_clarification_1": _get(nc_flags, 1),
+                # After CQ2
+                "cq_2":                   _get(cqs, 1),
+                "user_response_2":        _get(sim_responses, 1),
+                "solution_2":             _get(solutions, 2),
+                "confidence_2":           _get(confidences, 2),
+                "needed_clarification_2": _get(nc_flags, 2),
+                # After CQ3 (forced final)
+                "cq_3":                   _get(cqs, 2),
+                "user_response_3":        _get(sim_responses, 2),
+                "final_solution":         solutions[-1],
+                "final_confidence":       confidences[-1],
+                # Summary
+                "n_cqs_asked":    n_cqs,
+                "accepted_answer": accepted_answer,
+                "provider":        self._provider.provider_name,
+                "model_id":        self._provider.model_name,
+                "finish_reason":   "STOP",
+                "was_blocked":     False,
+            }
+            self._append_row(row)
+            processed_ids.add(record_id)
+            succeeded += 1
+            logger.info(
+                "  [%d/%d] Done — n_cqs=%d final_conf=%d",
+                i, total, n_cqs, confidences[-1],
+            )
+
+        logger.info(
+            "MsDialog Flex complete — total=%d succeeded=%d skipped=%d failed=%d",
             total, succeeded, skipped, failed,
         )

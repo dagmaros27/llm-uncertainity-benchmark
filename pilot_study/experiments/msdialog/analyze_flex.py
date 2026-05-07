@@ -15,7 +15,7 @@ from scipy.stats import spearmanr, mannwhitneyu, kruskal
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-ROOT       = Path(__file__).parent
+ROOT       = Path(__file__).parent.parent.parent
 OUTPUTS    = ROOT / "outputs" / "ms-dialog" / "gemini-2.5-flash"
 CASES_PATH = ROOT / "datasets" / "ms-dialog" / "msdialog_100.jsonl"
 FLEX_CSV   = OUTPUTS / "phase1_flex_results.csv"

@@ -36,7 +36,7 @@ class LLMProvider(abc.ABC):
         system_instruction: str,
         user_message: str,
         temperature: float = 0.0,
-        max_tokens: int = 512,
+        max_tokens: int = 4000,
         expect_json: Union[bool, types.Schema] = False,
     ) -> str:
         """Make a single (one-shot) call and return the response text."""
@@ -47,7 +47,7 @@ class LLMProvider(abc.ABC):
         system_instruction: str,
         contents: list[dict],
         temperature: float = 0.0,
-        max_tokens: int = 512,
+        max_tokens: int = 4000,
         expect_json: Union[bool, types.Schema] = False,
     ) -> str:
         """Multi-turn call with proper conversation history.
@@ -118,7 +118,7 @@ class GeminiProvider(LLMProvider):
         system_instruction: str,
         user_message: str,
         temperature: float = 0.0,
-        max_tokens: int = 512,
+        max_tokens: int = 4000,
         expect_json: Union[bool, types.Schema] = False,
     ) -> str:
         full_prompt = f"{system_instruction.strip()}\n\n{user_message.strip()}"
@@ -188,7 +188,7 @@ class GeminiProvider(LLMProvider):
         system_instruction: str,
         contents: list[dict],
         temperature: float = 0.0,
-        max_tokens: int = 512,
+        max_tokens: int = 4000,
         expect_json: Union[bool, types.Schema] = False,
     ) -> str:
         """Multi-turn call using the Gemini ``contents`` API.
@@ -264,7 +264,7 @@ class GemmaProvider(GeminiProvider):
         system_instruction: str,
         user_message: str,
         temperature: float = 0.0,
-        max_tokens: int = 512,
+        max_tokens: int = 4000,
         expect_json: Union[bool, types.Schema] = False,
     ) -> str:
         """Single-turn call. system_instruction is prepended to user_message."""
@@ -299,7 +299,7 @@ class GemmaProvider(GeminiProvider):
         system_instruction: str,
         contents: list[dict],
         temperature: float = 0.0,
-        max_tokens: int = 512,
+        max_tokens: int = 4000,
         expect_json: Union[bool, types.Schema] = False,
     ) -> str:
         """Multi-turn call. system_instruction is prepended to the LAST user turn.

@@ -1,0 +1,27 @@
+You are an experienced eligibility specialist. You have received an answer to your clarifying question.
+
+Review all the information gathered so far — the rule, the user's original question, and every clarifying exchange — then complete the following five parts.
+
+Part 1 — Do You Still Need Clarification?
+Honestly assess whether another targeted question would meaningfully improve your determination. Set "needed_clarification" to true only if one more question would substantially narrow the decision. Set it to false if you now have enough information to commit to a confident Yes or No.
+
+Part 2 — Clarifying Question (only if needed_clarification is true):
+If you still need clarification, ask exactly one new yes/no factual question you have not already asked. If needed_clarification is false, leave this field as an empty string.
+
+Part 3 — Updated Answer:
+Pick exactly one: "Yes" (the rule applies / user is eligible) or "No" (the rule does not apply / user is not eligible).
+
+Part 4 — Updated Reasoning:
+One sentence explaining the basis for your updated answer, focusing on what has sharpened based on the new information.
+
+Part 5 — Confidence:
+Rate your confidence in your updated answer from 0 to 100. Be honest — if the new information did not help much, your confidence should not jump artificially.
+
+Return ONLY a valid JSON object with exactly these five keys and no other text:
+{
+  "needed_clarification": <true or false>,
+  "clarifying_question": "<your next question, or empty string if not needed>",
+  "updated_answer": "Yes" or "No",
+  "updated_reasoning": "<one sentence>",
+  "confidence": <integer between 0 and 100>
+}

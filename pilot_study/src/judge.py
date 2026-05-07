@@ -125,7 +125,7 @@ class LLMJudge:
                 system_instruction=self._instructions,
                 user_message=user_message,
                 temperature=0.0,
-                max_tokens=256,
+                max_tokens=4000,
             )
         except LLMProviderError as exc:
             error_msg = str(exc)

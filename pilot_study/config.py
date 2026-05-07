@@ -115,6 +115,54 @@ MSDIALOG_FLEX_FIELDS = [
     "was_blocked",
 ]
 
+# ── ShARC Flex (optional-CQ, eligibility) CSV output schema ───────────────
+# Specialist sees only snippet + question. Simulator holds the synthesised
+# context_essay. Final answer is binary (Yes/No) + brief reasoning.
+
+SHARC_FLEX_FIELDS = [
+    "id",
+    "utterance_id",
+    "tree_id",
+    "snippet",
+    "question",
+    # Turn 0 — model sees rule + question only
+    "preliminary_answer",        # Yes/No
+    "preliminary_reasoning",
+    "preliminary_confidence",
+    "needed_clarification_0",
+    # After CQ1
+    "cq_1",
+    "user_response_1",
+    "answer_1",
+    "reasoning_1",
+    "confidence_1",
+    "needed_clarification_1",
+    # After CQ2
+    "cq_2",
+    "user_response_2",
+    "answer_2",
+    "reasoning_2",
+    "confidence_2",
+    "needed_clarification_2",
+    # After CQ3 (forced final)
+    "cq_3",
+    "user_response_3",
+    "final_answer",              # Yes/No
+    "final_reasoning",
+    "final_confidence",
+    # Summary
+    "n_cqs_asked",
+    "gold_answer",               # ground truth Yes/No
+    "n_history_cqs",             # reference CQ count from dataset
+    "n_evidence_cqs",
+    "is_correct_preliminary",
+    "is_correct_final",
+    "provider",
+    "model_id",
+    "finish_reason",
+    "was_blocked",
+]
+
 # ── Phase 1 single-turn CSV output schema ─────────────────────────────────
 PHASE1_FIELDS = [
     "id",

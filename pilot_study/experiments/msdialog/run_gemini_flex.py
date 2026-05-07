@@ -24,7 +24,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 # ── Path setup ────────────────────────────────────────────────────────────────
-ROOT = Path(__file__).parent.resolve()
+ROOT = Path(__file__).parent.parent.parent.resolve()
 sys.path.insert(0, str(ROOT))
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -89,7 +89,7 @@ def main() -> None:
     resp = specialist_provider.call(
         system_instruction="You are a helpful assistant.",
         user_message="Reply with exactly: SMOKE TEST PASSED",
-        temperature=0.0, max_tokens=64,
+        temperature=0.0, max_tokens=4000,
     )
     assert "SMOKE" in resp.upper(), f"Specialist smoke test failed: {resp}"
     logger.info("Specialist smoke test PASSED: %s", resp.strip()[:60])
@@ -97,7 +97,7 @@ def main() -> None:
     resp2 = simulator_provider.call(
         system_instruction="You are a helpful assistant.",
         user_message="Reply with exactly: SMOKE TEST PASSED",
-        temperature=0.0, max_tokens=5000,
+        temperature=0.0, max_tokens=4000,
     )
     assert "SMOKE" in resp2.upper(), f"Simulator smoke test failed: {resp2}"
     logger.info("Simulator smoke test PASSED: %s", resp2.strip()[:60])

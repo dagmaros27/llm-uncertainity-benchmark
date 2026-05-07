@@ -22,7 +22,7 @@ import pandas as pd
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
-ROOT = Path(__file__).parent.resolve()
+ROOT = Path(__file__).parent.parent.parent.resolve()
 sys.path.insert(0, str(ROOT))
 
 OUTPUTS_DIR     = ROOT / "outputs" / "clamber"

@@ -32,7 +32,7 @@ from .utils import (
 from config import (
     PHASE1_FIELDS, PHASE1_MULTITURN_FIELDS,
     MSDIALOG_PHASE1_FIELDS, MSDIALOG_PHASE1_MULTITURN_FIELDS,
-    MSDIALOG_FLEX_FIELDS,
+    MSDIALOG_FLEX_FIELDS, SHARC_FLEX_FIELDS,
     N_CQ_TURNS, REQUEST_INTERVAL,
 )
 
@@ -154,7 +154,7 @@ class PatientSimulator:
                 system_instruction=_SIMULATOR_INSTRUCTION,
                 user_message=user_message,
                 temperature=0.0,
-                max_tokens=2048,
+                max_tokens=4000,
                 expect_json=SIMULATOR_SCHEMA,
             )
         except SafetyBlockError:
@@ -229,7 +229,7 @@ class Phase1Pipeline:
                 system_instruction=self._instruction,
                 user_message=user_message,
                 temperature=0.0,
-                max_tokens=4096,
+                max_tokens=4000,
                 expect_json=TURN_0_SCHEMA,
             )
         except SafetyBlockError as exc:
@@ -264,7 +264,7 @@ class Phase1Pipeline:
                 system_instruction=_POST_CLARIFICATION_INSTRUCTION,
                 user_message=user_message,
                 temperature=0.0,
-                max_tokens=4096,
+                max_tokens=4000,
                 expect_json=TURN_1_SCHEMA,
             )
         except SafetyBlockError as exc:
@@ -511,7 +511,7 @@ class MultiTurnPhase1Pipeline:
                 system_instruction=self._instruction,
                 contents=contents,
                 temperature=0.0,
-                max_tokens=4096,
+                max_tokens=4000,
                 expect_json=TURN_0_SCHEMA,
             )
         except SafetyBlockError:
@@ -552,7 +552,7 @@ class MultiTurnPhase1Pipeline:
                         system_instruction=self._continuation_instruction,
                         contents=contents,
                         temperature=0.0,
-                        max_tokens=4096,
+                        max_tokens=4000,
                         expect_json=TURN_CONTINUATION_SCHEMA,
                     )
                 except SafetyBlockError:
@@ -580,7 +580,7 @@ class MultiTurnPhase1Pipeline:
                         system_instruction=_POST_CLARIFICATION_INSTRUCTION,
                         contents=contents,
                         temperature=0.0,
-                        max_tokens=4096,
+                        max_tokens=4000,
                         expect_json=TURN_1_SCHEMA,
                     )
                 except SafetyBlockError:
@@ -852,7 +852,7 @@ class UserSimulator:
                 system_instruction=_USER_SIMULATOR_INSTRUCTION,
                 user_message=user_message,
                 temperature=0.0,
-                max_tokens=1000,
+                max_tokens=4000,
                 expect_json=SIMULATOR_SCHEMA,
             )
         except SafetyBlockError:
@@ -931,7 +931,7 @@ class MsDialogPhase1Pipeline:
                 system_instruction=self._instruction,
                 user_message=_format_problem(title, category, original_question),
                 temperature=0.0,
-                max_tokens=3000,
+                max_tokens=4000,
                 expect_json=MSDIALOG_TURN_0_SCHEMA,
             )
         except SafetyBlockError as exc:
@@ -964,7 +964,7 @@ class MsDialogPhase1Pipeline:
                 system_instruction=_MSDIALOG_FINAL_INSTRUCTION,
                 user_message=user_message,
                 temperature=0.0,
-                max_tokens=3000,
+                max_tokens=4000,
                 expect_json=MSDIALOG_FINAL_SCHEMA,
             )
         except SafetyBlockError as exc:
@@ -1161,7 +1161,7 @@ class MsDialogMultiTurnPhase1Pipeline:
                 system_instruction=self._instruction,
                 contents=contents,
                 temperature=0.0,
-                max_tokens=3000,
+                max_tokens=4000,
                 expect_json=MSDIALOG_TURN_0_SCHEMA,
             )
         except SafetyBlockError:
@@ -1200,7 +1200,7 @@ class MsDialogMultiTurnPhase1Pipeline:
                         system_instruction=self._continuation_instruction,
                         contents=contents,
                         temperature=0.0,
-                        max_tokens=3000,
+                        max_tokens=4000,
                         expect_json=MSDIALOG_CONTINUATION_SCHEMA,
                     )
                 except SafetyBlockError:
@@ -1228,7 +1228,7 @@ class MsDialogMultiTurnPhase1Pipeline:
                         system_instruction=_MSDIALOG_FINAL_INSTRUCTION,
                         contents=contents,
                         temperature=0.0,
-                        max_tokens=3000,
+                        max_tokens=4000,
                         expect_json=MSDIALOG_FINAL_SCHEMA,
                     )
                 except SafetyBlockError:
@@ -1631,5 +1631,447 @@ class MsDialogFlexPipeline:
 
         logger.info(
             "MsDialog Flex complete — total=%d succeeded=%d skipped=%d failed=%d",
+            total, succeeded, skipped, failed,
+        )
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# ShARC Flex Pipeline
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# Eligibility task. The specialist sees a regulatory rule snippet + the user's
+# question. It must decide whether to ask a clarifying question (max 3) or
+# commit to a Yes/No determination. The simulator holds the synthesised
+# context_essay (rule + scenario + history + evidence facts) and answers any CQ.
+# ─────────────────────────────────────────────────────────────────────────────
+
+SHARC_FLEX_TURN_0_SCHEMA = types.Schema(
+    type=types.Type.OBJECT,
+    properties={
+        "needed_clarification": types.Schema(
+            type=types.Type.BOOLEAN,
+            description="True if asking a clarifying question would meaningfully change your determination; False if you can already commit to a confident answer.",
+        ),
+        "clarifying_question": types.Schema(
+            type=types.Type.STRING,
+            description="Your single clarifying question if needed_clarification is true; empty string otherwise.",
+        ),
+        "preliminary_answer": types.Schema(
+            type=types.Type.STRING,
+            enum=["Yes", "No"],
+            description="Your best preliminary determination of whether the rule applies to the user.",
+        ),
+        "preliminary_reasoning": types.Schema(
+            type=types.Type.STRING,
+            description="Brief one-sentence explanation supporting your determination.",
+        ),
+        "confidence": types.Schema(
+            type=types.Type.INTEGER,
+            description="Confidence in the preliminary answer from 0 to 100.",
+        ),
+    },
+    required=["needed_clarification", "clarifying_question",
+              "preliminary_answer", "preliminary_reasoning", "confidence"],
+)
+
+SHARC_FLEX_CONTINUATION_SCHEMA = types.Schema(
+    type=types.Type.OBJECT,
+    properties={
+        "needed_clarification": types.Schema(
+            type=types.Type.BOOLEAN,
+            description="True if another clarifying question would meaningfully help; False if you are ready to commit.",
+        ),
+        "clarifying_question": types.Schema(
+            type=types.Type.STRING,
+            description="Your next clarifying question if needed_clarification is true; empty string otherwise.",
+        ),
+        "updated_answer": types.Schema(
+            type=types.Type.STRING,
+            enum=["Yes", "No"],
+            description="Your updated determination incorporating all information gathered so far.",
+        ),
+        "updated_reasoning": types.Schema(
+            type=types.Type.STRING,
+            description="Brief one-sentence explanation supporting the updated determination.",
+        ),
+        "confidence": types.Schema(
+            type=types.Type.INTEGER,
+            description="Updated confidence from 0 to 100.",
+        ),
+    },
+    required=["needed_clarification", "clarifying_question",
+              "updated_answer", "updated_reasoning", "confidence"],
+)
+
+SHARC_FINAL_SCHEMA = types.Schema(
+    type=types.Type.OBJECT,
+    properties={
+        "final_answer": types.Schema(
+            type=types.Type.STRING,
+            enum=["Yes", "No"],
+            description="Your final binary determination.",
+        ),
+        "final_reasoning": types.Schema(
+            type=types.Type.STRING,
+            description="Brief one-sentence explanation supporting the final determination.",
+        ),
+        "confidence": types.Schema(
+            type=types.Type.INTEGER,
+            description="Final confidence from 0 to 100.",
+        ),
+    },
+    required=["final_answer", "final_reasoning", "confidence"],
+)
+
+
+_SHARC_FINAL_INSTRUCTION = """You are an experienced eligibility specialist. \
+You have now gathered all the information you need from the user.
+
+Provide your final, definitive determination. Pick exactly one: "Yes" (the rule \
+applies / user is eligible) or "No" (it does not apply / user is not eligible). \
+Give a brief one-sentence reasoning grounded in the rule and the user's situation. \
+Do not hedge.
+
+Return ONLY a valid JSON object:
+{
+  "final_answer": "Yes" or "No",
+  "final_reasoning": "<one sentence>",
+  "confidence": <integer 0-100>
+}"""
+
+
+def _format_sharc_problem(snippet: str, question: str) -> str:
+    """Format the eligibility task for the specialist."""
+    return (
+        f"ELIGIBILITY RULE:\n{snippet.strip()}\n\n"
+        f"USER'S QUESTION:\n{question.strip()}"
+    )
+
+
+class SharcFlexPipeline:
+    """ShARC eligibility pipeline with optional clarifying questions (0–3 turns).
+
+    Turn 0 : model sees rule + question → needed_clarification + preliminary_answer
+             + preliminary_reasoning + confidence (+ CQ if needed_clarification=True)
+    Turn 1–2: model sees history → needed_clarification + updated_answer + reasoning
+             + confidence (+ CQ if needed_clarification=True)
+    Turn 3 : forced final — model must commit regardless of needed_clarification.
+
+    Stops as soon as the model sets needed_clarification=False or after MAX_CQ_TURNS.
+    """
+
+    MAX_CQ_TURNS: int = 3
+
+    def __init__(
+        self,
+        provider: LLMProvider,
+        instruction_file: Path,
+        continuation_instruction_file: Path,
+        output_csv: Path,
+        request_interval: float = REQUEST_INTERVAL,
+        simulator_provider: Optional[LLMProvider] = None,
+    ) -> None:
+        if not instruction_file.exists():
+            raise FileNotFoundError(f"Instruction file not found: {instruction_file}")
+        if not continuation_instruction_file.exists():
+            raise FileNotFoundError(f"Continuation instruction not found: {continuation_instruction_file}")
+        self._instruction = instruction_file.read_text(encoding="utf-8").strip()
+        self._continuation_instruction = continuation_instruction_file.read_text(encoding="utf-8").strip()
+        self._provider = provider
+        self._simulator = UserSimulator(simulator_provider or provider)
+        self._output_csv = output_csv
+        self._request_interval = request_interval
+        self._output_csv.parent.mkdir(parents=True, exist_ok=True)
+        sim_prov = simulator_provider or provider
+        logger.info(
+            "SharcFlexPipeline ready — specialist=%s/%s simulator=%s/%s max_cq=%d output=%s",
+            provider.provider_name, provider.model_name,
+            sim_prov.provider_name, sim_prov.model_name,
+            self.MAX_CQ_TURNS, output_csv,
+        )
+
+    def _load_processed_ids(self) -> set[str]:
+        processed: set[str] = set()
+        if not self._output_csv.exists():
+            return processed
+        with self._output_csv.open("r", encoding="utf-8", newline="") as fh:
+            for row in csv.DictReader(fh):
+                if row.get("id"):
+                    processed.add(row["id"])
+        logger.info("Resumability: %d records already processed.", len(processed))
+        return processed
+
+    def _write_header_if_needed(self) -> None:
+        if not self._output_csv.exists():
+            with self._output_csv.open("w", encoding="utf-8", newline="") as fh:
+                csv.DictWriter(fh, fieldnames=SHARC_FLEX_FIELDS).writeheader()
+
+    def _append_row(self, row: dict) -> None:
+        with self._output_csv.open("a", encoding="utf-8", newline="") as fh:
+            csv.DictWriter(fh, fieldnames=SHARC_FLEX_FIELDS).writerow(row)
+
+    def _run_conversation(
+        self,
+        snippet: str,
+        question: str,
+        simulator_context: str,
+    ) -> Optional[dict]:
+        problem_text = _format_sharc_problem(snippet, question)
+        contents: list[dict] = [{"role": "user", "text": problem_text}]
+
+        answers: list[str] = []
+        reasonings: list[str] = []
+        confidences: list[int] = []
+        cqs: list[str] = []
+        sim_responses: list[str] = []
+        nc_flags: list[bool] = []
+
+        # ── Turn 0 ────────────────────────────────────────────────────────
+        try:
+            raw0 = self._provider.call_multiturn(
+                system_instruction=self._instruction,
+                contents=contents,
+                temperature=0.0,
+                max_tokens=4000,
+                expect_json=SHARC_FLEX_TURN_0_SCHEMA,
+            )
+        except SafetyBlockError:
+            return {"_blocked": True}
+
+        parsed0 = parse_json_response(raw0)
+        if not parsed0 or not {"needed_clarification", "preliminary_answer",
+                               "preliminary_reasoning", "confidence"}.issubset(parsed0.keys()):
+            logger.error("ShARC flex turn 0 parse failed. Raw: %.300s", raw0)
+            return None
+
+        nc0       = bool(parsed0["needed_clarification"])
+        ans0      = str(parsed0["preliminary_answer"]).strip()
+        reas0     = str(parsed0["preliminary_reasoning"]).strip()
+        conf0     = int(parsed0["confidence"])
+        cq0       = str(parsed0.get("clarifying_question", "")).strip()
+
+        answers.append(ans0)
+        reasonings.append(reas0)
+        confidences.append(conf0)
+        nc_flags.append(nc0)
+        contents.append({"role": "model", "text": raw0})
+
+        if not nc0 or not cq0:
+            if nc0 and not cq0:
+                logger.warning("Turn 0: needed_clarification=True but clarifying_question empty — treating as False.")
+                nc_flags[-1] = False
+            logger.info("  Turn0 ans=%s conf=%d nc=False — no CQs asked.", ans0, conf0)
+            return {
+                "answers": answers,
+                "reasonings": reasonings,
+                "confidences": confidences,
+                "cqs": cqs,
+                "sim_responses": sim_responses,
+                "nc_flags": nc_flags,
+            }
+
+        cqs.append(cq0)
+        logger.info("  Turn0 ans=%s conf=%d nc=True | CQ1: %s", ans0, conf0, cq0[:80])
+        time.sleep(self._request_interval)
+
+        # ── Clarification rounds ──────────────────────────────────────────
+        for turn_idx in range(1, self.MAX_CQ_TURNS + 1):
+            sim_resp = self._simulator.answer(cqs[-1], simulator_context)
+            sim_responses.append(sim_resp)
+            logger.info("  User[%d]: %s", turn_idx, sim_resp[:80])
+            time.sleep(self._request_interval)
+            contents.append({"role": "user", "text": f"User's answer: {sim_resp}"})
+
+            if turn_idx == self.MAX_CQ_TURNS:
+                # Forced final
+                try:
+                    raw_final = self._provider.call_multiturn(
+                        system_instruction=_SHARC_FINAL_INSTRUCTION,
+                        contents=contents,
+                        temperature=0.0,
+                        max_tokens=4000,
+                        expect_json=SHARC_FINAL_SCHEMA,
+                    )
+                except SafetyBlockError:
+                    return {"_blocked": True}
+
+                parsed_final = parse_json_response(raw_final)
+                if not parsed_final or not {"final_answer", "final_reasoning", "confidence"}.issubset(parsed_final.keys()):
+                    logger.error("ShARC forced-final parse failed. Raw: %.300s", raw_final)
+                    return None
+
+                answers.append(str(parsed_final["final_answer"]).strip())
+                reasonings.append(str(parsed_final["final_reasoning"]).strip())
+                confidences.append(int(parsed_final["confidence"]))
+                logger.info("  ForcedFinal ans=%s conf=%d", answers[-1], confidences[-1])
+
+            else:
+                try:
+                    raw_cont = self._provider.call_multiturn(
+                        system_instruction=self._continuation_instruction,
+                        contents=contents,
+                        temperature=0.0,
+                        max_tokens=4000,
+                        expect_json=SHARC_FLEX_CONTINUATION_SCHEMA,
+                    )
+                except SafetyBlockError:
+                    return {"_blocked": True}
+
+                parsed_cont = parse_json_response(raw_cont)
+                if not parsed_cont or not {"needed_clarification", "updated_answer",
+                                           "updated_reasoning", "confidence"}.issubset(parsed_cont.keys()):
+                    logger.error("ShARC flex continuation turn %d parse failed. Raw: %.300s", turn_idx, raw_cont)
+                    return None
+
+                nc       = bool(parsed_cont["needed_clarification"])
+                ans      = str(parsed_cont["updated_answer"]).strip()
+                reas     = str(parsed_cont["updated_reasoning"]).strip()
+                conf     = int(parsed_cont["confidence"])
+                next_cq  = str(parsed_cont.get("clarifying_question", "")).strip()
+
+                answers.append(ans)
+                reasonings.append(reas)
+                confidences.append(conf)
+                nc_flags.append(nc)
+                contents.append({"role": "model", "text": raw_cont})
+
+                if not nc or not next_cq:
+                    if nc and not next_cq:
+                        logger.warning(
+                            "Turn%d: needed_clarification=True but clarifying_question empty — treating as False.",
+                            turn_idx,
+                        )
+                        nc_flags[-1] = False
+                    logger.info("  Turn%d ans=%s conf=%d nc=False — stopping.", turn_idx, ans, conf)
+                    break
+
+                cqs.append(next_cq)
+                logger.info("  Turn%d ans=%s conf=%d nc=True | CQ%d: %s",
+                            turn_idx, ans, conf, turn_idx + 1, next_cq[:80])
+
+            time.sleep(self._request_interval)
+
+        return {
+            "answers": answers,
+            "reasonings": reasonings,
+            "confidences": confidences,
+            "cqs": cqs,
+            "sim_responses": sim_responses,
+            "nc_flags": nc_flags,
+        }
+
+    def run(self, records: list[dict]) -> None:
+        processed_ids = self._load_processed_ids()
+        self._write_header_if_needed()
+        total = len(records)
+        succeeded = skipped = failed = 0
+
+        def _get(lst: list, idx: int, default=""):
+            return lst[idx] if idx < len(lst) else default
+
+        for i, record in enumerate(records, start=1):
+            record_id = record.get("id")
+            if record_id in processed_ids:
+                logger.info("[%d/%d] SKIP — %s", i, total, record_id)
+                skipped += 1
+                continue
+
+            snippet           = record["snippet"]
+            question          = record["question"]
+            simulator_context = record["context_essay"]
+            gold_answer       = record["answer"]
+
+            logger.info("[%d/%d] Processing %s (gold=%s)", i, total, record_id, gold_answer)
+
+            result = self._run_conversation(snippet, question, simulator_context)
+
+            if result is None or result.get("_blocked"):
+                self._append_row({f: "" for f in SHARC_FLEX_FIELDS} | {
+                    "id": record_id,
+                    "utterance_id": record.get("utterance_id", ""),
+                    "tree_id":      record.get("tree_id", ""),
+                    "snippet":      snippet,
+                    "question":     question,
+                    "gold_answer":  gold_answer,
+                    "n_history_cqs":  record.get("n_history_cqs", ""),
+                    "n_evidence_cqs": record.get("n_evidence_cqs", ""),
+                    "preliminary_answer": "BLOCKED" if result and result.get("_blocked") else "PARSE_ERROR",
+                    "n_cqs_asked": -1,
+                    "is_correct_preliminary": "",
+                    "is_correct_final": "",
+                    "was_blocked":  bool(result and result.get("_blocked")),
+                    "finish_reason":"SAFETY" if result and result.get("_blocked") else "PARSE_ERROR",
+                    "provider":     self._provider.provider_name,
+                    "model_id":     self._provider.model_name,
+                })
+                failed += 1
+                continue
+
+            answers       = result["answers"]
+            reasonings    = result["reasonings"]
+            confidences   = result["confidences"]
+            cqs           = result["cqs"]
+            sim_responses = result["sim_responses"]
+            nc_flags      = result["nc_flags"]
+            n_cqs         = len(cqs)
+
+            preliminary_answer = answers[0]
+            final_answer       = answers[-1]
+            is_correct_prelim  = (preliminary_answer.lower() == gold_answer.lower())
+            is_correct_final   = (final_answer.lower() == gold_answer.lower())
+
+            row: dict = {
+                "id":           record_id,
+                "utterance_id": record.get("utterance_id", ""),
+                "tree_id":      record.get("tree_id", ""),
+                "snippet":      snippet,
+                "question":     question,
+                # Turn 0
+                "preliminary_answer":     preliminary_answer,
+                "preliminary_reasoning":  reasonings[0],
+                "preliminary_confidence": confidences[0],
+                "needed_clarification_0": nc_flags[0],
+                # After CQ1
+                "cq_1":                   _get(cqs, 0),
+                "user_response_1":        _get(sim_responses, 0),
+                "answer_1":               _get(answers, 1),
+                "reasoning_1":            _get(reasonings, 1),
+                "confidence_1":           _get(confidences, 1),
+                "needed_clarification_1": _get(nc_flags, 1),
+                # After CQ2
+                "cq_2":                   _get(cqs, 1),
+                "user_response_2":        _get(sim_responses, 1),
+                "answer_2":               _get(answers, 2),
+                "reasoning_2":            _get(reasonings, 2),
+                "confidence_2":           _get(confidences, 2),
+                "needed_clarification_2": _get(nc_flags, 2),
+                # After CQ3 (forced final)
+                "cq_3":                   _get(cqs, 2),
+                "user_response_3":        _get(sim_responses, 2),
+                "final_answer":           final_answer,
+                "final_reasoning":        reasonings[-1],
+                "final_confidence":       confidences[-1],
+                # Summary
+                "n_cqs_asked":             n_cqs,
+                "gold_answer":             gold_answer,
+                "n_history_cqs":           record.get("n_history_cqs", ""),
+                "n_evidence_cqs":          record.get("n_evidence_cqs", ""),
+                "is_correct_preliminary":  is_correct_prelim,
+                "is_correct_final":        is_correct_final,
+                "provider":                self._provider.provider_name,
+                "model_id":                self._provider.model_name,
+                "finish_reason":           "STOP",
+                "was_blocked":             False,
+            }
+            self._append_row(row)
+            processed_ids.add(record_id)
+            succeeded += 1
+            logger.info(
+                "  [%d/%d] Done — n_cqs=%d final=%s gold=%s correct=%s",
+                i, total, n_cqs, final_answer, gold_answer, is_correct_final,
+            )
+
+        logger.info(
+            "ShARC Flex complete — total=%d succeeded=%d skipped=%d failed=%d",
             total, succeeded, skipped, failed,
         )

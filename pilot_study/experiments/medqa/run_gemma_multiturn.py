@@ -1,11 +1,11 @@
-"""Run Phase 1 single-turn experiment with Gemma clinician + Gemini simulator.
+"""Run Phase 1 multi-turn experiment with Gemma clinician + Gemini simulator.
 
 Clinician model  : gemma-3-12b-it  (GemmaProvider)
 Simulator model  : see config.SIMULATOR_MODEL_ID (GeminiProvider)
 Judge model      : gemini-3.1-pro-preview (run separately via run_gemma_judge.py)
 
 Usage:
-    python run_gemma_singleturn.py
+    python run_gemma_multiturn.py
 """
 
 from __future__ import annotations
@@ -21,11 +21,11 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 # ── Path setup ────────────────────────────────────────────────────────────────
-ROOT = Path(__file__).parent.resolve()
+ROOT = Path(__file__).parent.parent.parent.resolve()
 sys.path.insert(0, str(ROOT))
 
 # ── Config ────────────────────────────────────────────────────────────────────
-from config import SIMULATOR_MODEL_ID, REQUEST_INTERVAL as _CFG_INTERVAL
+from config import SIMULATOR_MODEL_ID, N_CQ_TURNS, REQUEST_INTERVAL as _CFG_INTERVAL
 
 DATASET             = "medqa"
 CLINICIAN_MODEL_ID  = "gemma-3-12b-it"
@@ -36,7 +36,8 @@ OUTPUTS_DIR         = ROOT / "outputs"  / DATASET / CLINICIAN_MODEL_ID
 
 CASES_PATH          = DATASETS_DIR / "multiturn_100.jsonl"
 INSTRUCTION_FILE    = PROMPTS_DIR  / "phase1_instruction.txt"
-OUTPUT_CSV          = OUTPUTS_DIR  / "phase1_singleturn_results.csv"
+CONTINUATION_FILE   = PROMPTS_DIR  / "phase1_continuation_instruction.txt"
+OUTPUT_CSV          = OUTPUTS_DIR  / "phase1_multiturn_results.csv"
 
 REQUEST_INTERVAL    = _CFG_INTERVAL
 
@@ -47,7 +48,7 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
     handlers=[
         logging.StreamHandler(sys.stdout),
-        logging.FileHandler(ROOT / "logs" / f"gemma_singleturn.log", encoding="utf-8"),
+        logging.FileHandler(ROOT / "logs" / f"gemma_multiturn.log", encoding="utf-8"),
     ],
 )
 logger = logging.getLogger(__name__)
@@ -56,16 +57,17 @@ logger = logging.getLogger(__name__)
 def main() -> None:
     from src.utils import load_dotenv, clean_simulator_context
     from src.providers import GemmaProvider, GeminiProvider
-    from src.pipeline import Phase1Pipeline
+    from src.pipeline import MultiTurnPhase1Pipeline
 
     load_dotenv(ROOT / ".env")
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
     (ROOT / "logs").mkdir(parents=True, exist_ok=True)
 
     logger.info("=" * 70)
-    logger.info("Gemma Single-Turn Experiment")
+    logger.info("Gemma Multi-Turn Experiment")
     logger.info("  Clinician : %s (GemmaProvider)", CLINICIAN_MODEL_ID)
     logger.info("  Simulator : %s (GeminiProvider)", SIMULATOR_MODEL_ID)
+    logger.info("  N_CQ_TURNS: %d", N_CQ_TURNS)
     logger.info("  Output    : %s", OUTPUT_CSV)
     logger.info("=" * 70)
 
@@ -110,7 +112,7 @@ def main() -> None:
     resp = clinician_provider.call(
         system_instruction="You are a helpful assistant.",
         user_message="Reply with exactly: SMOKE TEST PASSED",
-        temperature=0.0, max_tokens=64,
+        temperature=0.0, max_tokens=4000,
     )
     assert "SMOKE" in resp.upper(), f"Clinician smoke test failed: {resp}"
     logger.info("Clinician smoke test PASSED: %s", resp.strip()[:60])
@@ -118,22 +120,24 @@ def main() -> None:
     resp2 = simulator_provider.call(
         system_instruction="You are a helpful assistant.",
         user_message="Reply with exactly: SMOKE TEST PASSED",
-        temperature=0.0, max_tokens=64,
+        temperature=0.0, max_tokens=4000,
     )
     assert "SMOKE" in resp2.upper(), f"Simulator smoke test failed: {resp2}"
     logger.info("Simulator smoke test PASSED: %s", resp2.strip()[:60])
 
     # Pipeline
-    pipeline = Phase1Pipeline(
+    pipeline = MultiTurnPhase1Pipeline(
         provider=clinician_provider,
         instruction_file=INSTRUCTION_FILE,
+        continuation_instruction_file=CONTINUATION_FILE,
         output_csv=OUTPUT_CSV,
+        n_turns=N_CQ_TURNS,
         request_interval=REQUEST_INTERVAL,
         simulator_provider=simulator_provider,
     )
 
     pipeline.run(records)
-    logger.info("Single-turn experiment complete. Results: %s", OUTPUT_CSV)
+    logger.info("Multi-turn experiment complete. Results: %s", OUTPUT_CSV)
 
 
 if __name__ == "__main__":

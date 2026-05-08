@@ -1,0 +1,101 @@
+id,clarifying_question
+medqa_0982,"What are the findings on chest imaging, such as a chest X-ray or CT scan?"
+medqa_0799,What are the patient's current blood pressure and heart rate?
+medqa_1095,What was the specific pathology identified on the CT scan?
+medqa_1228,"Does the patient have any headaches, visual disturbances, or symptoms of increased thirst and urination?"
+medqa_1054,Does the pain worsen when you lift your arm out to the side or overhead?
+medqa_0215,"Are you experiencing any pain or burning with urination, or do you feel like you're not emptying your bladder completely?"
+medqa_0155,"Has the patient recently taken any medications, prescribed or otherwise, or any illicit substances?"
+medqa_0886,Are you currently sexually active?
+medqa_0640,What are the patient's blood lead levels?
+medqa_0004,"Is this a new symptom, or does it happen seasonally or with specific exposures?"
+medqa_0141,"Does she have any other symptoms suggestive of Cushing's syndrome, such as central obesity, striae, or menstrual irregularities?"
+medqa_0090,"Have you had any recent international travel, or consumed any raw or undercooked meat or fish?"
+medqa_0655,What is the specific location of the insulinoma within the pancreas?
+medqa_0097,Have you experienced similar symptoms or infections in the past?
+medqa_0777,"Are there any objective signs of inflammation, such as joint swelling, warmth, or redness?"
+medqa_1245,What were the results of the pleural fluid cytology?
+medqa_0893,Does the patient have any allergies to penicillin or other antibiotics?
+medqa_0884,Are we specifically referring to proteins that are destined for export from the cell?
+medqa_1069,"Can you describe the mass for me? Is it firm or soft, mobile or fixed, and does it have a regular or irregular shape?"
+medqa_0925,"Has he had any issues with delayed umbilical cord separation, skin infections without pus, or unusual skin/hair/eye pigmentation?"
+medqa_1159,Is there any crepitus on abdominal examination?
+medqa_0758,Could you please describe the patient's specific cardiac findings?
+medqa_0451,Could you please specify which medication you are referring to?
+medqa_0050,"Are we specifically referring to ionizing radiation, as used in cancer therapy?"
+medqa_1119,Can you describe the exact location of your pain and if there was any specific injury or activity that brought it on?
+medqa_0222,Do you have a history of heart failure?
+medqa_0206,What is the generally accepted statistical threshold for a LOD score to indicate a high probability of genetic linkage?
+medqa_1134,Was there a specific injury or trauma to the foot that preceded the ulcer?
+medqa_0322,Are the falls typically backward?
+medqa_0951,"What are your goals for today's visit regarding smoking cessation, and how ready do you feel to set a quit date?"
+medqa_0208,What is DN501 used for?
+medqa_0872,"What is the suspected trajectory of the bullet, or which abdominal organs are involved?"
+medqa_0507,"Has the patient had any recent hospitalizations, resided in a nursing home, or received recent intravenous antibiotics?"
+medqa_0681,"Is there any swelling, redness, or warmth in the left leg, or has a DVT been ruled out?"
+medqa_0344,"Is the trembling present at rest, or does it occur with movement or when holding a posture?"
+medqa_0807,Are there any stab wounds to the chest or neck?
+medqa_0889,"Are there any other bleeding symptoms, such as easy bruising, nosebleeds, or prolonged bleeding from minor cuts?"
+medqa_1050,"Are you currently taking any other medications, including over-the-counter drugs or supplements?"
+medqa_0943,What type of cell is 'this cell'?
+medqa_0896,"Can you describe the specific changes you've noticed in your thoughts, feelings, and behaviors, particularly regarding any new beliefs, unusual perceptions, or significant shifts in your mood?"
+medqa_0052,What are the direct and indirect bilirubin levels?
+medqa_0607,Does the study aim to compare mortality in the psychiatric illness group to a general population?
+medqa_1182,Is the decreased renal blood flow an acute or chronic condition?
+medqa_0410,What are the patient's serum ADH levels?
+medqa_1164,What is the patient's current blood pressure?
+medqa_0467,Could you please provide the image showing the region indicated by the arrow?
+medqa_0610,What is the Rh status of the baby's father?
+medqa_0627,What is her cervical dilation and effacement?
+medqa_0702,What is the prevalence of the condition in the population being tested?
+medqa_0552,What were the findings on abdominal ultrasound?
+medqa_0258,"Does the patient have any history of alcohol use, lead exposure, or use of medications like isoniazid?"
+medqa_0711,"Can you describe the appearance of the dry skin and any associated scaling, and where on the body it is most prominent?"
+medqa_0128,Does the patient have any associated skin rashes or difficulty swallowing?
+medqa_1158,"Does the patient have any other systemic symptoms, such as rash, joint pain, or fever?"
+medqa_0138,"Does he experience any daytime urinary symptoms such as urgency, frequency, or daytime wetting?"
+medqa_0529,"Can you describe the specific nature of the vision loss? For example, is it a complete blackout, or is it more like a shadow or a part of your vision missing?"
+medqa_0770,Does the study include a control group of patients without paralysis?
+medqa_0569,Is the patient protecting their airway or experiencing respiratory distress?
+medqa_1077,"Is there any history of alcohol use, lead exposure, or medications known to cause sideroblastic anemia?"
+medqa_0857,Which specific drug are we discussing?
+medqa_1083,"Did you experience any specific injury or trauma to your foot, and are you able to bear weight on it?"
+medqa_0025,"What types of infections has she been experiencing, and have any specific organisms been identified?"
+medqa_0324,Are there any signs of jaundice or fever?
+medqa_1125,"Have you tried any over-the-counter pain relievers for these cramps, and if so, how effective were they?"
+medqa_0088,What are the patient's initial vital signs and lung exam findings?
+medqa_0749,"What is the onset, severity, and any associated symptoms of the headache?"
+medqa_1081,Which specific joints in her fingers are affected?
+medqa_0381,"Are there any other symptoms or signs, such as pallor, heavy menses, or pica, that would suggest iron deficiency anemia?"
+medqa_1172,"What is the character of the vaginal discharge (e.g., color, consistency, odor) and are there any associated symptoms like redness or irritation?"
+medqa_0932,"Do you experience any swelling, warmth, or redness in your knees, or significant morning stiffness?"
+medqa_1063,What is the planned surgical procedure?
+medqa_0885,"Was the headache sudden in onset, and are there any associated symptoms like weakness, numbness, or vision changes?"
+medqa_0458,"Are we asking about the physiological changes that occurred during the exercise itself, or the mechanisms involved in the body's return to a resting state after exercise?"
+medqa_1212,What was the composition of the patient's previous renal calculi?
+medqa_0920,Do you experience any difficulty or pain when swallowing?
+medqa_0334,Is there any evidence of existing diabetic nephropathy or other renal issues?
+medqa_0393,Is the patient hemodynamically stable?
+medqa_1171,Could you please describe the patient's neurological and psychiatric symptoms?
+medqa_0628,What specific liver abnormalities were found?
+medqa_1269,"Have you experienced any episodes of flushing, skin redness, or wheezing?"
+medqa_0099,What is the patient's current serum prolactin level?
+medqa_0207,Was the colposcopy satisfactory and the entire lesion visualized?
+medqa_0912,"Have you recently used a hot tub, swimming pool, or had prolonged exposure to water?"
+medqa_0423,"Is there evidence of microangiopathic hemolytic anemia (e.g., schistocytes on peripheral smear, elevated LDH, or low haptoglobin)?"
+medqa_0863,"Have you ingested any medications, drugs, or other substances recently?"
+medqa_1198,What exactly is the patient requesting regarding their pain management?
+medqa_1216,What were the patient's initial vital signs and respiratory status?
+medqa_0989,"Is the diarrhea watery, bloody, or does it contain mucus?"
+medqa_0682,Is the patient immunocompromised?
+medqa_0278,What are the patient's vital signs and key findings on lung auscultation and percussion?
+medqa_0983,What were the findings of his most recent endoscopy regarding esophageal varices?
+medqa_0620,"Are there any signs of fluid overload, such as peripheral edema, jugular venous distension, or pulmonary crackles?"
+medqa_1097,Is the diarrhea bloody?
+medqa_0732,"Are there any associated symptoms such as fever, neurological deficits, or signs of systemic illness?"
+medqa_0028,"Does the child have any fever, lethargy, or other neurological symptoms?"
+medqa_0644,What physiological parameter is represented by the changes at point D on the graph?
+medqa_0400,"Have you experienced any other symptoms such as skin rashes, mouth sores, hair loss, or chest pain?"
+medqa_0426,"What was the patient's travel destination, and did they experience any specific symptoms such as rash, diarrhea, or cough?"
+medqa_0281,Is Nikolsky's sign positive?
+medqa_0847,Has the patient previously tried H2 receptor blockers for their heartburn?

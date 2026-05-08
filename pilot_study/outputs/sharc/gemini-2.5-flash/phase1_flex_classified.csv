@@ -1,0 +1,136 @@
+id,question,label,raw_response,provider,model,latency_seconds,timestamp,error,turn
+sharc_000,"Are you a Veteran, Servicemember, current Reserve or National Guard member with at least 6 years of creditable service, or a surviving spouse?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.089,2026-05-07T19:55:03.392783+00:00,,1
+sharc_001,Are you a foreign national?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.371,2026-05-07T19:55:08.765139+00:00,,1
+sharc_002,"Are you a citizen, non-citizen national, or legal resident alien of the United States?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.885,2026-05-07T19:55:15.651571+00:00,,1
+sharc_003,Are you seeking assistance for a qualifying small business?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,2.417,2026-05-07T19:55:19.070291+00:00,,1
+sharc_004,Have you worked for your employer continuously for at least 26 weeks continuing into the 15th week before your expected week of childbirth?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,2.642,2026-05-07T19:55:22.715989+00:00,,1
+sharc_005,"Is the country you are referring to one of the following: Hungary, Iceland, Ireland, or Italy?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.526,2026-05-07T19:55:30.242711+00:00,,1
+sharc_006,Are you a single adult aged 16 or over?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,8.753,2026-05-07T19:55:39.997122+00:00,,1
+sharc_006,Do you or your children have a disability or medical condition that prevents sharing a bedroom?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,10.481,2026-05-07T19:55:51.479788+00:00,,2
+sharc_007,Are you a family farmer?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,9.659,2026-05-07T19:56:02.140282+00:00,,1
+sharc_007,Do you have a satisfactory history of meeting credit obligations?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.043,2026-05-07T19:56:08.185782+00:00,,2
+sharc_007,"Are you a citizen, non-citizen national, or legal resident alien of the United States?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.25,2026-05-07T19:56:13.437096+00:00,,3
+sharc_008,"Is your case related to Social Security and Child Support, Asylum Support, or Criminal Injuries Compensation?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.199,2026-05-07T19:56:17.637839+00:00,,1
+sharc_009,"Is your case a Social Security and Child Support, Asylum Support, or Criminal Injuries Compensation case?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,8.739,2026-05-07T19:56:27.378878+00:00,,1
+sharc_010,Are you a qualifying small business seeking capital for a start-up or growth situation?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,14.795,2026-05-07T19:56:43.175026+00:00,,1
+sharc_011,"Is the country you are referring to one of the following: Hungary, Iceland, Ireland, or Italy?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,12.32,2026-05-07T19:56:56.496794+00:00,,1
+sharc_012,Have you been getting Housing Benefit continuously at the same address since before 7 April 2008?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.09,2026-05-07T19:57:02.587832+00:00,,1
+sharc_014,Do you meet any of the specific criteria for a first preference immigrant worker as described in the rule?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.18,2026-05-07T19:57:08.769091+00:00,,1
+sharc_015,Are you 25 or older and currently a full-time student or an Australian Apprentice?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.612,2026-05-07T19:57:15.382995+00:00,,1
+sharc_016,"Are you a Veteran, Servicemember, current Reserve or National Guard member with at least 6 years of creditable service, or a certain surviving spouse?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.778,2026-05-07T19:57:21.162462+00:00,,1
+sharc_017,Do you live outside the UK?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.371,2026-05-07T19:57:27.535560+00:00,,1
+sharc_017,Are you a Crown servant posted overseas?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.085,2026-05-07T19:57:32.625018+00:00,,2
+sharc_017,Do you live abroad with your child and get UK benefits or the State Pension?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.87,2026-05-07T19:57:37.497302+00:00,,3
+sharc_018,Do you have an Honorable Discharge?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.57,2026-05-07T19:57:43.068561+00:00,,1
+sharc_018,Do you have a High School Diploma (or equivalent) or 12 hours of college credit?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,19.224,2026-05-07T19:58:03.294390+00:00,,2
+sharc_018,Do you meet the requirements under one of the four categories listed on the Department of Veterans Affairs (VA) Montgomery GI Bill Active Duty page?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.273,2026-05-07T19:58:08.569353+00:00,,3
+sharc_019,Have you worked for your employer continuously for at least 26 weeks continuing into the 15th week before your expected week of childbirth?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,2.571,2026-05-07T19:58:12.141207+00:00,,1
+sharc_019,Do you earn on average at least £113 a week?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.686,2026-05-07T19:58:17.829047+00:00,,2
+sharc_019,Have you given the correct notice to your employer?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.296,2026-05-07T19:58:24.126965+00:00,,3
+sharc_020,"Is your case a Social Security and Child Support, Asylum Support, or Criminal Injuries Compensation case?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.438,2026-05-07T19:58:31.566162+00:00,,1
+sharc_021,Do you plan to stay in the UK as your permanent home?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,8.963,2026-05-07T19:58:41.531467+00:00,,1
+sharc_022,Are you referring to one of the countries listed in the rule text?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,150.937,2026-05-07T20:01:13.470295+00:00,,1
+sharc_023,"Are you a Native American/American Indian who has been accepted or enrolled in an accredited degree program, college or university to study in the field of health care, and are you or your family member enrolled in a federally recognized American Indian tribe or Alaska Native village?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,17.321,2026-05-07T20:01:31.792766+00:00,,1
+sharc_024,"Is the animal classed as B, C, or D?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,68.826,2026-05-07T20:02:41.620111+00:00,,1
+sharc_025,Are you an agricultural producer or an owner of non-industrial private forestland?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,24.4,2026-05-07T20:03:07.021760+00:00,,1
+sharc_026,Is the item you are selling one of the specific items listed in the rule?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.565,2026-05-07T20:03:13.588117+00:00,,1
+sharc_027,"Are you the father, the husband or partner of the mother (or adopter), the child’s adopter, or an intended parent through a surrogacy arrangement?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,2.893,2026-05-07T20:03:17.483257+00:00,,1
+sharc_028,Are you a single adult aged 16 or over?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,16.886,2026-05-07T20:03:35.371254+00:00,,1
+sharc_028,"Do you have a disability or medical condition that prevents you from sharing a bedroom, or are you a child and shared bedrooms are already taken?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,24.088,2026-05-07T20:04:00.460865+00:00,,2
+sharc_029,Will you be the owner-operator of a family farm after loan closing?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.669,2026-05-07T20:04:07.131769+00:00,,1
+sharc_030,Do you claim Marriage Allowance or Blind Person's Allowance?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,23.801,2026-05-07T20:04:31.935562+00:00,,1
+sharc_030,"Is your income over £100,000?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.322,2026-05-07T20:04:38.260171+00:00,,2
+sharc_031,Are you a female Vietnam Veteran?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,14.521,2026-05-07T20:04:53.782255+00:00,,1
+sharc_032,Are you going to the European Economic Area (EEA) or Switzerland?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.043,2026-05-07T20:04:59.826816+00:00,,1
+sharc_033,Do you claim Marriage Allowance or Blind Person's Allowance?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,8.067,2026-05-07T20:05:08.905234+00:00,,1
+sharc_033,"Is your income over £100,000?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.131,2026-05-07T20:05:16.038285+00:00,,2
+sharc_034,"Are you a member of a profession that requires an advanced degree, do you have exceptional ability in the sciences, arts, or business, or are you seeking a national interest waiver?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.734,2026-05-07T20:05:20.774017+00:00,,1
+sharc_035,Are you an agricultural producer or an owner of non-industrial private forestland?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,10.878,2026-05-07T20:05:32.655196+00:00,,1
+sharc_036,Are you asking about the amount you get for council and social housing rent?,ALEATORIC,ALEATORIC,gemini,gemini-3.1-pro-preview,49.017,2026-05-07T20:06:22.706781+00:00,,1
+sharc_037,Do you or your partner currently claim Marriage Allowance?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,21.562,2026-05-07T20:06:45.270225+00:00,,1
+sharc_037,Were you or your partner born before 6 April 1935?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.927,2026-05-07T20:06:51.198718+00:00,,2
+sharc_038,"Are you trying to find out what benefits you could get, how to claim them, or how your benefits will be affected if you start work?",ALEATORIC,ALEATORIC,gemini,gemini-3.1-pro-preview,5.325,2026-05-07T20:06:57.525263+00:00,,1
+sharc_039,Have you served on active duty in the Armed Forces?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.539,2026-05-07T20:07:03.065802+00:00,,1
+sharc_040,Are you a physician?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,8.142,2026-05-07T20:07:12.209521+00:00,,1
+sharc_040,Do you agree to work full-time in clinical practice?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.697,2026-05-07T20:07:18.922842+00:00,,2
+sharc_040,Is the clinical practice in a designated underserved area?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.037,2026-05-07T20:07:24.961962+00:00,,3
+sharc_041,"Are you single, under 35, and seeking Housing Benefit for bed-sit accommodation or a single room in shared accommodation?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.125,2026-05-07T20:07:29.087906+00:00,,1
+sharc_042,Have you worked for your employer continuously for at least 26 weeks continuing into the 15th week before your expected week of childbirth?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,10.464,2026-05-07T20:07:40.553653+00:00,,1
+sharc_042,Do you earn on average at least £113 a week?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.6,2026-05-07T20:07:48.155207+00:00,,2
+sharc_042,Have you given the correct notice?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,16.816,2026-05-07T20:08:05.971799+00:00,,3
+sharc_043,Have you served on active duty in the Armed Forces?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.054,2026-05-07T20:08:13.027219+00:00,,1
+sharc_044,Are you 25 or older and currently a full-time student or an Australian Apprentice?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.461,2026-05-07T20:08:20.489831+00:00,,1
+sharc_045,"Does ""this"" refer to your savings, income, existing benefits/pensions, or outgoings?",ALEATORIC,ALEATORIC,gemini,gemini-3.1-pro-preview,3.444,2026-05-07T20:08:24.935534+00:00,,1
+sharc_046,Do you have an Honorable Discharge?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.578,2026-05-07T20:08:30.515034+00:00,,1
+sharc_046,Do you have a High School Diploma (or equivalent) or 12 hours of college credit?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.721,2026-05-07T20:08:36.237570+00:00,,2
+sharc_046,Do you meet the requirements under one of the four categories listed on the Department of Veterans Affairs (VA) Montgomery GI Bill Active Duty page?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.483,2026-05-07T20:08:42.721946+00:00,,3
+sharc_047,"Is the item you are asking about medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,24.412,2026-05-07T20:09:08.135525+00:00,,1
+sharc_048,"Is the item you are asking about medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,82.514,2026-05-07T20:10:31.650343+00:00,,1
+sharc_049,"Is the country you are referring to one of the following: Hungary, Iceland, Ireland, or Italy?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,7.049,2026-05-07T20:10:39.701216+00:00,,1
+sharc_050,"Is the item either medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.413,2026-05-07T20:10:46.115412+00:00,,1
+sharc_051,Is the sign you wish to display inconsistent with local laws or regulations?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.378,2026-05-07T20:10:50.494951+00:00,,1
+sharc_051,"Is the sign misleading, deceptive, false, or designed to appeal to a person under 21 years of age?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,8.953,2026-05-07T20:11:00.450074+00:00,,2
+sharc_052,"Is the item either medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.344,2026-05-07T20:11:06.796232+00:00,,1
+sharc_053,Do you have an Honorable Discharge?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.726,2026-05-07T20:11:12.523719+00:00,,1
+sharc_053,Do you have a High School Diploma (or equivalent) or 12 hours of college credit?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,7.278,2026-05-07T20:11:20.802931+00:00,,2
+sharc_053,Do you meet the requirements under one of the four categories listed on the Department of Veterans Affairs (VA) Montgomery GI Bill Active Duty page?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.928,2026-05-07T20:11:27.731815+00:00,,3
+sharc_054,Do you meet any of the specific criteria for a first preference immigrant worker as described in the rule?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.396,2026-05-07T20:11:35.128771+00:00,,1
+sharc_055,"Are you a citizen, non-citizen national, or legal resident alien of the United States?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.81,2026-05-07T20:11:40.940069+00:00,,1
+sharc_055,Are you a family farmer?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.81,2026-05-07T20:11:47.752500+00:00,,2
+sharc_055,Do you have a satisfactory history of meeting credit obligations?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.929,2026-05-07T20:11:55.682572+00:00,,3
+sharc_056,"Did you complete a qualification equivalent to a UK degree in Antigua and Barbuda, Australia, the Bahamas, or Barbados?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,22.702,2026-05-07T20:12:19.386598+00:00,,1
+sharc_057,Are you married or in a civil partnership?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,11.441,2026-05-07T20:12:31.829870+00:00,,1
+sharc_057,Is your income less than the standard Personal Allowance?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,10.964,2026-05-07T20:12:43.795322+00:00,,2
+sharc_058,"Are you age 65 or older, do you receive Social Security Disability benefits, or do you have certain disabilities or permanent kidney failure?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.029,2026-05-07T20:12:48.825918+00:00,,1
+sharc_058,Do you reside in a state or the District of Columbia?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,21.13,2026-05-07T20:13:10.958037+00:00,,2
+sharc_059,"Did you start receiving Housing Benefit after 7 April 2008, or have you changed address, or have you had a break in your claim for Housing Benefit?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,7.945,2026-05-07T20:13:19.904185+00:00,,1
+sharc_060,Are you a family farmer?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,8.316,2026-05-07T20:13:29.221335+00:00,,1
+sharc_060,Do you have a satisfactory history of meeting credit obligations?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.171,2026-05-07T20:13:36.394002+00:00,,2
+sharc_060,"Are you a citizen, non-citizen national, or legal resident alien of the United States?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,23.053,2026-05-07T20:14:00.447952+00:00,,3
+sharc_061,"Are you single, under 35, and seeking Housing Benefit for bed-sit accommodation or a single room in shared accommodation?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,7.987,2026-05-07T20:14:09.436392+00:00,,1
+sharc_062,Are you seeking assistance for a qualifying small business?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.159,2026-05-07T20:14:15.596916+00:00,,1
+sharc_063,"Are you selling this equipment to a charity that provides rescue or first aid services, or is it being bought specifically for donation to such a charity?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.966,2026-05-07T20:14:21.564385+00:00,,1
+sharc_064,"Are you single, under 35, and seeking Housing Benefit for bed-sit accommodation or a single room in shared accommodation?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.054,2026-05-07T20:14:25.634895+00:00,,1
+sharc_065,"Is the item you are asking about medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.243,2026-05-07T20:14:29.914855+00:00,,1
+sharc_066,"Are you the father, the husband or partner of the mother (or adopter), the child’s adopter, or an intended parent through a surrogacy arrangement?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.191,2026-05-07T20:14:37.107928+00:00,,1
+sharc_067,"Do you have an advanced degree, exceptional ability in the sciences, arts, or business, or are you seeking a national interest waiver?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.959,2026-05-07T20:14:42.068348+00:00,,1
+sharc_068,Are you a single adult aged 16 or over?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,12.607,2026-05-07T20:14:55.676806+00:00,,1
+sharc_068,"Are you a child who would normally share a bedroom, but all other shared bedrooms are already taken?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.352,2026-05-07T20:15:03.030630+00:00,,2
+sharc_068,Are you a couple or child who cannot share a bedroom because of a disability or medical condition?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,7.724,2026-05-07T20:15:11.755350+00:00,,3
+sharc_069,"Are you selling this equipment to a charity that provides rescue or first aid services, or is it being bought specifically for donation to such a charity?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.548,2026-05-07T20:15:16.304985+00:00,,1
+sharc_070,"Are you a Native American/American Indian who has been accepted or enrolled in an accredited degree program, college or university to study in the field of health care, and are you or your family member enrolled in a federally recognized American Indian tribe or Alaska Native village?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.09,2026-05-07T20:15:20.396702+00:00,,1
+sharc_071,Have you sustained physical damage?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.259,2026-05-07T20:15:26.656826+00:00,,1
+sharc_072,"Is your case related to Social Security and Child Support, Asylum Support, or Criminal Injuries Compensation?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.873,2026-05-07T20:15:34.531322+00:00,,1
+sharc_073,Are you a female Vietnam Veteran?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,25.734,2026-05-07T20:16:01.267107+00:00,,1
+sharc_074,"Are you a national of Canada or any of the countries in the list above, have you studied in the UK before as a Tier 4 (Child) student, or are you applying to come to the UK for a study abroad programme as part of a university degree course in the USA?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,8.938,2026-05-07T20:16:11.206825+00:00,,1
+sharc_075,Are you 25 or older and currently a full-time student or an Australian Apprentice?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.554,2026-05-07T20:16:17.761994+00:00,,1
+sharc_076,Are you going to the European Economic Area (EEA) or Switzerland?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.886,2026-05-07T20:16:25.648670+00:00,,1
+sharc_076,Were you entitled to contribution-based JSA on the day you went abroad?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.398,2026-05-07T20:16:31.047815+00:00,,2
+sharc_077,"Are you trying to determine what benefits you could get, how to claim them, or how starting work would affect your benefits?",ALEATORIC,ALEATORIC,gemini,gemini-3.1-pro-preview,5.013,2026-05-07T20:16:37.069839+00:00,,1
+sharc_078,"Were you employed by or for the U.S. government in Iraq for at least one year on or after March 20, 2003?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,21.801,2026-05-07T20:16:59.871774+00:00,,1
+sharc_078,Did you serve as an Afghan or Iraqi translator for the U.S. government?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,8.438,2026-05-07T20:17:09.310329+00:00,,2
+sharc_078,Were you an Afghan employed by the International Security Assistance Force (ISAF)?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.181,2026-05-07T20:17:15.492929+00:00,,3
+sharc_079,Do you or your partner currently claim Marriage Allowance?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.102,2026-05-07T20:17:21.596329+00:00,,1
+sharc_080,"Is the item you are asking about medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.663,2026-05-07T20:17:26.261162+00:00,,1
+sharc_081,Do you earn at least £113 a week before tax?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,9.942,2026-05-07T20:17:37.204937+00:00,,1
+sharc_081,Have you worked for your employer continuously for at least 26 weeks by the end of the 15th week before the expected week of childbirth?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.377,2026-05-07T20:17:44.582588+00:00,,2
+sharc_081,Will you be employed by your employer up to the date of birth?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.365,2026-05-07T20:17:51.949789+00:00,,3
+sharc_082,"Are you taking time off specifically to look after the child AND are you the father, the husband or partner of the mother (or adopter), the child's adopter, or the intended parent?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,4.255,2026-05-07T20:17:57.205734+00:00,,1
+sharc_083,Do you claim Marriage Allowance or Blind Person's Allowance?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.366,2026-05-07T20:18:04.572797+00:00,,1
+sharc_083,"Is your income over £100,000?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,14.128,2026-05-07T20:18:19.702731+00:00,,2
+sharc_084,"Are you a national of Canada, did you study in the UK before as a Tier 4 (Child) student, or are you applying to come to the UK for a study abroad programme as part of a university degree course in the USA?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,2.911,2026-05-07T20:18:23.615114+00:00,,1
+sharc_085,"Did you start receiving Housing Benefit after 7 April 2008, or have you changed address, or have you had a break in your claim for Housing Benefit?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.033,2026-05-07T20:18:27.649581+00:00,,1
+sharc_086,"Do you have an advanced degree, exceptional ability in the sciences, arts, or business, or are you seeking a national interest waiver?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.779,2026-05-07T20:18:34.429703+00:00,,1
+sharc_087,"Did you complete a qualification equivalent to a UK degree in Antigua and Barbuda, Australia, the Bahamas, or Barbados?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,2.495,2026-05-07T20:18:37.925942+00:00,,1
+sharc_088,Are you a female Vietnam Veteran and does your child have a birth defect?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.009,2026-05-07T20:18:43.937350+00:00,,1
+sharc_090,Do you meet any of the specific criteria listed for a first preference immigrant worker?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,18.175,2026-05-07T20:19:03.112982+00:00,,1
+sharc_091,"Did you complete a qualification equivalent to a UK degree in Antigua and Barbuda, Australia, the Bahamas, or Barbados?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.2,2026-05-07T20:19:07.314252+00:00,,1
+sharc_092,"Did you serve as an Afghan or Iraqi translator for the U.S. government, or were you employed by or for the U.S. government in Iraq for at least one year on or after March 20, 2003, or were you an Afghan employed by the International Security Assistance Force (ISAF)?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.401,2026-05-07T20:19:11.716613+00:00,,1
+sharc_093,"Are you a citizen, non-citizen national, or legal resident alien of the United States?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,6.596,2026-05-07T20:19:19.313973+00:00,,1
+sharc_093,Are you a family farmer?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.999,2026-05-07T20:19:26.314537+00:00,,2
+sharc_093,Do you have a satisfactory history of meeting credit obligations?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.294,2026-05-07T20:19:32.610255+00:00,,3
+sharc_094,"Are you single, under 35, and seeking Housing Benefit for bed-sit accommodation or a single room in shared accommodation?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,13.752,2026-05-07T20:19:47.364136+00:00,,1
+sharc_095,"Are you a spouse, an unmarried child under 21, or a parent of a U.S. citizen who is at least 21 years old?",EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,3.653,2026-05-07T20:19:52.028003+00:00,,1
+sharc_096,Is the item you are selling one of the specific items listed in the rule?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,7.641,2026-05-07T20:20:00.670918+00:00,,1
+sharc_098,Have you been continuously employed by your current employer for at least 26 weeks leading up to the 15th week before your baby is due?,EPISTEMIC,EPISTEMIC,gemini,gemini-3.1-pro-preview,5.647,2026-05-07T20:20:07.319066+00:00,,1
+sharc_099,"Are you trying to determine what benefits you could get, how to claim them, or how starting work would affect your benefits?",ALEATORIC,ALEATORIC,gemini,gemini-3.1-pro-preview,3.77,2026-05-07T20:20:12.092262+00:00,,1

@@ -24,6 +24,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from uncertainty_benchmark.src.utils import load_dotenv
+from uncertainty_benchmark.src.parsing import parse_with_schema
 
 load_dotenv(PROJECT_ROOT / "uncertainty_benchmark" / ".env")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s — %(message)s")
@@ -43,8 +44,9 @@ def test_gemini() -> bool:
         p = GeminiProvider(model_id="gemini-2.5-flash")
         text = p.call(SYSTEM, USER, temperature=0.0, max_tokens=64)
         logger.info("  Response: %s", text[:200])
-        obj = json.loads(text.strip().lstrip("```json").rstrip("```").strip())
-        assert obj.get("answer") is True, f"Expected true, got {obj}"
+        obj = parse_with_schema(text, required_keys=["answer", "confidence"])
+        assert obj is not None, f"parse_with_schema returned None — raw: {text[:200]}"
+        assert obj.get("answer") is True, f"Expected answer=true, got {obj}"
         print(f"  gemini-2.5-flash: {PASS}")
         return True
     except Exception as exc:

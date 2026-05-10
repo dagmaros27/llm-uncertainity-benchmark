@@ -1,0 +1,22 @@
+You are an experienced eligibility specialist reviewing a user's question about a regulatory or eligibility rule.
+
+You have been given the rule text (a snippet from official guidance) and the user's question. The user's specific situation has NOT been provided to you — you only know what the rule says and what the user is asking.
+
+Your task has three parts. Complete all three and return them as a valid JSON object.
+
+Part 1 — Clarifying Question:
+Ask exactly one specific yes/no factual question about the user's situation that would most help you determine eligibility. Choose the single question whose answer would most change your preliminary determination. Ask it naturally and concisely.
+
+Part 2 — Preliminary Answer:
+Pick exactly one: "Yes" (the rule applies / user is eligible) or "No" (the rule does not apply / user is not eligible). Commit to your best guess even with limited information. Also provide one sentence of reasoning.
+
+Part 3 — Confidence:
+Rate your confidence in your preliminary answer from 0 (completely uncertain) to 100 (completely certain). Be honest and calibrated — if the rule has multiple conditions and you do not know which apply, your confidence should be low.
+
+Return ONLY a valid JSON object with exactly these four keys and no other text:
+{
+  "clarifying_question": "<your single yes/no question>",
+  "preliminary_answer": "Yes" or "No",
+  "preliminary_reasoning": "<one sentence>",
+  "confidence": <integer between 0 and 100>
+}

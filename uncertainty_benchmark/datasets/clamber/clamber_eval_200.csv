@@ -1,0 +1,201 @@
+eval_id,subclass,true_label,clarifying_question
+clamber_000,ICL,EPISTEMIC,Is the category either does not contain a negation or proper noun?
+clamber_001,NK,EPISTEMIC,Can you provide more information about mitziella?
+clamber_002,NK,EPISTEMIC,Can you please provide more context or information about Thuparezomidae?
+clamber_003,what,ALEATORIC,"which one dies: person injured by axe, dog that first dies, or dog on top of old dan's grave"
+clamber_004,whom,ALEATORIC,What is your current fitness level and running experience?
+clamber_005,where,ALEATORIC,"Which one: the country, the city where group matches were held, the city where quarter finals were held, the city where semi finals were held, or the city where the final was held?"
+clamber_006,ICL,EPISTEMIC,Is the category either contains a negation or common noun?
+clamber_007,when,ALEATORIC,"In which year: 1917, or 1941?"
+clamber_008,co-reference,ALEATORIC,What does he refer to? the son or Robert?
+clamber_009,NK,EPISTEMIC,"What is the context or domain in which ""Hime capitonis"" is typically discussed?"
+clamber_010,ICL,EPISTEMIC,Is the category either indoor location or human?
+clamber_011,where,ALEATORIC," From which country: United States, India, or China?"
+clamber_012,what,ALEATORIC,What is the list?
+clamber_013,ICL,EPISTEMIC,Is the category either indoor location or human?
+clamber_014,what,ALEATORIC,"Which one: kingdom, clade, or division?"
+clamber_015,when,ALEATORIC,"In which year: 2017, 2016, or 2015?"
+clamber_016,ICL,EPISTEMIC,Is the category either indoor location or human?
+clamber_017,what,ALEATORIC,"Which one: the music, or the lyrics?"
+clamber_018,ICL,EPISTEMIC,Is the category either does not contain a negation or proper noun?
+clamber_019,ICL,EPISTEMIC,Is the category either outdoor location or animal?
+clamber_020,where,ALEATORIC," Which location: a National Forest, or peaks?"
+clamber_021,NK,EPISTEMIC,Can you please provide more information about Leuciaiaivea?
+clamber_022,whom,ALEATORIC,"Could you provide more details about the person who is learning to ski, such as their age, athletic background, and any previous experience with skiing or similar sports?"
+clamber_023,ICL,EPISTEMIC,Is the category either secular leader or female pronoun?
+clamber_024,ICL,EPISTEMIC,Is the category either common noun or contains a negation?
+clamber_025,ICL,EPISTEMIC,Is the category either proper noun or does not contain a negation?
+clamber_026,ICL,EPISTEMIC,Is the category either does not contain a negation or proper noun?
+clamber_027,ICL,EPISTEMIC,Is the category either male pronoun or religious leader?
+clamber_028,when,ALEATORIC,"In which year: 2017, 2016, or 2015?"
+clamber_029,whom,ALEATORIC,"Which one: who wrote the oldest known polyphonic, or who first brought polyphonic?"
+clamber_030,NK,EPISTEMIC,"What is the specific context or reference for ""Anthidium atorense""?"
+clamber_031,NK,EPISTEMIC,"Can you provide more information or context about ""Aro diffic plana""?"
+clamber_032,ICL,EPISTEMIC,Is the category either does not contain a negation or proper noun?
+clamber_033,ICL,EPISTEMIC,Is the category either outdoor location or animal?
+clamber_034,whom,ALEATORIC,"Which age of lily: adult, 11-year old, or 7- year old"
+clamber_035,polysemy,ALEATORIC,Are you referring to the term 'Tomboy' in relation to gender expression or a specific movie or song?
+clamber_036,what,ALEATORIC,"Which one: the film in North America, the film outside of North America, soundtrack, or score?"
+clamber_037,whom,ALEATORIC,What specific criteria or preferences do you have in mind that should be addressed to determine why cats might be considered better than dogs for you or your intended audience?
+clamber_038,co-reference,ALEATORIC,What does him refer to? Matthew or Joshua?
+clamber_039,ICL,EPISTEMIC,Is the category either male pronoun or religious leader?
+clamber_040,ICL,EPISTEMIC,Is the category either human or indoor location?
+clamber_041,what,ALEATORIC,"Could you provide more details on your current Kafka and Spark setup, such as the version, cluster size, and the specific latency issues you're experiencing"
+clamber_042,NK,EPISTEMIC,"Can you please provide more information about ""ymovicia""? Is it a specific organism, a geological period, or something else?"
+clamber_043,NK,EPISTEMIC,Can you please provide more information about Visciaabra?
+clamber_044,co-reference,ALEATORIC,What does she refer to? Kimberly or the aunt?
+clamber_045,what,ALEATORIC,"Are you looking for the basic steps for beginners, or are you seeking advanced techniques for a toe loop jump?"
+clamber_046,NK,EPISTEMIC,"Can you please provide more information about Johnstonia duplysna? Is it a specific place, a species, or something else?"
+clamber_047,NK,EPISTEMIC,"What is the intended meaning of ""Dicent canadensis""? Is it a specific plant species or a misspelling of a different plant name?"
+clamber_048,polysemy,ALEATORIC,Are you referring to Men in Black or Management Information Base?
+clamber_049,ICL,EPISTEMIC,Is the category either proper noun or does not contain a negation?
+clamber_050,where,ALEATORIC,Where exactly would you like to start your journey from when crossing the English Channel?
+clamber_051,co-reference,ALEATORIC,What does he refer to? Matthew or Joshua?
+clamber_052,NK,EPISTEMIC,Can you provide more information about Arigmodete?
+clamber_053,where,ALEATORIC,"Which location: El Capitan Theatre in Los Angeles, widely in the United States, at the Cannes Film Festival, or in select countries?"
+clamber_054,whom,ALEATORIC,"Which one: a chef, or a recruit?"
+clamber_055,ICL,EPISTEMIC,Is the category either common noun or contains a negation?
+clamber_056,when,ALEATORIC,"Which year: 2017, 2015, or 2008?"
+clamber_057,ICL,EPISTEMIC,Is the category either outdoor location or animal?
+clamber_058,what,ALEATORIC,"Which one: the team that won, or the team that lost?"
+clamber_059,ICL,EPISTEMIC,Is the category either male pronoun or religious leader?
+clamber_060,where,ALEATORIC,"Which country: Canada, France, Germany, Ireland, Japan, New Zealand, or South Korea?"
+clamber_061,ICL,EPISTEMIC,Is the category either does not contain a negation or proper noun?
+clamber_062,NK,EPISTEMIC,Can you provide more information about Bia?
+clamber_063,NK,EPISTEMIC,Can you provide more information about Kaotaia longa?
+clamber_064,NK,EPISTEMIC,"Can you please provide more information about what you mean by ""Oreo bushmark""?"
+clamber_065,where,ALEATORIC,"Which one: the airport, or the terminal?"
+clamber_066,NK,EPISTEMIC,"What is the context or field of study in which ""Rhodeus amarus"" is typically discussed?"
+clamber_067,co-reference,ALEATORIC,What does she refer to? Melissa or Jennifer?
+clamber_068,ICL,EPISTEMIC,Is the category either does not contain a negation or proper noun?
+clamber_069,where,ALEATORIC," Which place did the new star wars movie come out: Shrine Auditorium, in the United States, or at the Royal Albert Hall in London?"
+clamber_070,ICL,EPISTEMIC,Is the category either outdoor location or animal?
+clamber_071,whom,ALEATORIC,What are your preferences or themes you're interested in for a Halloween costume?
+clamber_072,when,ALEATORIC,"Which timeframe: the first half, or the second half?"
+clamber_073,NK,EPISTEMIC,"What is ""Tondora"" referring to?"
+clamber_074,when,ALEATORIC,"Which year: 2008, 1980, or 1961?"
+clamber_075,when,ALEATORIC,"In which year: 2018, 2015, or 2012?"
+clamber_076,NK,EPISTEMIC,Can you provide any additional context or information about Dioxysrichi?
+clamber_077,whom,ALEATORIC,Are there any dietary restrictions or cuisine preferences I should consider when suggesting potato dishes?
+clamber_078,polysemy,ALEATORIC,Are you asking about being observant in terms of paying close attention to details or in terms of adhering strictly to laws and rules and customs?
+clamber_079,where,ALEATORIC,"In which country: uk, us, or australia and new zealand?"
+clamber_080,NK,EPISTEMIC,"Can you provide more information about ClHummia? Is it a specific location, a species, or something else?"
+clamber_081,ICL,EPISTEMIC,Is the category either does not contain a negation or proper noun?
+clamber_082,NK,EPISTEMIC,Can you please provide more information about Saccolopolyspora?
+clamber_083,when,ALEATORIC,"Which time: first, second, or third?"
+clamber_084,whom,ALEATORIC,"In which one: a newly born baby, or an adult?"
+clamber_085,ICL,EPISTEMIC,Is the category either female pronoun or secular leader?
+clamber_086,where,ALEATORIC,"Which type of location: specifically, or geographically?"
+clamber_087,NK,EPISTEMIC,"Can you please provide more information about MacStatira? Is it a person, an animal, or something else?"
+clamber_088,where,ALEATORIC," On which country: America, or the United Kingdom?"
+clamber_089,ICL,EPISTEMIC,Is the category either secular leader or female pronoun?
+clamber_090,NK,EPISTEMIC,Can you provide more context or information about Ampulla?
+clamber_091,when,ALEATORIC," Which period was it released: announced, or at the Geneva Motor Show?"
+clamber_092,polysemy,ALEATORIC,Are you referring to the value of peanuts as a food product or as a monetary amount?
+clamber_093,NK,EPISTEMIC,"Can you please provide more information about Phora dubia? Is it a plant, animal, or something else?"
+clamber_094,NK,EPISTEMIC,"Can you please provide more information about ""Botaurus stellarinosus""? Is it a species of bird, mammal, or another type of organism?"
+clamber_095,where,ALEATORIC,"In which place: worldwide, or US and Canadian theatres?"
+clamber_096,where,ALEATORIC," Which origin: country, or background?"
+clamber_097,NK,EPISTEMIC,"What is the specific context or domain in which ""Tepa jugosa"" is being referred to?"
+clamber_098,NK,EPISTEMIC,"Can you please provide more information about ""Daph mac laureola""? Is it a plant species or something else?"
+clamber_099,where,ALEATORIC,"Which country: US, Netherlands, Norway, South Korea, Sweden, Finland, or the UK?"
+clamber_100,NK,EPISTEMIC,"What is ""Horum""?"
+clamber_101,NK,EPISTEMIC,"Can you please provide more information about ""Crop s minthe""?"
+clamber_102,polysemy,ALEATORIC,Are you referring to the movie or the general term?
+clamber_103,co-reference,ALEATORIC,What does her refer to? the sister-in-law or Amanda?
+clamber_104,polysemy,ALEATORIC,Are you referring to the 2013 film 'The Conjuring' or the 2021 film 'Conjuring: The Devil Made Me Do It'?
+clamber_105,polysemy,ALEATORIC,Are you referring to the book or the movie?
+clamber_106,NK,EPISTEMIC,"What is the context or field in which ""Comallcium"" is typically used or referenced?"
+clamber_107,ICL,EPISTEMIC,Is the category either common noun or contains a negation?
+clamber_108,polysemy,ALEATORIC,"Are you referring to the book, the movie, or something else?"
+clamber_109,co-reference,ALEATORIC,What does him refer to? William or Joshua?
+clamber_110,where,ALEATORIC,"Which location: at the Hammersmith Apollo, or throughout the UK?"
+clamber_111,NK,EPISTEMIC,"Can you please provide more information about ""Nofagusagus antiesii""? Is it a specific species of plant or a typo?"
+clamber_112,what,ALEATORIC," Which type of benefit: in terms of land, or economically?"
+clamber_113,where,ALEATORIC,Should the division be based on the outer appearance (skin or peel color) or the internal color of the fruits and vegetables?
+clamber_114,ICL,EPISTEMIC,Is the category either secular leader or female pronoun?
+clamber_115,whom,ALEATORIC,"Which person: who collected the x - ray diffraction images originally, or who collected the data and was last awarded the Nobel Prize for his work?"
+clamber_116,ICL,EPISTEMIC,Is the category either common noun or contains a negation?
+clamber_117,NK,EPISTEMIC,Can you please provide more information about Fargesia grossa?
+clamber_118,whom,ALEATORIC,"Which one: the actress, or the character?"
+clamber_119,NK,EPISTEMIC,What is Ryllobaga?
+clamber_120,NK,EPISTEMIC,Can you provide more information about Bengalia depressa?
+clamber_121,polysemy,ALEATORIC,"Are you referring to the word ""tack"" in the context of horse riding or sailing?"
+clamber_122,where,ALEATORIC," Which country: Japan, or the United States?"
+clamber_123,where,ALEATORIC," Which position: first base, second base, third base, shortstop, pitcher, outfield, or catcher?"
+clamber_124,NK,EPISTEMIC,"Can you please provide more information or context about ""Aroanaanalivacea""?"
+clamber_125,NK,EPISTEMIC,"What is the specific context or domain in which ""Gia parvif nutans"" is being referred to?"
+clamber_126,polysemy,ALEATORIC,Are you referring to the insurance company or another entity named Nationwide?
+clamber_127,when,ALEATORIC,"Which date: 12 May 2015, 31 May 2016, 21 Feb 2017, 29 Feb 2017, 28 Jun 2017, or 01 Dec 2017?"
+clamber_128,ICL,EPISTEMIC,Is the category either male pronoun or religious leader?
+clamber_129,NK,EPISTEMIC,"Can you please provide more information about ""Clun africanus""? Is it a species of animal, plant, or something else?"
+clamber_130,whom,ALEATORIC,What are the interests and preferences of the 12 year old boy?
+clamber_131,NK,EPISTEMIC,"Can you provide any additional information or context about ""Electocheisidium""?"
+clamber_132,ICL,EPISTEMIC,Is the category either indoor location or human?
+clamber_133,polysemy,ALEATORIC,Are you referring to the process of taking out money or the process of stopping drug use?
+clamber_134,NK,EPISTEMIC,What is Lomeris?
+clamber_135,whom,ALEATORIC,"Which player: the sone signed to play, or the one drafted in their first super draft"
+clamber_136,NK,EPISTEMIC,Can you please provide more information about Helichrysumbanense? Is it a plant species or a specific type of seed?
+clamber_137,where,ALEATORIC,"Which region: 1, or 4?"
+clamber_138,ICL,EPISTEMIC,Is the category either does not contain a negation or proper noun?
+clamber_139,when,ALEATORIC," Which year: 2017, 2016, or 2015?"
+clamber_140,what,ALEATORIC,"Which type of car: carriage-sized automobile, or running and gasoline-powered car?"
+clamber_141,whom,ALEATORIC,"What is your current familiarity with metal music, and are you looking for mainstream or specific sub-genres?"
+clamber_142,polysemy,ALEATORIC,Are you referring to reducing the noise of a loud and disturbing noise or reducing the noise made by a sports implement used in games?
+clamber_143,NK,EPISTEMIC,"Can you please provide more information about ""Schizobopina k lobata""? Is it a plant, animal, or something else?"
+clamber_144,ICL,EPISTEMIC,Is the category either indoor location or human?
+clamber_145,NK,EPISTEMIC,Can you provide more information about Maleonna?
+clamber_146,NK,EPISTEMIC,"What is the context or source of information regarding ""Jefferson ul bridgei""?"
+clamber_147,what,ALEATORIC,"Which one: the Gallo Opera House, the Casino de Paree, the WPA Federal Music Theatre, the New Yorker Theatre, CBS Studio 52, or a nightclub?"
+clamber_148,ICL,EPISTEMIC,Is the category either human or indoor location?
+clamber_149,ICL,EPISTEMIC,Is the category either secular leader or female pronoun?
+clamber_150,polysemy,ALEATORIC,Are you referring to shots as in vaccinations or shots as in alcoholic beverages?
+clamber_151,polysemy,ALEATORIC,Are you referring to the TV show or the book?
+clamber_152,ICL,EPISTEMIC,Is the category either indoor location or human?
+clamber_153,NK,EPISTEMIC,What is Chelyrttodestoni?
+clamber_154,NK,EPISTEMIC,"What is ""Sintoria emeralda"" referring to?"
+clamber_155,ICL,EPISTEMIC,Is the category either indoor location or human?
+clamber_156,whom,ALEATORIC,"Can you provide your current living situation, budget, and lifestyle preferences to tailor the list of pros and cons to your circumstances?"
+clamber_157,co-reference,ALEATORIC,What does he refer to? Matthew or Joshua?
+clamber_158,NK,EPISTEMIC,Can you please provide more context or information about Naphena?
+clamber_159,ICL,EPISTEMIC,Is the category either proper noun or does not contain a negation?
+clamber_160,whom,ALEATORIC,"Which one: the person who first used the phrase, or the person who came up with the underlying principles?"
+clamber_161,what,ALEATORIC,"Which one: the book, or the television film?"
+clamber_162,what,ALEATORIC,"Which one: initiated, or completed the break of England's ties to the Catholic Church?"
+clamber_163,where,ALEATORIC,"Which location: continent, or countries?"
+clamber_164,ICL,EPISTEMIC,Is the category either male pronoun or religious leader?
+clamber_165,ICL,EPISTEMIC,Is the category either female pronoun or secular leader?
+clamber_166,what,ALEATORIC,"By which one: declaration, or overthrowing British rule?"
+clamber_167,ICL,EPISTEMIC,Is the category either outdoor location or animal?
+clamber_168,polysemy,ALEATORIC,Are you referring to the competitor who has withdrawn from the competition or are you referring to a physical action of scraping or rubbing?
+clamber_169,ICL,EPISTEMIC,Is the category either female pronoun or secular leader?
+clamber_170,NK,EPISTEMIC,"Can you please provide more information about Macrocamera pansa? Is it a specific place, object, or something else?"
+clamber_171,ICL,EPISTEMIC,Is the category either secular leader or female pronoun?
+clamber_172,NK,EPISTEMIC,What is Arichria referring to?
+clamber_173,ICL,EPISTEMIC,Is the category either does not contain a negation or proper noun?
+clamber_174,whom,ALEATORIC,Can you specify what kind of business topics interest you or any preferred industry focus for the podcasts?
+clamber_175,where,ALEATORIC,"Which place is the episode being released: Japan, or the United States?"
+clamber_176,where,ALEATORIC," Which nationality: American, or Australian?"
+clamber_177,NK,EPISTEMIC,Can you provide more information about Aquariusarius fabricii?
+clamber_178,whom,ALEATORIC,"Which one: the full name, or the actor's name?"
+clamber_179,what,ALEATORIC,"Which type of breath: practice, or first real?"
+clamber_180,NK,EPISTEMIC,"Can you please provide more information about ""arnides""? Is it a specific organism, a geological period, or something else?"
+clamber_181,ICL,EPISTEMIC,Is the category either indoor location or human?
+clamber_182,what,ALEATORIC," In which one: gland, or cell?"
+clamber_183,when,ALEATORIC,"Which time period: 1992 to 2002, or 2006?"
+clamber_184,co-reference,ALEATORIC,What does him refer to? Matthew or Joshua?
+clamber_185,what,ALEATORIC,"Are you interested in a specific platform, method, or revenue stream used by influencers to make money? (e.g., social media, sponsorships, affiliate marketing)"
+clamber_186,ICL,EPISTEMIC,Is the category either secular leader or female pronoun?
+clamber_187,what,ALEATORIC,"Which one: the name of the College, the name of the school, or the city of the school?"
+clamber_188,ICL,EPISTEMIC,Is the category either contains a negation or common noun?
+clamber_189,ICL,EPISTEMIC,Is the category either common noun or contains a negation?
+clamber_190,what,ALEATORIC,"Which one: organ, or appendages?"
+clamber_191,when,ALEATORIC,"In which year: 2014, 2010, or 2006?"
+clamber_192,NK,EPISTEMIC,"Can you please provide more information about ""Ptedoctematidae""? I am not familiar with this term."
+clamber_193,where,ALEATORIC,Are you interested in activities suitable for specific geographic locations or any general activities in a natural environment?
+clamber_194,ICL,EPISTEMIC,Is the category either contains a negation or common noun?
+clamber_195,co-reference,ALEATORIC,What does her refer to? the sister-in-law or Amanda?
+clamber_196,NK,EPISTEMIC,"Can you please provide more information about ""achotus""? Is it a specific place, person, or object?"
+clamber_197,ICL,EPISTEMIC,Is the category either human or indoor location?
+clamber_198,when,ALEATORIC,"When is your vacation planned, so the doctor understands the urgency of the appointments?"
+clamber_199,when,ALEATORIC,"Which time period: before 2017, or after 2017"

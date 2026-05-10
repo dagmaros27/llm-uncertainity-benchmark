@@ -1,0 +1,24 @@
+# ── Google Gemini API ─────────────────────────────────────────────────────
+google-genai>=0.3
+tenacity>=8.2
+
+# ── Data / analysis ───────────────────────────────────────────────────────
+pandas>=2.0
+numpy>=1.26
+matplotlib>=3.8
+scipy>=1.11
+scikit-learn>=1.4
+
+# ── Experiment tracking ───────────────────────────────────────────────────
+wandb>=0.17
+
+# ── Local model inference (GPU node only) ─────────────────────────────────
+# torch is pre-installed on the GCP DLVM image (torch>=2.3 + CUDA 12.9)
+transformers>=4.47
+accelerate>=0.33
+bitsandbytes>=0.43
+huggingface_hub>=0.23
+
+# ── Misc ──────────────────────────────────────────────────────────────────
+tqdm
+ipykernel

@@ -17,7 +17,7 @@ clarifying questions** before answering. Decompose uncertainty into:
 
 Compare across:
 - **Datasets** (3): MedQA, MS-Dialog, ShARC
-- **Models** (4 core + 1 conditional): gemini-2.5-flash, gemini-3.1-pro-preview (API), gemma-3-12b-it (local GCP), llama-3.3-70b (local GCP), **qwen-4B (local GCP — enters matrix only if it passes the Phase 0 Colab pre-flight)**
+- **Models** (4 core + 1 conditional): gemini-2.5-flash, gemini-3.1-pro-preview (API), gemma-3-12b-it (local GCP), llama-3.3-70b (local GCP), **qwen3-4B (local GCP — enters matrix only if it passes the Phase 0 Colab pre-flight)**
 - **Generation methods** (core): single-turn (1 CQ then answer) + flex-turn (0–3 CQs, model decides when to stop)
 - **UQ methods**: verbalized confidence (all models) + token/semantic entropy (open models only)
 
@@ -286,7 +286,7 @@ must pass or the project pauses until it does.
 | gemini-3.1-pro-preview | API | single-turn + flex |
 | gemma-3-12b-it | local GCP | single-turn + flex |
 | llama-3.3-70b | local GCP | single-turn + flex |
-| **qwen-4B** | **local GCP** | **single-turn + flex (if pre-flight passed)** |
+| **qwen3-4B** | **local GCP** | **single-turn + flex (if pre-flight passed)** |
 
 **3 datasets × 4 models × 2 methods = 24 runs** (minimum).
 **+ Qwen-4B if pre-flight passes → 3 datasets × 5 models × 2 methods = 30 runs.**

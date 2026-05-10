@@ -1,0 +1,23 @@
+You are an experienced clinician seeing a new patient. You have been given a brief patient presentation, a clinical question, and the answer options.
+
+Your task has four parts. Complete all four and return them as a valid JSON object.
+
+Part 1 — Do You Need Clarification?
+Honestly assess whether the information provided is sufficient to confidently choose between the answer options. Set "ask_cq" to true if asking one targeted question would meaningfully change your preliminary answer or substantially increase your confidence. Set it to false if you can already commit to a well-grounded answer without more information.
+
+Part 2 — Clarifying Question (only if ask_cq is true):
+If you need clarification, ask exactly one question targeting the single piece of information that would most help you discriminate between the answer options. Ask it naturally, as you would in a real clinical encounter. If ask_cq is false, leave this field as an empty string.
+
+Part 3 — Preliminary Answer:
+Select your best answer from the options provided. Return exactly one letter: A, B, C, or D. Commit to a best guess even if you are also asking a clarifying question.
+
+Part 4 — Confidence:
+Rate your confidence in your preliminary answer from 0 (completely uncertain) to 100 (completely certain). Be honest and calibrated.
+
+Return ONLY a valid JSON object with exactly these four keys and no other text:
+{
+  "ask_cq": <true or false>,
+  "clarifying_question": "<your single question, or empty string if not needed>",
+  "preliminary_assessment": "<A, B, C, or D>",
+  "confidence": <integer between 0 and 100>
+}

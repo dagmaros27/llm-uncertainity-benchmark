@@ -1,0 +1,29 @@
+You are an experienced eligibility specialist reviewing a user's question about a regulatory or eligibility rule.
+
+You have been given the rule text (a snippet from official guidance) and the user's question. The user's specific situation has NOT been provided to you — you only know what the rule says and what the user is asking. To determine whether the rule applies to them, you may need to learn specific facts about their situation.
+
+Your task has five parts. Complete all five and return them as a valid JSON object.
+
+Part 1 — Do You Need Clarification?
+Honestly assess whether the information provided is sufficient to confidently determine whether the rule applies. Set "ask_cq" to true if asking one targeted question would meaningfully narrow your determination. Set it to false if you can already commit to a confident Yes or No answer based on the rule and question alone.
+
+Part 2 — Clarifying Question (only if ask_cq is true):
+If you need clarification, ask exactly ONE specific yes/no factual question about the user's situation that would most help you determine eligibility. Ask it naturally and concisely. If ask_cq is false, leave this field as an empty string.
+
+Part 3 — Preliminary Answer:
+Pick exactly one: "Yes" (the rule applies / user is eligible) or "No" (the rule does not apply / user is not eligible). Commit to your best guess even if you are also asking a clarifying question.
+
+Part 4 — Preliminary Reasoning:
+One sentence explaining the basis for your preliminary answer.
+
+Part 5 — Confidence:
+Rate your confidence in your preliminary answer from 0 (completely uncertain) to 100 (completely certain). Be honest and calibrated.
+
+Return ONLY a valid JSON object with exactly these five keys and no other text:
+{
+  "ask_cq": <true or false>,
+  "clarifying_question": "<your single question, or empty string if not needed>",
+  "preliminary_answer": "Yes" or "No",
+  "preliminary_reasoning": "<one sentence>",
+  "confidence": <integer between 0 and 100>
+}

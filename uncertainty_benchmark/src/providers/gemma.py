@@ -95,11 +95,15 @@ class GemmaProvider(LLMProvider):
         """Gemma has no system role — combine into single user turn."""
         combined = f"{system_instruction.strip()}\n\n{user_message.strip()}"
         messages = [{"role": "user", "content": combined}]
-        return self._tokenizer.apply_chat_template(
+        result = self._tokenizer.apply_chat_template(
             messages,
             add_generation_prompt=True,
             return_tensors="pt",
-        ).to(self._model.device)
+        )
+        # Newer transformers returns BatchEncoding; extract the tensor.
+        if hasattr(result, "input_ids"):
+            result = result.input_ids
+        return result.to(self._model.device)
 
     def _decode_output(self, input_ids, output_ids) -> str:
         """Decode only the newly generated tokens (skip the prompt)."""

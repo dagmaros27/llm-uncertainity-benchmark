@@ -105,7 +105,7 @@ class QwenProvider(LLMProvider):
             {"role": "user",   "content": user_message.strip()},
         ]
         try:
-            input_ids = self._tokenizer.apply_chat_template(
+            result = self._tokenizer.apply_chat_template(
                 messages,
                 add_generation_prompt=True,
                 enable_thinking=False,
@@ -114,12 +114,15 @@ class QwenProvider(LLMProvider):
         except TypeError:
             # Older tokenizer versions may not have enable_thinking
             logger.warning("enable_thinking kwarg not supported — using standard template")
-            input_ids = self._tokenizer.apply_chat_template(
+            result = self._tokenizer.apply_chat_template(
                 messages,
                 add_generation_prompt=True,
                 return_tensors="pt",
             )
-        return input_ids.to(self._model.device)
+        # Newer transformers returns BatchEncoding; extract the tensor.
+        if hasattr(result, "input_ids"):
+            result = result.input_ids
+        return result.to(self._model.device)
 
     def _decode_output(self, input_ids, output_ids) -> str:
         new_ids = output_ids[0, input_ids.shape[1]:]

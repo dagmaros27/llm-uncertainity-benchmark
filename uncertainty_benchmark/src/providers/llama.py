@@ -1,28 +1,42 @@
-"""Local Llama-3.3-70B-Instruct provider using HuggingFace Transformers.
+"""Local large-70B provider — DeepSeek-R1-Distill-Llama-70B (default).
 
-Identical architecture to GemmaProvider but:
-  • Supports system role in chat template (Llama-3 instruction format)
-  • 70B — expects multi-GPU or large single GPU; device_map="auto" handles this
-  • Optional 4-bit quantization strongly recommended for single-node setups
+Architecture: Llama-3 base, distilled from DeepSeek-R1 (reasoning model).
+This model emits <think>...</think> blocks which are stripped automatically.
+
+Key properties:
+  • Supports system role (Llama-3 chat template)
+  • 70B — device_map="auto" spans all available GPUs
+  • 4-bit NF4 quantization by default (~35-40 GB VRAM, fits A100-80GB)
+  • Thinking blocks stripped from output before returning text
 
 Model IDs:
-  "meta-llama/Llama-3.3-70B-Instruct"  (default)
+  "deepseek-ai/DeepSeek-R1-Distill-Llama-70B"  (default, ungated)
+  "meta-llama/Llama-3.3-70B-Instruct"           (gated, requires HF approval)
 """
 
 from __future__ import annotations
 
 import logging
+import re
 from typing import Optional
 
 from .base import LLMProvider
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_MODEL_ID = "meta-llama/Llama-3.3-70B-Instruct"
+DEFAULT_MODEL_ID = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B"
+
+# Strip <think>...</think> reasoning blocks emitted by DeepSeek distill models
+_THINKING_RE = re.compile(r"<think>.*?</think>", re.DOTALL)
+
+
+def strip_thinking(text: str) -> str:
+    """Remove DeepSeek-style <think>...</think> blocks from output."""
+    return _THINKING_RE.sub("", text).strip()
 
 
 class LlamaProvider(LLMProvider):
-    """Llama-3.3-70B-Instruct running locally via transformers."""
+    """DeepSeek-R1-Distill-Llama-70B (or any Llama-3-based model) running locally."""
 
     def __init__(
         self,
@@ -79,6 +93,9 @@ class LlamaProvider(LLMProvider):
 
     @property
     def provider_name(self) -> str:
+        # Use "deepseek" when running the DeepSeek distill; "llama" otherwise.
+        if "deepseek" in self._model_id.lower():
+            return "deepseek"
         return "llama"
 
     @property
@@ -90,7 +107,7 @@ class LlamaProvider(LLMProvider):
         return True
 
     def _build_input_ids(self, system_instruction: str, user_message: str):
-        """Llama-3 supports system role natively."""
+        """Llama-3 chat template — supports system role natively."""
         messages = [
             {"role": "system", "content": system_instruction.strip()},
             {"role": "user",   "content": user_message.strip()},
@@ -108,7 +125,8 @@ class LlamaProvider(LLMProvider):
 
     def _decode_output(self, input_ids, output_ids) -> str:
         new_ids = output_ids[0, input_ids.shape[1]:]
-        return self._tokenizer.decode(new_ids, skip_special_tokens=True).strip()
+        text = self._tokenizer.decode(new_ids, skip_special_tokens=True).strip()
+        return strip_thinking(text)
 
     def call(
         self,

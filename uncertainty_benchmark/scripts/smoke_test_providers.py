@@ -59,7 +59,7 @@ def test_gemma() -> bool:
     try:
         from uncertainty_benchmark.src.providers.gemma import GemmaProvider
         p = GemmaProvider(model_id="google/gemma-3-12b-it", load_in_4bit=True)
-        text, logprobs = p.call_with_logprobs(SYSTEM, USER, temperature=0.0, max_tokens=64)
+        text, logprobs = p.call_with_logprobs(SYSTEM, USER, temperature=0.0, max_tokens=128)
         logger.info("  Response: %s", text[:200])
         logger.info("  Logprob steps: %d", len(logprobs))
         assert logprobs and len(logprobs) > 0
@@ -71,18 +71,19 @@ def test_gemma() -> bool:
 
 
 def test_llama() -> bool:
-    logger.info("Testing LlamaProvider (meta-llama/Llama-3.3-70B-Instruct)...")
+    model_id = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B"
+    logger.info("Testing LlamaProvider (%s)...", model_id)
     try:
         from uncertainty_benchmark.src.providers.llama import LlamaProvider
-        p = LlamaProvider(model_id="meta-llama/Llama-3.3-70B-Instruct", load_in_4bit=True)
-        text, logprobs = p.call_with_logprobs(SYSTEM, USER, temperature=0.0, max_tokens=64)
+        p = LlamaProvider(model_id=model_id, load_in_4bit=True)
+        text, logprobs = p.call_with_logprobs(SYSTEM, USER, temperature=0.0, max_tokens=512)
         logger.info("  Response: %s", text[:200])
         logger.info("  Logprob steps: %d", len(logprobs))
         assert logprobs and len(logprobs) > 0
-        print(f"  Llama-3.3-70B: {PASS}  (logprob steps={len(logprobs)})")
+        print(f"  DeepSeek-R1-Distill-Llama-70B: {PASS}  (logprob steps={len(logprobs)})")
         return True
     except Exception as exc:
-        print(f"  Llama-3.3-70B: {FAIL} — {exc}")
+        print(f"  DeepSeek-R1-Distill-Llama-70B: {FAIL} — {exc}")
         return False
 
 

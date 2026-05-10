@@ -42,7 +42,7 @@ def test_gemini() -> bool:
     try:
         from uncertainty_benchmark.src.providers.gemini import GeminiProvider
         p = GeminiProvider(model_id="gemini-2.5-flash")
-        text = p.call(SYSTEM, USER, temperature=0.0, max_tokens=64)
+        text = p.call(SYSTEM, USER, temperature=0.0, max_tokens=128, expect_json=True)
         logger.info("  Response: %s", text[:200])
         obj = parse_with_schema(text, required_keys=["answer", "confidence"])
         assert obj is not None, f"parse_with_schema returned None — raw: {text[:200]}"

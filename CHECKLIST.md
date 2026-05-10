@@ -94,7 +94,7 @@ Update this file as each task is completed. Mark done with `[x]`.
 - [x] `src/providers/llama.py` — DeepSeek-R1-Distill-Llama-70B (local, device_map=auto, `call_with_logprobs`, 4-bit default, `<think>` stripping; swapped from Llama-3.3-70B which is gated)
 - [x] `src/providers/qwen.py` — Qwen3-4B (local, `enable_thinking=False`, `call_with_logprobs`, validated in pre-flight)
 - [x] `src/providers/base.py` — updated with `call_with_logprobs()`, `call_multiturn()`, `supports_logprobs` property
-- [ ] Smoke test: each provider completes 1 structured-output call *(run on GPU node)*
+- [x] Smoke test: gemini-2.5-flash ✅ | WandB ✅ | Qwen3-4B ✅ | gemma-3-12b-it ✅ | DeepSeek-R1-Distill-Llama-70B ⏳ (downloading 140GB)
 
 ### Robust JSON handling
 - [x] `src/parsing.py` — `parse_with_schema()` with 4-step retry ladder (direct → fence-strip → brace-extract → LLM self-repair)

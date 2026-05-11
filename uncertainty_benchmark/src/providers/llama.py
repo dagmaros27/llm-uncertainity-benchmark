@@ -113,6 +113,14 @@ class LlamaProvider(LLMProvider):
         block so the model skips extended chain-of-thought reasoning and
         outputs the JSON answer directly. Without this, the model exhausts
         max_tokens on thinking before ever producing the JSON.
+
+        We do NOT use continue_final_message=True here because the DeepSeek
+        chat template strips our empty assistant pre-fill, triggering:
+          "continue_final_message is set but the final message does not appear
+           in the chat after applying the chat template"
+        Instead we build the prompt as a plain string: apply_chat_template
+        with add_generation_prompt=True (stops after the assistant header),
+        then manually append "<think>\\n\\n</think>\\n\\n" before tokenizing.
         """
         messages = [
             {"role": "system", "content": system_instruction.strip()},
@@ -122,16 +130,15 @@ class LlamaProvider(LLMProvider):
         is_deepseek = "deepseek" in self._model_id.lower()
 
         if is_deepseek:
-            # Pre-fill empty thinking block: forces model past reasoning phase.
-            # Use continue_final_message=True to extend this partial turn.
-            messages.append({"role": "assistant", "content": "<think>\n\n</think>\n\n"})
-            result = self._tokenizer.apply_chat_template(
+            # Build prompt string up to the assistant header, then append
+            # the empty thinking pre-fill so the model skips reasoning.
+            prompt_str = self._tokenizer.apply_chat_template(
                 messages,
-                add_generation_prompt=False,
-                continue_final_message=True,
-                return_tensors="pt",
-                tokenize=True,
+                add_generation_prompt=True,
+                tokenize=False,
             )
+            prompt_str += "<think>\n\n</think>\n\n"
+            result = self._tokenizer(prompt_str, return_tensors="pt").input_ids
         else:
             result = self._tokenizer.apply_chat_template(
                 messages,
@@ -139,10 +146,10 @@ class LlamaProvider(LLMProvider):
                 return_tensors="pt",
                 tokenize=True,
             )
+            # Newer transformers returns BatchEncoding; extract the tensor.
+            if hasattr(result, "input_ids"):
+                result = result.input_ids
 
-        # Newer transformers returns BatchEncoding; extract the tensor.
-        if hasattr(result, "input_ids"):
-            result = result.input_ids
         return result.to(self._model.device)
 
     def _decode_output(self, input_ids, output_ids) -> str:

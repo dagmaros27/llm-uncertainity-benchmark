@@ -50,12 +50,15 @@ print(MODEL_REGISTRY['$model']['model_id'].split('/')[-1])
 
         if [ -f "$csv" ]; then
             rows=$(tail -n +2 "$csv" | wc -l)
-            echo "  → CSV rows written: ${rows}"
-            if [ "$rows" -ge 1 ]; then
+            # Count rows that actually succeeded (STOP or STOP_NO_CQ)
+            ok_rows=$(grep -cE ',STOP(_NO_CQ)?,' "$csv" 2>/dev/null || echo 0)
+            err_rows=$(grep -cE ',PARSE_ERROR,' "$csv" 2>/dev/null || echo 0)
+            echo "  → CSV rows: ${rows} total, ${ok_rows} STOP, ${err_rows} PARSE_ERROR"
+            if [ "$ok_rows" -ge 1 ]; then
                 echo "  ✅ PASS"
                 PASS=$((PASS + 1))
             else
-                echo "  ❌ FAIL — CSV exists but 0 data rows"
+                echo "  ❌ FAIL — 0 successful rows (all PARSE_ERROR or empty)"
                 FAIL=$((FAIL + 1))
                 FAILURES+=("$label")
             fi

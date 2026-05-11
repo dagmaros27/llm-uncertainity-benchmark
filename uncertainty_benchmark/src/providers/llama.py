@@ -107,17 +107,39 @@ class LlamaProvider(LLMProvider):
         return True
 
     def _build_input_ids(self, system_instruction: str, user_message: str):
-        """Llama-3 chat template — supports system role natively."""
+        """Llama-3 chat template — supports system role natively.
+
+        For DeepSeek-R1-Distill models: pre-fills an empty <think></think>
+        block so the model skips extended chain-of-thought reasoning and
+        outputs the JSON answer directly. Without this, the model exhausts
+        max_tokens on thinking before ever producing the JSON.
+        """
         messages = [
             {"role": "system", "content": system_instruction.strip()},
             {"role": "user",   "content": user_message.strip()},
         ]
-        result = self._tokenizer.apply_chat_template(
-            messages,
-            add_generation_prompt=True,
-            return_tensors="pt",
-            tokenize=True,
-        )
+
+        is_deepseek = "deepseek" in self._model_id.lower()
+
+        if is_deepseek:
+            # Pre-fill empty thinking block: forces model past reasoning phase.
+            # Use continue_final_message=True to extend this partial turn.
+            messages.append({"role": "assistant", "content": "<think>\n\n</think>\n\n"})
+            result = self._tokenizer.apply_chat_template(
+                messages,
+                add_generation_prompt=False,
+                continue_final_message=True,
+                return_tensors="pt",
+                tokenize=True,
+            )
+        else:
+            result = self._tokenizer.apply_chat_template(
+                messages,
+                add_generation_prompt=True,
+                return_tensors="pt",
+                tokenize=True,
+            )
+
         # Newer transformers returns BatchEncoding; extract the tensor.
         if hasattr(result, "input_ids"):
             result = result.input_ids

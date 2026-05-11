@@ -165,6 +165,11 @@ class LlamaProvider(LLMProvider):
         if self._deepseek_json_prefill:
             # Restore the "{" that was pre-filled into the input
             text = "{" + text
+        # Clean up BPE encoding artefacts that HuggingFace tokenizers can
+        # leave in the decoded string when using byte-level BPE:
+        #   Ġ (U+0120) represents a space-prefixed token → plain space
+        #   Ċ (U+010A) represents a newline-prefixed token → plain newline
+        text = text.replace("Ġ", " ").replace("Ċ", "\n")
         return strip_thinking(text)
 
     def call(

@@ -106,21 +106,26 @@ class LlamaProvider(LLMProvider):
     def supports_logprobs(self) -> bool:
         return True
 
+    # Flag: whether the DeepSeek JSON-start character was pre-filled into input
+    _deepseek_json_prefill: bool = False
+
     def _build_input_ids(self, system_instruction: str, user_message: str):
         """Llama-3 chat template — supports system role natively.
 
         For DeepSeek-R1-Distill models: pre-fills an empty <think></think>
-        block so the model skips extended chain-of-thought reasoning and
-        outputs the JSON answer directly. Without this, the model exhausts
-        max_tokens on thinking before ever producing the JSON.
+        block followed by a "{" to force the model to output JSON directly
+        without any reasoning preamble.
 
-        We do NOT use continue_final_message=True here because the DeepSeek
-        chat template strips our empty assistant pre-fill, triggering:
-          "continue_final_message is set but the final message does not appear
-           in the chat after applying the chat template"
-        Instead we build the prompt as a plain string: apply_chat_template
-        with add_generation_prompt=True (stops after the assistant header),
-        then manually append "<think>\\n\\n</think>\\n\\n" before tokenizing.
+        Two problems with a naïve approach:
+          1. continue_final_message=True: the DeepSeek chat template strips
+             empty assistant turns → raises "final message does not appear".
+          2. Empty think block only: the model still emits bare reasoning text
+             (without <think> tags) before the JSON, exhausting max_tokens.
+
+        Fix: build the prompt as a plain string, append the closed think block
+        plus the opening "{" of the JSON object, then tokenize. The model is
+        now committed to continuing the JSON object immediately. Because "{" is
+        in the INPUT (not generated), we restore it in _decode_output.
         """
         messages = [
             {"role": "system", "content": system_instruction.strip()},
@@ -128,16 +133,18 @@ class LlamaProvider(LLMProvider):
         ]
 
         is_deepseek = "deepseek" in self._model_id.lower()
+        self._deepseek_json_prefill = is_deepseek
 
         if is_deepseek:
-            # Build prompt string up to the assistant header, then append
-            # the empty thinking pre-fill so the model skips reasoning.
+            # Template produces: ...assistant_header\n\n
+            # We append: <think>\n\n</think>\n\n{
+            # The opening "{" hard-commits the model to JSON output.
             prompt_str = self._tokenizer.apply_chat_template(
                 messages,
                 add_generation_prompt=True,
                 tokenize=False,
             )
-            prompt_str += "<think>\n\n</think>\n\n"
+            prompt_str += "<think>\n\n</think>\n\n{"
             result = self._tokenizer(prompt_str, return_tensors="pt").input_ids
         else:
             result = self._tokenizer.apply_chat_template(
@@ -155,6 +162,9 @@ class LlamaProvider(LLMProvider):
     def _decode_output(self, input_ids, output_ids) -> str:
         new_ids = output_ids[0, input_ids.shape[1]:]
         text = self._tokenizer.decode(new_ids, skip_special_tokens=True).strip()
+        if self._deepseek_json_prefill:
+            # Restore the "{" that was pre-filled into the input
+            text = "{" + text
         return strip_thinking(text)
 
     def call(

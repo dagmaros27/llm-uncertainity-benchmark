@@ -92,10 +92,12 @@ Update this file as each task is completed. Mark done with `[x]`.
 - [x] `src/providers/gemini.py` — gemini-2.5-flash + gemini-3.1-pro-preview; updated with `expect_json`, `call_multiturn`
 - [x] `src/providers/gemma.py` — gemma-3-12b-it (local, transformers, `call_with_logprobs`, 4-bit BnB optional)
 - [x] `src/providers/llama.py` — DeepSeek-R1-Distill-Llama-70B (local, device_map=auto, `call_with_logprobs`, 4-bit default, `<think>` stripping; swapped from Llama-3.3-70B which is gated)
+  - Fix: JSON brace pre-fill (`<think>\n\n</think>\n\n{`) bypasses reasoning phase → ~15s/sample instead of 4+ min
+  - Fix: BPE artefact cleanup (Ġ→space, Ċ→newline) after tokenizer.decode()
 - [x] `src/providers/qwen.py` — Qwen3-4B (local, `enable_thinking=False`, `call_with_logprobs`, validated in pre-flight)
 - [x] `src/providers/base.py` — updated with `call_with_logprobs()`, `call_multiturn()`, `supports_logprobs` property
 - [x] Smoke test: gemini-2.5-flash ✅ | WandB ✅ | Qwen3-4B ✅ | gemma-3-12b-it ✅ | DeepSeek-R1-Distill-Llama-70B ✅ (512 logprob steps)
-  - ⚠️ DeepSeek is a reasoning model: 512 tok used for "2+2=4" alone → ~5.6 tok/s on A100-80GB → ~3-6 min/sample in experiments
+  - ⚠️ DeepSeek reasoning bypass confirmed working in dry runs: ~15s/sample with `{` pre-fill (vs 4+ min without)
 
 ### Robust JSON handling
 - [x] `src/parsing.py` — `parse_with_schema()` with 4-step retry ladder (direct → fence-strip → brace-extract → LLM self-repair)
@@ -134,32 +136,37 @@ Update this file as each task is completed. Mark done with `[x]`.
 
 ## Phase 2 — Experiment runs
 
-### Dry runs (5 records each — all configs before full runs)
-- [ ] MedQA × gemini-2.5-flash × single-turn
-- [ ] MedQA × gemini-2.5-flash × flex
-- [ ] MedQA × gemini-3.1-pro-preview × single-turn
-- [ ] MedQA × gemini-3.1-pro-preview × flex
-- [ ] MedQA × gemma-3-12b-it × single-turn
-- [ ] MedQA × gemma-3-12b-it × flex
-- [ ] MedQA × deepseek-r1-distill-70b × single-turn
-- [ ] MedQA × deepseek-r1-distill-70b × flex
-- [ ] MedQA × qwen3-4B × single-turn- [ ] MedQA × qwen3-4B × flex- [ ] MS-Dialog × gemini-2.5-flash × single-turn
-- [ ] MS-Dialog × gemini-2.5-flash × flex
-- [ ] MS-Dialog × gemini-3.1-pro-preview × single-turn
-- [ ] MS-Dialog × gemini-3.1-pro-preview × flex
-- [ ] MS-Dialog × gemma-3-12b-it × single-turn
-- [ ] MS-Dialog × gemma-3-12b-it × flex
-- [ ] MS-Dialog × deepseek-r1-distill-70b × single-turn
-- [ ] MS-Dialog × deepseek-r1-distill-70b × flex
-- [ ] MS-Dialog × qwen3-4B × single-turn- [ ] MS-Dialog × qwen3-4B × flex- [ ] ShARC × gemini-2.5-flash × single-turn
-- [ ] ShARC × gemini-2.5-flash × flex
-- [ ] ShARC × gemini-3.1-pro-preview × single-turn
-- [ ] ShARC × gemini-3.1-pro-preview × flex
-- [ ] ShARC × gemma-3-12b-it × single-turn
-- [ ] ShARC × gemma-3-12b-it × flex
-- [ ] ShARC × deepseek-r1-distill-70b × single-turn
-- [ ] ShARC × deepseek-r1-distill-70b × flex
-- [ ] ShARC × qwen3-4B × single-turn- [ ] ShARC × qwen3-4B × flex
+### Dry runs (5 records each — all configs before full runs) ✅ ALL 30 PASSED
+- [x] MedQA × gemini-2.5-flash × single-turn
+- [x] MedQA × gemini-2.5-flash × flex
+- [x] MedQA × gemini-3.1-pro-preview × single-turn
+- [x] MedQA × gemini-3.1-pro-preview × flex
+- [x] MedQA × gemma-3-12b-it × single-turn
+- [x] MedQA × gemma-3-12b-it × flex
+- [x] MedQA × deepseek-r1-distill-70b × single-turn
+- [x] MedQA × deepseek-r1-distill-70b × flex
+- [x] MedQA × qwen3-4B × single-turn
+- [x] MedQA × qwen3-4B × flex
+- [x] MS-Dialog × gemini-2.5-flash × single-turn
+- [x] MS-Dialog × gemini-2.5-flash × flex
+- [x] MS-Dialog × gemini-3.1-pro-preview × single-turn
+- [x] MS-Dialog × gemini-3.1-pro-preview × flex
+- [x] MS-Dialog × gemma-3-12b-it × single-turn
+- [x] MS-Dialog × gemma-3-12b-it × flex
+- [x] MS-Dialog × deepseek-r1-distill-70b × single-turn
+- [x] MS-Dialog × deepseek-r1-distill-70b × flex
+- [x] MS-Dialog × qwen3-4B × single-turn
+- [x] MS-Dialog × qwen3-4B × flex
+- [x] ShARC × gemini-2.5-flash × single-turn
+- [x] ShARC × gemini-2.5-flash × flex
+- [x] ShARC × gemini-3.1-pro-preview × single-turn
+- [x] ShARC × gemini-3.1-pro-preview × flex
+- [x] ShARC × gemma-3-12b-it × single-turn
+- [x] ShARC × gemma-3-12b-it × flex
+- [x] ShARC × deepseek-r1-distill-70b × single-turn
+- [x] ShARC × deepseek-r1-distill-70b × flex
+- [x] ShARC × qwen3-4B × single-turn
+- [x] ShARC × qwen3-4B × flex
 ### Full runs (200 records each)
 - [ ] MedQA × gemini-2.5-flash × single-turn
 - [ ] MedQA × gemini-2.5-flash × flex

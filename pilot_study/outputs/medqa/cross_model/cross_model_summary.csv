@@ -1,0 +1,15 @@
+,Gemini-2.5-flash,Gemma-3-12b-it
+st_prelim_acc,63.0,53.0
+st_post_cq_acc,74.0,50.0
+st_acc_gain_pp,11.0,-3.0
+st_mean_conf_delta,22.6,32.6
+st_prelim_ece,25.7,9.85
+st_postcq_ece,14.83,43.0
+st_pct_epistemic,97.0,99.0
+mt_prelim_acc,57.0,53.0
+mt_cq1_acc,69.0,52.0
+mt_cq2_acc,72.0,54.0
+mt_final_acc,75.0,56.0
+mt_acc_gain_pp,18.0,3.0
+mt_final_ece,20.59,38.76
+mt_pct_epistemic,99.3,99.3

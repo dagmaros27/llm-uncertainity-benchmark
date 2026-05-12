@@ -1,0 +1,101 @@
+id,clarifying_question
+medqa_0982,"Can you describe the chest pain – is it pleuritic, exertional, or something else?"
+medqa_0799,"Can you describe the chest pain – is it exertional, positional, or constant, and are there any associated symptoms like shortness of breath or nausea?"
+medqa_1095,"Could you describe the location of the pathology on the CT scan more precisely – for example, is it closer to the flank, the midline, or more anterior?"
+medqa_1228,"Has the patient experienced any recent changes in vision, headaches, or other neurological symptoms?"
+medqa_1054,"Can you describe the pain – is it constant, intermittent, sharp, dull, or aching, and what activities make it worse?"
+medqa_0215,How long has the patient been experiencing these urinary changes?
+medqa_0155,"Can you describe the 'unusual behavior' in more detail? Specifically, what behaviors are concerning you?"
+medqa_0886,"Has she reported any new symptoms or concerns since her last visit, such as unusual discharge, pain, or bleeding?"
+medqa_0640,"Can you tell me how long the abdominal cramps and muscle pains have been occurring, and have there been any other associated symptoms like urine discoloration, fatigue, or recent viral illnesses?"
+medqa_0004,"How long have the itchy, watery eyes been occurring?"
+medqa_0141,"How long has the patient been experiencing fatigue and weakness, and has there been any recent weight change or changes in appetite?"
+medqa_0090,"How long has the patient been experiencing these symptoms, and has there been any recent travel or changes in diet?"
+medqa_0655,"Could you describe the planned surgical approach (e.g., open, laparoscopic, robotic) and the anticipated location of the insulinoma within the pancreas?"
+medqa_0097,"Can you describe the appearance of the penile discharge – is it purulent, mucopurulent, or clear?"
+medqa_0777,"Can you describe the pattern of your pain – is it constant, intermittent, or fluctuating, and are there any specific activities or times of day that make it significantly better or worse?"
+medqa_1245,How long has the patient been experiencing the cough and fatigue?
+medqa_0893,"Can you describe the nature of the bite – was it a clean puncture wound, or did it involve crushing or tearing of the tissue?"
+medqa_0884,Could you please specify the type of protein-secreting cell this patient is exhibiting?
+medqa_1069,"How long has the patient noticed this mass, and has it changed in size?"
+medqa_0925,"Can you describe the types of bacterial infections he's experiencing, and roughly how frequently they occur?"
+medqa_1159,How long has the abdominal distension been progressing?
+medqa_0758,"How long has the patient been experiencing these symptoms, and has there been any unintentional weight loss?"
+medqa_0451,"How far can he typically walk before the cramping starts, and does rest alleviate the pain?"
+medqa_0050,"Is this patient's treatment plan primarily radiation, or is it combined with other modalities like chemotherapy?"
+medqa_1119,"Can you describe the nature of the pain – is it sharp, aching, constant, or related to specific activities?"
+medqa_0222,"Has she been diagnosed with diabetes, and if so, what type of diabetes and what medications is she currently taking?"
+medqa_0206,"Regarding the genetic analysis, what is the population being studied and is it known to have a high degree of genetic homogeneity?"
+medqa_1134,"Can you describe the location of the ulcer on the foot, and are there any signs of surrounding cellulitis or drainage?"
+medqa_0322,"Can you tell me more about the pattern of the falls – are they primarily forward, backward, sudden, or related to any specific movements or activities?"
+medqa_0951,"Has the patient expressed any previous attempts at quitting, and if so, what methods did she try and what were the barriers she encountered?"
+medqa_0208,What type of virus is DN501 intended to treat?
+medqa_0872,"Can you describe the location of the gunshot wound on the abdomen more specifically – for example, quadrant or distance from the umbilicus?"
+medqa_0507,Can you tell me about the patient's oxygen saturation and any findings on chest auscultation or imaging?
+medqa_0681,Can you tell me when the leg pain started and has there been any recent trauma or injury to the leg?
+medqa_0344,"Can you describe the tremor in more detail? For example, is it at rest, with movement, or postural?"
+medqa_0807,"Can you describe the location of the stab wounds – specifically, are any of them in the chest or near the neck?"
+medqa_0889,"How long has the patient been experiencing this gum bleeding, and has there been any recent trauma to the gums?"
+medqa_1050,"Can you describe the nature of the patient's statin intolerance – was it muscle pain, liver enzyme elevation, or something else?"
+medqa_0943,Could you please specify the type of cell we're discussing?
+medqa_0896,"Can you describe the specific changes in his personality – what behaviors or traits have changed, and when did you first notice these changes?"
+medqa_0052,How long has the patient been experiencing these symptoms?
+medqa_0607,"Could you please specify the psychiatric illness the patient is experiencing, or the broader context of the study?"
+medqa_1182,"How long has the patient's hypertension been present, and has there been any recent change in their medication or blood pressure control?"
+medqa_0410,Can you describe the patient's overall fluid intake and whether she feels thirsty?
+medqa_1164,"Can you tell me about any other medical conditions the patient has, particularly hypertension, heart failure, or kidney disease?"
+medqa_0467,"When did these symptoms begin, and has there been any noticeable progression or fluctuation in their severity?"
+medqa_0610,"When was the patient's varicella vaccination, if known?"
+medqa_0627,Can you tell me the patient's vital signs and if she's reporting any vaginal bleeding or leakage of amniotic fluid?
+medqa_0702,What is the context of this 'cut-off point' and what test are we discussing?
+medqa_0552,"Can you describe the location, character, and radiation of the abdominal pain, and has it been associated with any fever, nausea, vomiting, or changes in bowel habits?"
+medqa_0258,"How long has she been experiencing these symptoms, and has there been any recent travel or exposure to individuals with similar symptoms?"
+medqa_0711,"Has the dryness been present since birth, or did it develop later in life?"
+medqa_0128,"Can you describe the distribution of the muscle weakness – is it proximal or distal, and are there any specific muscle groups that are more affected?"
+medqa_1158,How long has the patient been exhibiting this aggressive behavior and responding to internal stimuli?
+medqa_0138,"How long has the bedwetting been occurring, and has there been any recent change in frequency or severity?"
+medqa_0529,"When did the vision loss begin – was it truly instantaneous, or did it develop over minutes or hours?"
+medqa_0770,How long has the paralysis persisted since the initial flu-like illness?
+medqa_0569,"Can you describe the circumstances of the loss of consciousness – was it sudden, gradual, associated with any specific events like trauma or seizure activity, or any known substance use?"
+medqa_1077,How long has the patient been experiencing this fatigue?
+medqa_0857,Could you please specify which drug you are referring to in this context?
+medqa_1083,"Can you describe the pain – is it sharp, dull, throbbing, or something else, and what activities make it worse?"
+medqa_0025,"Can you describe the types of infections she's experiencing – are they primarily bacterial, viral, or fungal, and how severe are they?"
+medqa_0324,"Can you describe the altered mental status in more detail – for example, is it acute onset, fluctuating, associated with focal neurological signs, or more of a gradual decline?"
+medqa_1125,"How long has she been experiencing these severe cramps, and have they changed in intensity or character over time?"
+medqa_0088,"Besides the MVC, does the patient have any specific complaints like shortness of breath, chest pain, or abdominal distension?"
+medqa_0749,"Can you describe the headache – what's the character, location, and how long has it been present?"
+medqa_1081,How long has the pain and stiffness been progressing?
+medqa_0381,"Can you describe the nature of the fatigue – is it constant, intermittent, related to activity, or associated with any specific times of day?"
+medqa_1172,"Can you describe the vaginal discharge – what is its color, consistency, and amount?"
+medqa_0932,"Can you describe the nature of the pain – is it constant, intermittent, sharp, aching, or related to activity?"
+medqa_1063,Is this patient undergoing a surgical procedure requiring muscle relaxation?
+medqa_0885,"Can you describe the headache – is it sudden in onset, and if so, how severe would you rate it on a scale of 1 to 10?"
+medqa_0458,"Can you describe what specifically he's experiencing after exercise – for example, is his heart rate and blood pressure elevated, decreased, or fluctuating, and how long does this change last?"
+medqa_1212,Can you tell me about the composition of the stone(s) that were passed or identified?
+medqa_0920,How long has the patient been experiencing fatigue and neck pain?
+medqa_0334,"How long has the patient had their diabetes diagnosis, and are there any existing complications like neuropathy or peripheral vascular disease?"
+medqa_0393,"Can you describe the appearance of the protruding bowel – is it dusky, edematous, or otherwise concerning for ischemia?"
+medqa_1171,"Regarding the abdominal symptoms, how long have they been present and has there been any change in their severity or character over time?"
+medqa_0628,"Can you tell me about any past medical history, including any history of alcohol use, viral hepatitis, or other liver conditions?"
+medqa_1269,"How long has the diarrhea been occurring, and has there been any noticeable weight loss or abdominal pain associated with it?"
+medqa_0099,Can you tell me if the patient has a history of psychosis or other psychiatric conditions for which he might be taking these medications?
+medqa_0207,Can you tell me the results of the HPV testing performed alongside the initial cervical biopsy?
+medqa_0912,"How would you describe the morphology of the individual bumps – are they pustular, papular, or vesicular?"
+medqa_0423,How long has the bloody diarrhea been occurring?
+medqa_0863,"Can you describe the nature of the abdominal pain – for example, is it localized, diffuse, cramping, or sharp?"
+medqa_1198,Can you tell me more about the surgery he had and when it occurred relative to the onset of this severe pain?
+medqa_1216,"Can you describe the mechanism of injury in more detail – specifically, what part of the vehicle did the patient occupy and what was the approximate speed/impact?"
+medqa_0989,"How long has the diarrhea been occurring, and has there been any blood or mucus in the stool?"
+medqa_0682,"Can you tell me more about the onset and characteristics of her shortness of breath – for example, is it gradual or sudden, and are there any associated symptoms like cough, fever, or chest pain?"
+medqa_0278,"Can you describe the severity of his shortness of breath – is he able to speak in full sentences, or is it significantly impairing his ability to breathe?"
+medqa_0983,"Has the patient previously been treated with beta-blockers, and if so, what was the response and current dosage?"
+medqa_0620,"Can you tell me if the patient has any known history of edema, heart failure, or kidney disease?"
+medqa_1097,How long has the patient been experiencing these symptoms?
+medqa_0732,"Can you describe the nature of the pain – is it constant, intermittent, sharp, dull, radiating, or associated with any neurological symptoms like numbness, tingling, or weakness in your arms or legs?"
+medqa_0028,How long has the vomiting and bloody diarrhea been occurring?
+medqa_0644,"Could you describe what 'point D' on the graph represents – specifically, what variable is being measured and what is its value at that point?"
+medqa_0400,How long has the knee swelling and pain been present?
+medqa_0426,"Where did the patient recently travel, and what activities did they engage in during their trip?"
+medqa_0281,How long has this bulla been present?
+medqa_0847,"How long has the patient been experiencing heartburn, and are there any specific triggers or alleviating factors you've noticed?"

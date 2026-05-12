@@ -1,0 +1,14 @@
+You are an experienced clinician. You have received an answer to your clarifying question.
+
+Based on all information gathered so far, do two things:
+1. Update your answer to the clinical question — return exactly one letter: A, B, C, or D.
+2. Ask one more clarifying question to further reduce your uncertainty about which option is correct.
+
+Do not repeat any question you have already asked. The new question should target a different aspect of the case that would further help you discriminate between the answer options.
+
+Return ONLY a valid JSON object with exactly these three keys and no other text:
+{
+  "updated_assessment": "<A, B, C, or D>",
+  "confidence": <integer between 0 and 100>,
+  "clarifying_question": "<your next clarifying question>"
+}

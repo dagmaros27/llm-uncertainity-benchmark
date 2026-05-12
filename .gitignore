@@ -1,0 +1,46 @@
+# ── Secrets ───────────────────────────────────────────────────────────────
+**/.env
+**/.venv
+
+# ── Python cache ──────────────────────────────────────────────────────────
+**/__pycache__/**
+**/*.pyc
+**/.pytest_cache/**
+**/.mypy_cache/**
+**/.ruff_cache/**
+**/.pyre/**
+**/.hypothesis/**
+**/.nox/**
+**/.tox/**
+
+# ── Claude Code session state ─────────────────────────────────────────────
+.claude/
+
+# ── Raw / large source datasets (not curated benchmark data) ─────────────
+# MS-Dialog raw JSON files (large, not for repo)
+pilot_study/datasets/ms-dialog/MSDialog-Complete.json
+pilot_study/datasets/ms-dialog/MSDialog-Intent.json
+pilot_study/datasets/ms-dialog/MSDialog-IntentPred/
+pilot_study/datasets/ms-dialog/MSDialog-ResponseRank/
+# ShARC raw official splits
+pilot_study/datasets/sharc1-official/
+# Other raw benchmark datasets
+pilot_study/datasets/CAB/
+pilot_study/datasets/ClarEval/
+pilot_study/datasets/ambigQA/
+
+# ── Build / synthesis caches (re-generatable) ─────────────────────────────
+uncertainty_benchmark/datasets/msdialog/_synthesis_cache.jsonl
+uncertainty_benchmark/datasets/msdialog/_selected_preview.jsonl
+
+# ── Logs ──────────────────────────────────────────────────────────────────
+**/*.log
+uncertainty_benchmark/logs/
+
+# ── Experiment outputs (large CSVs / PDFs — tracked separately) ───────────
+uncertainty_benchmark/outputs/
+uncertainty_benchmark/figures/
+
+# ── Misc scratch ──────────────────────────────────────────────────────────
+pilot_study_2/
+pilot_study/logs/

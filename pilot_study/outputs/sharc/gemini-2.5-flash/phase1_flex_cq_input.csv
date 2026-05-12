@@ -1,0 +1,136 @@
+id,turn,clarifying_question
+sharc_000,1,"Are you a Veteran, Servicemember, current Reserve or National Guard member with at least 6 years of creditable service, or a surviving spouse?"
+sharc_001,1,Are you a foreign national?
+sharc_002,1,"Are you a citizen, non-citizen national, or legal resident alien of the United States?"
+sharc_003,1,Are you seeking assistance for a qualifying small business?
+sharc_004,1,Have you worked for your employer continuously for at least 26 weeks continuing into the 15th week before your expected week of childbirth?
+sharc_005,1,"Is the country you are referring to one of the following: Hungary, Iceland, Ireland, or Italy?"
+sharc_006,1,Are you a single adult aged 16 or over?
+sharc_006,2,Do you or your children have a disability or medical condition that prevents sharing a bedroom?
+sharc_007,1,Are you a family farmer?
+sharc_007,2,Do you have a satisfactory history of meeting credit obligations?
+sharc_007,3,"Are you a citizen, non-citizen national, or legal resident alien of the United States?"
+sharc_008,1,"Is your case related to Social Security and Child Support, Asylum Support, or Criminal Injuries Compensation?"
+sharc_009,1,"Is your case a Social Security and Child Support, Asylum Support, or Criminal Injuries Compensation case?"
+sharc_010,1,Are you a qualifying small business seeking capital for a start-up or growth situation?
+sharc_011,1,"Is the country you are referring to one of the following: Hungary, Iceland, Ireland, or Italy?"
+sharc_012,1,Have you been getting Housing Benefit continuously at the same address since before 7 April 2008?
+sharc_014,1,Do you meet any of the specific criteria for a first preference immigrant worker as described in the rule?
+sharc_015,1,Are you 25 or older and currently a full-time student or an Australian Apprentice?
+sharc_016,1,"Are you a Veteran, Servicemember, current Reserve or National Guard member with at least 6 years of creditable service, or a certain surviving spouse?"
+sharc_017,1,Do you live outside the UK?
+sharc_017,2,Are you a Crown servant posted overseas?
+sharc_017,3,Do you live abroad with your child and get UK benefits or the State Pension?
+sharc_018,1,Do you have an Honorable Discharge?
+sharc_018,2,Do you have a High School Diploma (or equivalent) or 12 hours of college credit?
+sharc_018,3,Do you meet the requirements under one of the four categories listed on the Department of Veterans Affairs (VA) Montgomery GI Bill Active Duty page?
+sharc_019,1,Have you worked for your employer continuously for at least 26 weeks continuing into the 15th week before your expected week of childbirth?
+sharc_019,2,Do you earn on average at least £113 a week?
+sharc_019,3,Have you given the correct notice to your employer?
+sharc_020,1,"Is your case a Social Security and Child Support, Asylum Support, or Criminal Injuries Compensation case?"
+sharc_021,1,Do you plan to stay in the UK as your permanent home?
+sharc_022,1,Are you referring to one of the countries listed in the rule text?
+sharc_023,1,"Are you a Native American/American Indian who has been accepted or enrolled in an accredited degree program, college or university to study in the field of health care, and are you or your family member enrolled in a federally recognized American Indian tribe or Alaska Native village?"
+sharc_024,1,"Is the animal classed as B, C, or D?"
+sharc_025,1,Are you an agricultural producer or an owner of non-industrial private forestland?
+sharc_026,1,Is the item you are selling one of the specific items listed in the rule?
+sharc_027,1,"Are you the father, the husband or partner of the mother (or adopter), the child’s adopter, or an intended parent through a surrogacy arrangement?"
+sharc_028,1,Are you a single adult aged 16 or over?
+sharc_028,2,"Do you have a disability or medical condition that prevents you from sharing a bedroom, or are you a child and shared bedrooms are already taken?"
+sharc_029,1,Will you be the owner-operator of a family farm after loan closing?
+sharc_030,1,Do you claim Marriage Allowance or Blind Person's Allowance?
+sharc_030,2,"Is your income over £100,000?"
+sharc_031,1,Are you a female Vietnam Veteran?
+sharc_032,1,Are you going to the European Economic Area (EEA) or Switzerland?
+sharc_033,1,Do you claim Marriage Allowance or Blind Person's Allowance?
+sharc_033,2,"Is your income over £100,000?"
+sharc_034,1,"Are you a member of a profession that requires an advanced degree, do you have exceptional ability in the sciences, arts, or business, or are you seeking a national interest waiver?"
+sharc_035,1,Are you an agricultural producer or an owner of non-industrial private forestland?
+sharc_036,1,Are you asking about the amount you get for council and social housing rent?
+sharc_037,1,Do you or your partner currently claim Marriage Allowance?
+sharc_037,2,Were you or your partner born before 6 April 1935?
+sharc_038,1,"Are you trying to find out what benefits you could get, how to claim them, or how your benefits will be affected if you start work?"
+sharc_039,1,Have you served on active duty in the Armed Forces?
+sharc_040,1,Are you a physician?
+sharc_040,2,Do you agree to work full-time in clinical practice?
+sharc_040,3,Is the clinical practice in a designated underserved area?
+sharc_041,1,"Are you single, under 35, and seeking Housing Benefit for bed-sit accommodation or a single room in shared accommodation?"
+sharc_042,1,Have you worked for your employer continuously for at least 26 weeks continuing into the 15th week before your expected week of childbirth?
+sharc_042,2,Do you earn on average at least £113 a week?
+sharc_042,3,Have you given the correct notice?
+sharc_043,1,Have you served on active duty in the Armed Forces?
+sharc_044,1,Are you 25 or older and currently a full-time student or an Australian Apprentice?
+sharc_045,1,"Does ""this"" refer to your savings, income, existing benefits/pensions, or outgoings?"
+sharc_046,1,Do you have an Honorable Discharge?
+sharc_046,2,Do you have a High School Diploma (or equivalent) or 12 hours of college credit?
+sharc_046,3,Do you meet the requirements under one of the four categories listed on the Department of Veterans Affairs (VA) Montgomery GI Bill Active Duty page?
+sharc_047,1,"Is the item you are asking about medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?"
+sharc_048,1,"Is the item you are asking about medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?"
+sharc_049,1,"Is the country you are referring to one of the following: Hungary, Iceland, Ireland, or Italy?"
+sharc_050,1,"Is the item either medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?"
+sharc_051,1,Is the sign you wish to display inconsistent with local laws or regulations?
+sharc_051,2,"Is the sign misleading, deceptive, false, or designed to appeal to a person under 21 years of age?"
+sharc_052,1,"Is the item either medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?"
+sharc_053,1,Do you have an Honorable Discharge?
+sharc_053,2,Do you have a High School Diploma (or equivalent) or 12 hours of college credit?
+sharc_053,3,Do you meet the requirements under one of the four categories listed on the Department of Veterans Affairs (VA) Montgomery GI Bill Active Duty page?
+sharc_054,1,Do you meet any of the specific criteria for a first preference immigrant worker as described in the rule?
+sharc_055,1,"Are you a citizen, non-citizen national, or legal resident alien of the United States?"
+sharc_055,2,Are you a family farmer?
+sharc_055,3,Do you have a satisfactory history of meeting credit obligations?
+sharc_056,1,"Did you complete a qualification equivalent to a UK degree in Antigua and Barbuda, Australia, the Bahamas, or Barbados?"
+sharc_057,1,Are you married or in a civil partnership?
+sharc_057,2,Is your income less than the standard Personal Allowance?
+sharc_058,1,"Are you age 65 or older, do you receive Social Security Disability benefits, or do you have certain disabilities or permanent kidney failure?"
+sharc_058,2,Do you reside in a state or the District of Columbia?
+sharc_059,1,"Did you start receiving Housing Benefit after 7 April 2008, or have you changed address, or have you had a break in your claim for Housing Benefit?"
+sharc_060,1,Are you a family farmer?
+sharc_060,2,Do you have a satisfactory history of meeting credit obligations?
+sharc_060,3,"Are you a citizen, non-citizen national, or legal resident alien of the United States?"
+sharc_061,1,"Are you single, under 35, and seeking Housing Benefit for bed-sit accommodation or a single room in shared accommodation?"
+sharc_062,1,Are you seeking assistance for a qualifying small business?
+sharc_063,1,"Are you selling this equipment to a charity that provides rescue or first aid services, or is it being bought specifically for donation to such a charity?"
+sharc_064,1,"Are you single, under 35, and seeking Housing Benefit for bed-sit accommodation or a single room in shared accommodation?"
+sharc_065,1,"Is the item you are asking about medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?"
+sharc_066,1,"Are you the father, the husband or partner of the mother (or adopter), the child’s adopter, or an intended parent through a surrogacy arrangement?"
+sharc_067,1,"Do you have an advanced degree, exceptional ability in the sciences, arts, or business, or are you seeking a national interest waiver?"
+sharc_068,1,Are you a single adult aged 16 or over?
+sharc_068,2,"Are you a child who would normally share a bedroom, but all other shared bedrooms are already taken?"
+sharc_068,3,Are you a couple or child who cannot share a bedroom because of a disability or medical condition?
+sharc_069,1,"Are you selling this equipment to a charity that provides rescue or first aid services, or is it being bought specifically for donation to such a charity?"
+sharc_070,1,"Are you a Native American/American Indian who has been accepted or enrolled in an accredited degree program, college or university to study in the field of health care, and are you or your family member enrolled in a federally recognized American Indian tribe or Alaska Native village?"
+sharc_071,1,Have you sustained physical damage?
+sharc_072,1,"Is your case related to Social Security and Child Support, Asylum Support, or Criminal Injuries Compensation?"
+sharc_073,1,Are you a female Vietnam Veteran?
+sharc_074,1,"Are you a national of Canada or any of the countries in the list above, have you studied in the UK before as a Tier 4 (Child) student, or are you applying to come to the UK for a study abroad programme as part of a university degree course in the USA?"
+sharc_075,1,Are you 25 or older and currently a full-time student or an Australian Apprentice?
+sharc_076,1,Are you going to the European Economic Area (EEA) or Switzerland?
+sharc_076,2,Were you entitled to contribution-based JSA on the day you went abroad?
+sharc_077,1,"Are you trying to determine what benefits you could get, how to claim them, or how starting work would affect your benefits?"
+sharc_078,1,"Were you employed by or for the U.S. government in Iraq for at least one year on or after March 20, 2003?"
+sharc_078,2,Did you serve as an Afghan or Iraqi translator for the U.S. government?
+sharc_078,3,Were you an Afghan employed by the International Security Assistance Force (ISAF)?
+sharc_079,1,Do you or your partner currently claim Marriage Allowance?
+sharc_080,1,"Is the item you are asking about medical, veterinary, or scientific equipment, an ambulance, goods for disabled people, or a motor vehicle for medical use?"
+sharc_081,1,Do you earn at least £113 a week before tax?
+sharc_081,2,Have you worked for your employer continuously for at least 26 weeks by the end of the 15th week before the expected week of childbirth?
+sharc_081,3,Will you be employed by your employer up to the date of birth?
+sharc_082,1,"Are you taking time off specifically to look after the child AND are you the father, the husband or partner of the mother (or adopter), the child's adopter, or the intended parent?"
+sharc_083,1,Do you claim Marriage Allowance or Blind Person's Allowance?
+sharc_083,2,"Is your income over £100,000?"
+sharc_084,1,"Are you a national of Canada, did you study in the UK before as a Tier 4 (Child) student, or are you applying to come to the UK for a study abroad programme as part of a university degree course in the USA?"
+sharc_085,1,"Did you start receiving Housing Benefit after 7 April 2008, or have you changed address, or have you had a break in your claim for Housing Benefit?"
+sharc_086,1,"Do you have an advanced degree, exceptional ability in the sciences, arts, or business, or are you seeking a national interest waiver?"
+sharc_087,1,"Did you complete a qualification equivalent to a UK degree in Antigua and Barbuda, Australia, the Bahamas, or Barbados?"
+sharc_088,1,Are you a female Vietnam Veteran and does your child have a birth defect?
+sharc_090,1,Do you meet any of the specific criteria listed for a first preference immigrant worker?
+sharc_091,1,"Did you complete a qualification equivalent to a UK degree in Antigua and Barbuda, Australia, the Bahamas, or Barbados?"
+sharc_092,1,"Did you serve as an Afghan or Iraqi translator for the U.S. government, or were you employed by or for the U.S. government in Iraq for at least one year on or after March 20, 2003, or were you an Afghan employed by the International Security Assistance Force (ISAF)?"
+sharc_093,1,"Are you a citizen, non-citizen national, or legal resident alien of the United States?"
+sharc_093,2,Are you a family farmer?
+sharc_093,3,Do you have a satisfactory history of meeting credit obligations?
+sharc_094,1,"Are you single, under 35, and seeking Housing Benefit for bed-sit accommodation or a single room in shared accommodation?"
+sharc_095,1,"Are you a spouse, an unmarried child under 21, or a parent of a U.S. citizen who is at least 21 years old?"
+sharc_096,1,Is the item you are selling one of the specific items listed in the rule?
+sharc_098,1,Have you been continuously employed by your current employer for at least 26 weeks leading up to the 15th week before your baby is due?
+sharc_099,1,"Are you trying to determine what benefits you could get, how to claim them, or how starting work would affect your benefits?"

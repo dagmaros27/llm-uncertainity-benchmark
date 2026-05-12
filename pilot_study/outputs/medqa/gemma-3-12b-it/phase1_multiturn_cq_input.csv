@@ -1,0 +1,301 @@
+id,turn,clarifying_question
+medqa_0982,1,"Can you describe the chest pain – is it pleuritic, exertional, or something else?"
+medqa_0982,2,"Has the patient experienced any recent weight loss, fever, night sweats, or other systemic symptoms?"
+medqa_0982,3,"Has a chest X-ray or CT scan been performed, and if so, can you describe any findings, particularly regarding the presence of masses, nodules, or lymphadenopathy?"
+medqa_0799,1,"Can you describe the chest pain – is it exertional, positional, or constant, and are there any associated symptoms like shortness of breath or nausea?"
+medqa_0799,2,"What is the patient's current blood pressure and heart rate, and are there any signs of peripheral perfusion compromise (e.g., cool extremities, delayed capillary refill)?"
+medqa_0799,3,"Has an ECG been performed, and if so, what are the key findings (e.g., ST elevation, ST depression, T wave inversions)?"
+medqa_1095,1,"Could you describe the location of the pathology on the CT scan more precisely – for example, is it closer to the flank, the midline, or more anterior?"
+medqa_1095,2,Does the CT scan reveal any involvement or proximity to the linea alba?
+medqa_1095,3,"Is there any evidence of hematoma or fluid collection surrounding the defect within the rectus abdominis muscle, and if so, what is its approximate size?"
+medqa_1228,1,Has the patient experienced any recent changes in vision or headaches?
+medqa_1228,2,"Has the patient's growth velocity (height gained per year) been consistently below the normal range for his age, or is this a more recent observation?"
+medqa_1228,3,"Are there any reported abnormalities on physical examination, such as galactorrhea, delayed puberty signs, or abnormal neurological findings beyond the occasional head turning and recent headaches?"
+medqa_1054,1,"Can you describe the pain – is it constant, intermittent, sharp, dull, or aching, and what activities make it worse?"
+medqa_1054,2,Does the patient experience difficulty or pain with abduction (raising the arm away from the body) or external rotation of the shoulder?
+medqa_1054,3,"Has the patient experienced any recent trauma to the shoulder, such as a fall or direct blow?"
+medqa_0215,1,How long has the patient been experiencing these urinary changes?
+medqa_0215,2,"Does the patient report any dysuria (painful urination), hematuria (blood in urine), or urgency (sudden, compelling need to urinate)?"
+medqa_0215,3,"Has the patient noticed any difficulty starting or maintaining a stream of urine, or a weak urinary stream?"
+medqa_0155,1,"Can you describe the 'unusual behavior' in more detail? Specifically, what behaviors are concerning you?"
+medqa_0155,2,"Was there any history of recent substance use, particularly over-the-counter medications, prescription drugs, or illicit substances, and if so, can you describe the substance(s) and approximate time of last use?"
+medqa_0155,3,"Can you describe the appearance of the 'white powder' that was reportedly circulating, and were there any other individuals present who exhibited similar symptoms?"
+medqa_0886,1,"Has she reported any new symptoms or concerns since her last visit, such as unusual discharge, pain, or bleeding?"
+medqa_0886,2,What is her history of prior STI screening and what were the results?
+medqa_0886,3,What type of contraception is she currently using?
+medqa_0640,1,"Can you tell me how long the abdominal cramps and muscle pains have been occurring, and have there been any other associated symptoms like urine discoloration, fatigue, or recent infections?"
+medqa_0640,2,"Has Jacob been exposed to lead recently, such as through paint, water pipes, or toys, and are there any known sources of lead in his home or daycare environment?"
+medqa_0640,3,Could you please obtain a blood lead level (BLL) for Jacob to quantify the extent of potential lead exposure?
+medqa_0004,1,"How long have the itchy, watery eyes been occurring?"
+medqa_0004,2,"Are there any associated symptoms such as redness, swelling, crusting of the eyelids, or blurred vision?"
+medqa_0004,3,"Does the patient have any known allergies, particularly to pollen, dust mites, or animal dander?"
+medqa_0141,1,"How long has the patient been experiencing fatigue and weakness, and has there been any recent weight change or changes in appetite?"
+medqa_0141,2,"Does the patient report any new-onset headaches, visual disturbances, or changes in her menstrual cycle?"
+medqa_0141,3,"Has the patient been taking any new medications, supplements, or herbal remedies in the past six months?"
+medqa_0090,1,"How long has the patient been experiencing these symptoms, and has there been any recent travel or changes in diet?"
+medqa_0090,2,"Has the patient consumed any water from rivers, lakes, or streams since arriving in Uganda?"
+medqa_0090,3,"Has the patient experienced any abdominal pain, fever, or visible blood in the stool?"
+medqa_0655,1,"Could you describe the planned surgical approach (e.g., open, laparoscopic, robotic) and the anticipated location of the insulinoma within the pancreas?"
+medqa_0655,2,"Given the laparoscopic approach and body of the pancreas location, are there any significant adhesions or prior surgical history that might alter the standard dissection plane and necessitate additional ligamentolysis?"
+medqa_0655,3,"Considering the laparoscopic approach and the lesion's location in the body of the pancreas, what is the anticipated plane of dissection relative to the splenic vessels, and how might this influence the need to address the ligamentum venosum?"
+medqa_0097,1,"Can you describe the appearance of the penile discharge – is it purulent, mucopurulent, or something else?"
+medqa_0097,2,Does the patient report any history of recurrent urinary tract infections or sexually transmitted infections?
+medqa_0097,3,"Has the patient been tested for *Neisseria gonorrhoeae* and *Chlamydia trachomatis* in the past, and if so, what were the results?"
+medqa_0777,1,"Can you describe the pattern of your pain – is it constant, intermittent, or fluctuating, and are there any specific activities or times of day that make it significantly better or worse?"
+medqa_0777,2,"Has the patient experienced any significant psychological distress, such as anxiety or depression, alongside the chronic pain?"
+medqa_0777,3,"Are there any signs of inflammation, such as morning stiffness lasting longer than 30 minutes, or swelling in any joints?"
+medqa_1245,1,How long has the patient been experiencing the cough and fatigue?
+medqa_1245,2,Has the patient had any known asbestos exposure or a history of working in industries with high asbestos content?
+medqa_1245,3,"Are there any pleural plaques or other signs of asbestos-related lung disease visible on chest imaging (e.g., X-ray or CT scan)?"
+medqa_0893,1,"Was there any significant tissue damage or contamination at the bite site, beyond a superficial puncture?"
+medqa_0893,2,Does the patient have any known allergies to penicillin or cephalosporins?
+medqa_0893,3,"Was the dog a domestic animal with a known vaccination history, and if so, are its rabies vaccination records available?"
+medqa_0884,1,"Could you please specify the type of protein-secreting cell this patient represents (e.g., pancreatic acinar cell, plasma cell, etc.)?"
+medqa_0884,2,"Does the patient exhibit signs of endoplasmic reticulum stress or unfolded protein response (UPR) activation, such as increased expression of chaperone proteins or autophagy?"
+medqa_0884,3,Are there any observed defects in the Golgi apparatus or its trafficking pathways?
+medqa_1069,1,"How long has the patient noticed this mass, and has it changed in size?"
+medqa_1069,2,Is the mass mobile or fixed to the chest wall or skin?
+medqa_1069,3,"Does the patient have any history of prior breast biopsies or imaging findings, and are there any skin changes associated with the mass (e.g., redness, peau d'orange)?"
+medqa_0925,1,"Can you describe the types of bacterial infections he's experiencing, and roughly how frequently they occur?"
+medqa_0925,2,"Has Jacob exhibited any unusual physical findings, such as albinism, partial oculocutaneous albinism, or an increased risk of bleeding/bruising?"
+medqa_0925,3,"Has Jacob's neutrophil count been assessed, and if so, what are the findings regarding the size and appearance of the neutrophils (e.g., are they abnormally large or granular)?"
+medqa_1159,1,"How long has the abdominal distension been progressing – roughly days, weeks, or shorter?"
+medqa_1159,2,"Does the patient have a history of diverticulosis, inflammatory bowel disease, or any recent abdominal surgeries?"
+medqa_1159,3,"Is there any evidence of peritonitis on physical exam, such as rebound tenderness or guarding?"
+medqa_0758,1,"How long has the patient been experiencing these symptoms, and has there been any unintentional weight loss?"
+medqa_0758,2,"Has the patient had a colonoscopy or any other screening for colorectal cancer in the past, and if so, what were the results?"
+medqa_0758,3,Are there any palpable abdominal masses or signs of ascites on physical examination?
+medqa_0451,1,"How far can he typically walk before the cramping starts, and does rest alleviate the pain?"
+medqa_0451,2,"Does the patient have a history of peripheral artery disease, diabetes, or smoking?"
+medqa_0451,3,Does the patient have any known history of elevated cholesterol or other cardiovascular risk factors beyond diabetes and smoking?
+medqa_0050,1,"Is this patient's treatment plan primarily radiation, or is it combined with other modalities like chemotherapy?"
+medqa_0050,2,Does the radiation therapy protocol involve fractionation (multiple smaller doses) or a single high dose?
+medqa_0050,3,"Is the radiation therapy targeting the primary tumor site exclusively, or are regional lymph nodes also being included in the treatment field?"
+medqa_1119,1,"Can you describe the pain – is it sharp, aching, constant, or related to specific activities?"
+medqa_1119,2,"Has the patient experienced any locking, clicking, or giving way sensations in the knee?"
+medqa_1119,3,Is there any tenderness to palpation along the joint line of the knee?
+medqa_0222,1,"Has she been diagnosed with diabetes, and if so, what type of diabetes and what medications is she currently taking?"
+medqa_0222,2,"Does Mrs. Carter report any episodes of hypoglycemia, and if so, how frequently and what is her typical blood glucose level during these episodes?"
+medqa_0222,3,"Does Mrs. Carter report any symptoms suggestive of gastrointestinal distress, such as nausea, vomiting, or diarrhea, particularly after taking Metformin?"
+medqa_0206,1,"Regarding the genetic analysis, what is the population being studied and is it known to have a founder effect or other factors that might influence linkage disequilibrium?"
+medqa_0206,2,What is the recombination frequency (θ) observed between these two loci in the study population?
+medqa_0206,3,What is the sample size (number of individuals genotyped) used to calculate the LOD score?
+medqa_1134,1,"Can you describe the location of the ulcer on the foot, and are there any signs of surrounding cellulitis or drainage?"
+medqa_1134,2,Does the patient have a history of diabetes or peripheral vascular disease?
+medqa_1134,3,"Has the patient recently experienced any trauma to the foot, such as a foreign body puncture or insect bite?"
+medqa_0322,1,"How long has the patient been experiencing these falls, and have there been any other cognitive or motor changes noted prior to the falls?"
+medqa_0322,2,"Has the patient exhibited any postural instability, particularly a tendency to fall backwards, and if so, when did this become noticeable?"
+medqa_0322,3,"Has the patient exhibited any olfactory dysfunction, such as a reduced sense of smell, at any point in his history?"
+medqa_0951,1,"Has the patient expressed any previous attempts at quitting, and if so, what methods did she try and what were the barriers she encountered?"
+medqa_0951,2,"Beyond the previous methods, has the patient explored any specific strategies within behavioral counseling, such as relapse prevention planning or coping skills training, and if so, what was her experience with those?"
+medqa_0951,3,"Considering her history of adverse reactions to nicotine replacement therapy (headaches and insomnia) and previous unsuccessful attempts, does the patient have any contraindications or concerns regarding the use of prescription medications like varenicline, such as psychiatric history or concerns about potential side effects?"
+medqa_0208,1,What type of virus is DN501 intended to treat?
+medqa_0208,2,Does DN501 target a specific viral surface protein or receptor?
+medqa_0208,3,Is DN501 a broadly acting antiviral or does it demonstrate specificity for a particular viral family?
+medqa_0872,1,"Can you describe the location of the gunshot wound on the abdomen more specifically – for example, quadrant or distance from the umbilicus?"
+medqa_0872,2,"Was there any exit wound observed, and if so, can you describe its location relative to the entrance wound?"
+medqa_0872,3,"Are there any signs of active bleeding or hemodynamic instability (e.g., hypotension, tachycardia) in the patient?"
+medqa_0507,1,Can you tell me about the patient's oxygen saturation and any findings on chest auscultation?
+medqa_0507,2,"Has the patient had a recent travel history, particularly to areas with endemic fungal infections, or a history of immunocompromising conditions (e.g., transplant, HIV, prolonged steroid use)?"
+medqa_0507,3,"Has a sputum sample been obtained for Gram stain and culture, and if so, what are the preliminary results?"
+medqa_0681,1,Can you tell me when the leg pain started and has there been any recent trauma or injury to the leg?
+medqa_0681,2,"Has the patient been taking any medications, including over-the-counter drugs or supplements, particularly anything related to blood thinning or vitamin K?"
+medqa_0681,3,"Has the patient's dietary intake of green leafy vegetables been consistent in the past few weeks, or has there been a significant change?"
+medqa_0344,1,"Can you describe the tremor in more detail – is it at rest, with movement, or postural?"
+medqa_0344,2,"Has the patient experienced any other neurological symptoms, such as ataxia, dysarthria (difficulty speaking), or visual disturbances?"
+medqa_0344,3,Is there a family history of ataxia or other movement disorders?
+medqa_0807,1,"Can you describe the location of the stab wounds – specifically, are any of them in the chest or near the neck?"
+medqa_0807,2,"What is the patient's current blood pressure and heart rate, and are there any signs of jugular venous distension?"
+medqa_0807,3,Is there any evidence of tracheal deviation or decreased breath sounds on the left side of the chest?
+medqa_0889,1,"How long has the patient been experiencing this gum bleeding, and has there been any recent trauma to the gums or mouth?"
+medqa_0889,2,"Does the patient take any medications, including over-the-counter drugs or supplements, particularly any antibiotics, anticoagulants, or those known to interfere with vitamin K absorption?"
+medqa_0889,3,"Has the patient noticed any other signs of bleeding, such as easy bruising, nosebleeds, or prolonged bleeding from minor cuts?"
+medqa_1050,1,"Can you describe the nature of the patient's statin intolerance – was it muscle pain, liver enzyme elevation, or something else?"
+medqa_1050,2,"Does the patient currently take any other medications, including over-the-counter drugs or supplements, that could potentially interact with colesevelam's absorption or efficacy?"
+medqa_1050,3,"Given the patient's current medications, specifically levothyroxine, has the patient's thyroid function been recently assessed and is she currently euthyroid?"
+medqa_0943,1,Could you please specify the type of cell we're discussing?
+medqa_0943,2,"Is this myocyte at rest, or is it in the process of contraction?"
+medqa_0943,3,Are there any pharmacological agents present in the solution surrounding the myocytes?
+medqa_0896,1,"Can you describe the specific changes in his personality – what behaviors or traits have changed, and when did you first notice these changes?"
+medqa_0896,2,"Has the patient experienced any periods of elevated mood, increased energy, or impulsive behavior alongside these changes, or has the presentation been consistently characterized by withdrawal and negative symptoms?"
+medqa_0896,3,"Has there been any family history of psychotic disorders, such as schizophrenia or schizoaffective disorder?"
+medqa_0052,1,How long has the patient been experiencing these symptoms?
+medqa_0052,2,"Are there any other associated symptoms, such as abdominal pain, nausea, vomiting, dark urine, or pale stools?"
+medqa_0052,3,"Does the patient have a history of alcohol abuse, viral hepatitis, or any known liver disease?"
+medqa_0607,1,"Could you please specify the psychiatric illness the patient is experiencing, or the broader context of the study?"
+medqa_0607,2,"Was the 'expected number of deaths' calculated based on a population with similar demographic characteristics (age, sex, race/ethnicity) but *without* the specified psychiatric diagnoses and substance use disorders?"
+medqa_0607,3,"Was the study's methodology explicitly stated to use a population-based standard for calculating expected deaths, or was the expected number derived from historical mortality data within the same community-based setting?"
+medqa_1182,1,"How long has the patient's hypertension been present, and has there been any recent change in their medication or blood pressure control?"
+medqa_1182,2,Has the patient experienced any recent changes in serum creatinine or estimated glomerular filtration rate (eGFR)?
+medqa_1182,3,"Does the patient have any known history of atherosclerotic disease, such as coronary artery disease or peripheral artery disease?"
+medqa_0410,1,Can you describe the patient's overall fluid intake and whether she feels thirsty?
+medqa_0410,2,"Has the patient experienced any recent weight loss or changes in dietary habits, particularly regarding salt intake?"
+medqa_0410,3,"Are there any family members with a history of kidney disease, diabetes insipidus, or other electrolyte disorders?"
+medqa_1164,1,"Can you tell me about any other medical conditions the patient has, particularly regarding blood pressure or heart health?"
+medqa_1164,2,"Has the patient's confusion developed acutely, or has it been a gradual onset? If acute, are there any other neurological signs or symptoms present, such as focal weakness, seizures, or altered level of consciousness beyond confusion?"
+medqa_1164,3,"Could you please check the patient's current medications, including over-the-counter drugs and supplements, to rule out any potential drug interactions or medications that could be contributing to the confusion?"
+medqa_0467,1,"When did these symptoms begin, and has there been any noticeable progression or fluctuation in their severity?"
+medqa_0467,2,"Has Mr. Martinez experienced any difficulty with swallowing or speaking, or noticed any muscle weakness beyond the eyelids and fatigue?"
+medqa_0467,3,"Are there any family members with a history of autoimmune disorders, neuromuscular diseases, or cancers?"
+medqa_0610,1,"When was the patient's varicella vaccination, if known?"
+medqa_0610,2,"Has the patient previously been pregnant, and if so, what was the outcome of those pregnancies?"
+medqa_0610,3,"Was the newborn from the previous pregnancy Rh(D) positive or negative, and was anti-D immunoglobulin administered after that delivery?"
+medqa_0627,1,Can you tell me the patient's vital signs and if she's reporting any vaginal bleeding or leakage of amniotic fluid?
+medqa_0627,2,"Is the patient experiencing any abdominal tenderness or rigidity, and has a digital vaginal exam been performed to assess cervical dilation and effacement, and to rule out placental abruption?"
+medqa_0627,3,"Given the brisk bleeding and uterine inversion, is there any evidence of retained placental fragments or clots within the uterus visualized on exam or ultrasound?"
+medqa_0702,1,What is the context of this 'cut-off point' and what test are we discussing?
+medqa_0702,2,What is the prevalence of latent tuberculosis infection (LTBI) in the population being screened with this Tuberculin Skin Test?
+medqa_0702,3,What is the sensitivity of the Tuberculin Skin Test at the current 5 mm cutoff?
+medqa_0552,1,"Can you describe the location, character, and radiation of the abdominal pain, and has it been associated with any nausea, vomiting, fever, or changes in bowel habits?"
+medqa_0552,2,"Has the patient had any prior episodes of similar abdominal pain, and if so, were any imaging studies performed at that time, and what were the findings?"
+medqa_0552,3,"Are there any signs of systemic inflammation on physical exam, such as tachycardia, hypotension, or leukocytosis?"
+medqa_0258,1,"How long has she been experiencing these symptoms, and has there been any recent travel or exposure to individuals with similar symptoms?"
+medqa_0258,2,"Has she experienced any unintentional weight loss, and are there any other systemic symptoms such as fever, chills, or swollen lymph nodes?"
+medqa_0258,3,"Does the patient have a history of autoimmune disease, or any known exposure to environmental toxins or infectious agents (e.g., tuberculosis)?"
+medqa_0711,1,"Has the dryness been present since birth, or did it develop later?"
+medqa_0711,2,"Are there any other family members with similar skin conditions, particularly dry skin or scaling?"
+medqa_0711,3,"Does the patient experience any itching associated with the dry skin, and if so, is it constant or intermittent?"
+medqa_0128,1,"Can you describe the distribution of the muscle weakness – is it proximal or distal, and are there any specific muscle groups that are more affected?"
+medqa_0128,2,Has the patient experienced any recent viral illnesses or been vaccinated with an mRNA COVID-19 vaccine?
+medqa_0128,3,"Are there any signs of autonomic dysfunction, such as orthostatic hypotension, bowel or bladder dysfunction, or cardiac arrhythmias?"
+medqa_1158,1,How long has the patient been exhibiting this aggressive behavior and responding to internal stimuli?
+medqa_1158,2,"Has the patient had any recent changes in medication, substance use, or significant life stressors?"
+medqa_1158,3,"Is there any history of psychosis, bipolar disorder, or other psychiatric conditions in the patient or her family?"
+medqa_0138,1,"How long has the bedwetting been occurring, and has there been any recent change in frequency or severity?"
+medqa_0138,2,"Has the child experienced any daytime urinary symptoms such as urgency, frequency, or incontinence?"
+medqa_0138,3,Is there a family history of bedwetting (enuresis) in either parent or siblings?
+medqa_0529,1,"When did the vision loss begin – was it truly instantaneous, or did it develop over minutes or hours?"
+medqa_0529,2,"Are there any associated symptoms such as headache, jaw pain, or scalp tenderness?"
+medqa_0529,3,"On examination, what is the visual acuity in the right eye, and what is the appearance of the retinal vessels (specifically, are there any signs of cherry-red spot in the macula)?"
+medqa_0770,1,How long has the paralysis persisted since the initial flu-like illness?
+medqa_0770,2,Was there any known exposure to poliovirus or other enteroviruses in the patient's community or family prior to the illness?
+medqa_0770,3,Were there any other similar cases of acute flaccid weakness reported in the patient's school or community around the same time?
+medqa_0569,1,"Can you describe the circumstances of the loss of consciousness – was it sudden, gradual, associated with any specific events like trauma or seizure activity, or any known substance use?"
+medqa_0569,2,"Are there any signs of trauma, such as head injury or facial bruising, and what is his current level of responsiveness to stimuli (e.g., pain, verbal commands)?"
+medqa_0569,3,"What is the patient's initial vital sign assessment, specifically focusing on respiratory rate, depth, and oxygen saturation?"
+medqa_1077,1,How long has the patient been experiencing this fatigue?
+medqa_1077,2,"Has the patient reported any other symptoms, such as pica, brittle nails, or hair loss?"
+medqa_1077,3,Are there any known medical conditions or medications the patient is taking that could impact iron absorption or utilization?
+medqa_0857,1,Could you please specify which drug you are referring to in this context?
+medqa_0857,2,"Is the pigmented lesion suspected to be melanoma, or is it more likely to be a benign nevus or other non-melanocytic lesion?"
+medqa_0857,3,"Is the patient currently receiving, or being considered for, immunotherapy (e.g., checkpoint inhibitors) or other treatments targeting the immune system?"
+medqa_1083,1,"Can you describe the pain – is it sharp, dull, throbbing, or something else, and what activities make it worse?"
+medqa_1083,2,"Is there any visible deformity, swelling, bruising, or tenderness to palpation over a specific bony prominence or soft tissue structure in the foot?"
+medqa_1083,3,"Has the patient had any recent trauma to the foot, such as a direct blow or twisting injury?"
+medqa_0025,1,"Can you describe the types of infections she's experiencing – are they primarily bacterial, viral, or fungal, and how severe are they?"
+medqa_0025,2,"Has the patient's immunoglobulin profile (including levels of IgG, IgA, IgM, and IgE subclasses) been evaluated, and if so, what were the findings?"
+medqa_0025,3,"Has the patient's neutrophil function been assessed, specifically including tests like neutrophil chemotaxis, phagocytosis, and intracellular killing of bacteria and fungi?"
+medqa_0324,1,"Can you describe the altered mental status in more detail – for example, is it acute onset, fluctuating, associated with focal neurological signs, or more of a gradual decline?"
+medqa_0324,2,"Are there any reported or suspected sources of infection, such as fever, urinary symptoms, pneumonia, or intravenous drug use?"
+medqa_0324,3,"Has the patient had any recent trauma, falls, or history of head injury?"
+medqa_1125,1,"How long has she been experiencing these severe cramps, and have they changed in intensity or character over time?"
+medqa_1125,2,"Does she experience any other symptoms during her periods, such as heavy bleeding, nausea, vomiting, diarrhea, or fatigue?"
+medqa_1125,3,"Has she ever been assessed for or treated for dysmenorrhea previously, and if so, what interventions have been tried (e.g., hormonal birth control, other pain medications) and what was the response?"
+medqa_0088,1,"Besides the MVC, does the patient have any specific complaints like shortness of breath, chest pain, or abdominal distension?"
+medqa_0088,2,Is there any evidence of subcutaneous emphysema on physical exam?
+medqa_0088,3,"Are there any signs of hemodynamic instability, such as hypotension or tachycardia?"
+medqa_0749,1,"Can you describe the headache – what's the character, location, and any associated symptoms like fever, neck stiffness, or neurological deficits?"
+medqa_0749,2,"Has the patient experienced any recent trauma, dental work, or sinus infections?"
+medqa_0749,3,"Does the patient have a history of hypertension, hyperlipidemia, or other vascular risk factors?"
+medqa_1081,1,How long has the pain and stiffness been progressing?
+medqa_1081,2,"Are there any bony deformities visible in the affected hand, such as Heberden's nodes or Bouchard's nodes?"
+medqa_1081,3,Does the patient have a history of previous joint injuries or trauma to the right hand?
+medqa_0381,1,"How long has the patient been experiencing this fatigue, and are there any other associated symptoms, such as weight changes, changes in appetite, or cold intolerance?"
+medqa_0381,2,"Does the patient have a history of thyroid disease, or has she ever had her thyroid function tested?"
+medqa_0381,3,Does the patient report any difficulty concentrating or experiencing memory problems?
+medqa_1172,1,"Can you describe the vaginal discharge – what is its color, consistency, and amount?"
+medqa_1172,2,"Is there any history of maternal antibiotic use during pregnancy or labor, or any known history of group B streptococcus (GBS) colonization in the mother?"
+medqa_1172,3,"Is the infant afebrile, feeding well, and otherwise appearing healthy, or are there any signs of systemic illness (e.g., irritability, lethargy, poor feeding)?"
+medqa_0932,1,"Can you describe the nature of the pain – is it constant, intermittent, sharp, aching, or related to activity?"
+medqa_0932,2,"Has the patient experienced any recent trauma to the knees, or a history of knee instability or locking?"
+medqa_0932,3,"Does the patient have any history of inflammatory conditions such as rheumatoid arthritis, gout, or psoriatic arthritis, or a family history of such conditions?"
+medqa_1063,1,"Is this patient undergoing a surgical procedure, and if so, what is the anticipated duration and complexity of the procedure?"
+medqa_1063,2,"Given the patient's presentation of sudden, mild vaginal bleeding, is there any suspicion of an underlying coagulopathy or bleeding disorder?"
+medqa_1063,3,Is there any planned intubation or need for muscle relaxation during the evaluation or potential subsequent procedures for this patient?
+medqa_0885,1,"Can you describe the headache – is it sudden in onset, and if so, how severe would you rate it on a scale of 1 to 10?"
+medqa_0885,2,"Are there any associated neurological deficits, such as weakness, numbness, vision changes, or speech difficulties?"
+medqa_0885,3,"Is there a history of recent trauma, bleeding disorders, or anticoagulant use?"
+medqa_0458,1,Can you describe what happens to his heart rate and blood pressure *immediately* after he stops exercising?
+medqa_0458,2,"Does the patient report any dizziness, lightheadedness, or blurred vision immediately after exercise cessation, and if so, how long does this sensation last?"
+medqa_0458,3,"Does the patient experience a rapid decrease in heart rate and blood pressure within the first 2-3 minutes after exercise cessation, and if so, approximately how much do these values change?"
+medqa_1212,1,Can you tell me about the composition of the stone(s) that were passed or identified?
+medqa_1212,2,"Does the patient have a history of hypercalciuria (excessive calcium in the urine), and if so, what is the 24-hour urine calcium level?"
+medqa_1212,3,"Does the patient have a history of gastrointestinal issues, such as inflammatory bowel disease or gastric bypass surgery, that could affect oxalate absorption?"
+medqa_0920,1,How long has the patient been experiencing fatigue and neck pain?
+medqa_0920,2,"Is there any palpable mass or lymphadenopathy in the neck, and if so, what is its size, location, and consistency?"
+medqa_0920,3,"Has the patient experienced any unintentional weight loss, difficulty swallowing (dysphagia), or changes in her voice?"
+medqa_0334,1,"How long has the patient had their diabetes diagnosis, and are there any existing complications like neuropathy or peripheral vascular disease?"
+medqa_0334,2,"Has the patient received any influenza or pneumococcal vaccinations previously, and if so, when?"
+medqa_0334,3,"Does the patient smoke, and what is her history of prior foot care or any history of foot ulcers or infections?"
+medqa_0393,1,"Can you describe the appearance of the protruding bowel – is it dusky, inflamed, or otherwise concerning for ischemia or necrosis?"
+medqa_0393,2,"Is there any evidence of bowel incarceration (e.g., a palpable bulge, inability to reduce the prolapse, or signs of obstruction like abdominal distension or vomiting)?"
+medqa_0393,3,What is the gestational age and birth weight of the infant?
+medqa_1171,1,"Regarding the abdominal symptoms, how long have they been present and has there been any change in their severity or character?"
+medqa_1171,2,"Has the patient been assessed for vitamin B12 or folate deficiency, and if so, what were the results?"
+medqa_1171,3,"Has the patient undergone any imaging studies of the abdomen (e.g., CT scan, MRI, ultrasound) to evaluate for structural abnormalities such as gastric outlet obstruction or masses?"
+medqa_0628,1,"Can you tell me about any past medical history, including any history of alcohol use, viral hepatitis, or other liver conditions?"
+medqa_0628,2,"Has the patient experienced any recent or prolonged periods of unintentional weight loss, fatigue, or abdominal discomfort?"
+medqa_0628,3,"Could you please provide the patient's ALT and AST levels, and any other available liver function tests (e.g., alkaline phosphatase, bilirubin)?"
+medqa_1269,1,"Can you describe the diarrhea – is it watery, greasy, or does it occur at specific times, such as after eating?"
+medqa_1269,2,"Has the patient experienced any flushing, wheezing, or right-sided heart murmur?"
+medqa_1269,3,"Has the patient had any recent weight loss or noticed any skin changes, such as flushing or telangiectasias?"
+medqa_0099,1,Can you tell me if the patient has a history of psychosis or other psychiatric conditions for which he might be taking these medications?
+medqa_0099,2,"Is the nipple discharge unilateral or bilateral, and what is its color and consistency (e.g., serous, milky, bloody)?"
+medqa_0099,3,"Has the patient ever been diagnosed with or treated for any endocrine disorders, particularly involving the pituitary gland or hypothalamus?"
+medqa_0207,1,"Can you tell me the HPV type identified on the biopsy, if known?"
+medqa_0207,2,"Does the patient desire future fertility, and if so, how strongly?"
+medqa_0207,3,"Are there any other abnormal findings on the physical exam, such as vulvar lesions or concerning lymphadenopathy?"
+medqa_0912,1,"How would you describe the morphology of the individual bumps – are they pustular, papular, or vesicular?"
+medqa_0912,2,"Does the patient report any recent travel history, particularly to areas known for sporotrichosis?"
+medqa_0912,3,Are there any satellite lesions or evidence of regional lymphadenopathy?
+medqa_0423,1,How long has the patient been experiencing the bloody diarrhea?
+medqa_0423,2,"Does the patient have a history of inflammatory bowel disease (IBD) such as Crohn's disease or ulcerative colitis, or a family history of IBD?"
+medqa_0423,3,"Has the patient recently traveled internationally, particularly to areas with poor sanitation, or consumed any unusual foods in the past few days?"
+medqa_0863,1,"Can you describe the nature of the abdominal pain – for example, is it localized, diffuse, cramping, or sharp?"
+medqa_0863,2,"Is there any history of diabetes, recent trauma, or medication use (including over-the-counter medications or supplements)?"
+medqa_0863,3,"Could you please describe the characteristics of the vomitus – for example, color, presence of blood or bile, and approximate volume?"
+medqa_1198,1,Can you tell me more about the surgery he had and when it occurred relative to the onset of this severe pain?
+medqa_1198,2,"Has the patient been taking any pain medication since the surgery, and if so, what type, dosage, and how effective has it been in managing his pain?"
+medqa_1198,3,"Can you describe the patient's history of pain management, including any previous experiences with opioids or other pain medications, and any history of substance use or misuse, either personally or within his family?"
+medqa_1216,1,"Can you describe the mechanism of injury in more detail – specifically, was there significant deceleration or impact to the chest?"
+medqa_1216,2,"Was a chest radiograph performed, and if so, were there any findings suggestive of mediastinal widening or pleural effusion?"
+medqa_1216,3,"What is the patient's blood pressure and heart rate, and are there any signs of unequal pulses or blood in the urine?"
+medqa_0989,1,"How long has the diarrhea been occurring, and has there been any blood or mucus in the stool?"
+medqa_0989,2,Has the patient recently traveled internationally or consumed any unusual foods or water sources?
+medqa_0989,3,Does the patient have a history of inflammatory bowel disease (IBD) or celiac disease?
+medqa_0682,1,"Can you tell me more about the onset and characteristics of her shortness of breath – for example, is it gradual or sudden, and are there any associated symptoms like cough, fever, or chest pain?"
+medqa_0682,2,"Has the patient been exposed to any known allergens or irritants, such as dust, mold, pets, or smoke, and does she have a personal or family history of asthma or atopy?"
+medqa_0682,3,"What is the patient's current peak expiratory flow (PEF) or forced expiratory volume in 1 second (FEV1) compared to her predicted values, and has she been using any inhaled corticosteroids or bronchodilators, and if so, with what frequency and effect?"
+medqa_0278,1,"Can you describe the severity of his shortness of breath – is he able to speak in full sentences, or is it significantly impairing his ability to breathe?"
+medqa_0278,2,"Are there any signs of respiratory distress such as accessory muscle use, nasal flaring, or cyanosis?"
+medqa_0278,3,"Is there any suspicion of a pneumothorax (e.g., history of trauma, sudden onset of chest pain) or any other condition that would contraindicate BiPAP?"
+medqa_0983,1,"Has the patient previously been treated with beta-blockers, and if so, what was the response and current dosage?"
+medqa_0983,2,What is the patient's current Child-Pugh score and MELD score?
+medqa_0983,3,"Does the patient have a history of variceal bleeding, and if so, when was the last episode and what was the treatment?"
+medqa_0620,1,"Can you tell me if the patient has any known history of edema, heart failure, or kidney disease?"
+medqa_0620,2,"Is the patient currently taking any other medications for heart failure, such as ACE inhibitors, ARBs, or beta-blockers?"
+medqa_0620,3,"Is the patient's breathing difficulty acute in onset, or has it been gradually worsening?"
+medqa_1097,1,How long has the patient been experiencing these symptoms?
+medqa_1097,2,Has the patient traveled internationally or consumed any undercooked or unusual foods recently?
+medqa_1097,3,"Does the patient have any known pre-existing medical conditions, particularly inflammatory bowel disease or a history of kidney problems?"
+medqa_0732,1,"Can you describe the nature of the pain – is it constant, intermittent, sharp, dull, radiating, or associated with any neurological symptoms like numbness, tingling, or weakness in your arms or legs?"
+medqa_0732,2,"Has the patient experienced any recent trauma, fever, weight loss, or night sweats?"
+medqa_0732,3,"Are there any signs of skin changes or lesions along the spine, such as redness, warmth, or ulcerations?"
+medqa_0028,1,How long has the vomiting and bloody diarrhea been occurring?
+medqa_0028,2,"Is the patient febrile, and if so, what is the temperature?"
+medqa_0028,3,"Could you describe the appearance of the bloody diarrhea? Is it grossly bloody, or melena (dark, tarry stools)?"
+medqa_0644,1,"Could you describe what 'point D' on the graph represents – specifically, what variable is being measured and what is its value at that point?"
+medqa_0644,2,"What gastrointestinal regulatory substance is being studied, and what is its known physiological effect (e.g., increases insulin secretion, inhibits gastric acid secretion)?"
+medqa_0644,3,Is the gastrointestinal regulatory substance being studied known to primarily influence gastric emptying or intestinal motility?
+medqa_0400,1,How long has the knee swelling and pain been present?
+medqa_0400,2,"Does the patient have any history of trauma to the right knee, or any other joint pain/swelling in other locations?"
+medqa_0400,3,"Does the patient have a family history of gout, pseudogout, or other crystal-related arthropathies?"
+medqa_0426,1,"Where did the patient recently travel, and what activities did they engage in during their trip?"
+medqa_0426,2,"Has the patient experienced any skin lesions, ulcers, or swollen lymph nodes, particularly in the areas where he might have been bitten or scratched?"
+medqa_0426,3,"Has the patient experienced any bleeding from the eschar sites, and has he reported any significant pain or tenderness beyond the immediate area of the lesions?"
+medqa_0281,1,How long has this bulla been present?
+medqa_0281,2,"Does the patient have a history of autoimmune disease, particularly pemphigus or bullous pemphigoid, or any recent medication changes?"
+medqa_0281,3,"Are there any signs of mucosal involvement, such as oral or esophageal lesions?"
+medqa_0847,1,"How long has the patient been experiencing heartburn, and are there any specific triggers or alleviating factors you've noticed?"
+medqa_0847,2,"Does the patient have any known allergies, particularly to medications or food, and has she ever been diagnosed with any other gastrointestinal conditions like ulcers or esophagitis?"
+medqa_0847,3,"Has the patient tried any other medications besides antacids for her heartburn, such as H2 receptor antagonists, and if so, what was her response?"

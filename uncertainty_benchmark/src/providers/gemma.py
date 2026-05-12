@@ -165,16 +165,20 @@ class GemmaProvider(LLMProvider):
 
         text = self._decode_output(input_ids, output.sequences)
 
-        # Extract top-k logprobs per generated token
+        # Extract top-k logprobs per generated token + generated token lp for LNPE
         logprobs: list[dict[str, float]] = []
-        for step_scores in output.scores:
+        input_len = input_ids.shape[1]
+        for step_idx, step_scores in enumerate(output.scores):
             # step_scores shape: (batch=1, vocab_size)
             step_lp = torch.log_softmax(step_scores[0], dim=-1)
             top = step_lp.topk(min(top_k_logprobs, step_lp.size(-1)))
-            token_lp = {}
+            token_lp: dict[str, float] = {}
             for idx, lp in zip(top.indices.tolist(), top.values.tolist()):
                 token_str = self._tokenizer.decode([idx])
                 token_lp[token_str] = float(lp)
+            # Store the log-prob of the actually generated token for LNPE
+            gen_id = output.sequences[0, input_len + step_idx].item()
+            token_lp["__gen_lp__"] = float(step_lp[gen_id])
             logprobs.append(token_lp)
 
         return text, logprobs

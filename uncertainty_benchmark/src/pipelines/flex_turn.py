@@ -40,7 +40,8 @@ FIELDS = [
     "clarifying_question", "simulator_response",
     "final_answer", "final_confidence", "confidence_delta",
     "is_correct_preliminary", "is_correct_final",
-    "logprob_mean_entropy", "logprob_max_entropy", "logprob_n_tokens", "logprob_lnpe",
+    "logprob_mean_entropy_t0", "logprob_max_entropy_t0", "logprob_n_tokens_t0", "logprob_lnpe_t0",
+    "logprob_mean_entropy_t1", "logprob_max_entropy_t1", "logprob_n_tokens_t1", "logprob_lnpe_t1",
     "finish_reason", "was_blocked", "latency_t0_s", "latency_t1_s",
 ]
 
@@ -348,11 +349,15 @@ class FlexTurnPipeline:
                     "confidence_delta":      0.0,
                     "is_correct_preliminary": is_c_prelim,
                     "is_correct_final":       is_c_prelim,
-                    "logprob_mean_entropy":  lp0_stats["logprob_mean_entropy"],
-                    "logprob_max_entropy":   lp0_stats["logprob_max_entropy"],
-                    "logprob_n_tokens":      lp0_stats["logprob_n_tokens"],
-                    "logprob_lnpe":          lp0_stats["logprob_lnpe"],
-                    "finish_reason":         "STOP_NO_CQ",
+                    "logprob_mean_entropy_t0": lp0_stats["logprob_mean_entropy"],
+                    "logprob_max_entropy_t0":  lp0_stats["logprob_max_entropy"],
+                    "logprob_n_tokens_t0":     lp0_stats["logprob_n_tokens"],
+                    "logprob_lnpe_t0":         lp0_stats["logprob_lnpe"],
+                    "logprob_mean_entropy_t1": "",
+                    "logprob_max_entropy_t1":  "",
+                    "logprob_n_tokens_t1":     "",
+                    "logprob_lnpe_t1":         "",
+                    "finish_reason":           "STOP_NO_CQ",
                     "was_blocked":           False,
                     "latency_t0_s":          round(lat0, 2),
                     "latency_t1_s":          "",
@@ -386,7 +391,10 @@ class FlexTurnPipeline:
                     "clarifying_question": cq,
                     "simulator_response": sim_resp,
                     "is_correct_preliminary": _evaluate_correct(self._dataset, prelim, record),
-                    **{k: lp0_stats[k] for k in ["logprob_mean_entropy", "logprob_max_entropy", "logprob_n_tokens", "logprob_lnpe"]},
+                    "logprob_mean_entropy_t0": lp0_stats["logprob_mean_entropy"],
+                    "logprob_max_entropy_t0":  lp0_stats["logprob_max_entropy"],
+                    "logprob_n_tokens_t0":     lp0_stats["logprob_n_tokens"],
+                    "logprob_lnpe_t0":         lp0_stats["logprob_lnpe"],
                     "finish_reason": "PARSE_ERROR_T1", "was_blocked": False,
                     "latency_t0_s": round(lat0, 2), "latency_t1_s": round(lat1, 2),
                 })
@@ -396,7 +404,6 @@ class FlexTurnPipeline:
             final    = _extract_final_answer(self._dataset, parsed1)
             final_c  = extract_confidence(parsed1) or 0.0
             lp1_stats = response_entropy_stats(lp1)
-            entropy_stats = lp1_stats if lp1 is not None else lp0_stats
 
             is_c_prelim = _evaluate_correct(self._dataset, prelim, record)
             is_c_final  = _evaluate_correct(self._dataset, final,  record)
@@ -420,11 +427,15 @@ class FlexTurnPipeline:
                 "confidence_delta":      conf_delta,
                 "is_correct_preliminary": is_c_prelim,
                 "is_correct_final":       is_c_final,
-                "logprob_mean_entropy":  entropy_stats["logprob_mean_entropy"],
-                "logprob_max_entropy":   entropy_stats["logprob_max_entropy"],
-                "logprob_n_tokens":      entropy_stats["logprob_n_tokens"],
-                "logprob_lnpe":          entropy_stats["logprob_lnpe"],
-                "finish_reason":         "STOP",
+                "logprob_mean_entropy_t0": lp0_stats["logprob_mean_entropy"],
+                "logprob_max_entropy_t0":  lp0_stats["logprob_max_entropy"],
+                "logprob_n_tokens_t0":     lp0_stats["logprob_n_tokens"],
+                "logprob_lnpe_t0":         lp0_stats["logprob_lnpe"],
+                "logprob_mean_entropy_t1": lp1_stats["logprob_mean_entropy"],
+                "logprob_max_entropy_t1":  lp1_stats["logprob_max_entropy"],
+                "logprob_n_tokens_t1":     lp1_stats["logprob_n_tokens"],
+                "logprob_lnpe_t1":         lp1_stats["logprob_lnpe"],
+                "finish_reason":           "STOP",
                 "was_blocked":           False,
                 "latency_t0_s":          round(lat0, 2),
                 "latency_t1_s":          round(lat1, 2),

@@ -182,11 +182,13 @@ class LlamaProvider(LLMProvider):
     ) -> str:
         import torch
         input_ids = self._build_input_ids(system_instruction, user_message)
+        attention_mask = torch.ones_like(input_ids)
         do_sample = temperature > 0.0
 
         with torch.inference_mode():
             output = self._model.generate(
                 input_ids,
+                attention_mask=attention_mask,
                 max_new_tokens=max_tokens,
                 temperature=temperature if do_sample else None,
                 do_sample=do_sample,
@@ -205,11 +207,13 @@ class LlamaProvider(LLMProvider):
     ) -> tuple[str, list[dict[str, float]]]:
         import torch
         input_ids = self._build_input_ids(system_instruction, user_message)
+        attention_mask = torch.ones_like(input_ids)
         do_sample = temperature > 0.0
 
         with torch.inference_mode():
             output = self._model.generate(
                 input_ids,
+                attention_mask=attention_mask,
                 max_new_tokens=max_tokens,
                 temperature=temperature if do_sample else None,
                 do_sample=do_sample,

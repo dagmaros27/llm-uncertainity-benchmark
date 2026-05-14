@@ -67,7 +67,9 @@ _FINAL_INSTRUCTIONS = {
         "Based on all information gathered so far, select the most appropriate answer "
         "to the clinical question and state your updated confidence.\n\n"
         "Return ONLY a valid JSON object:\n"
-        "{\n  \"updated_assessment\": \"<A, B, C, or D>\",\n  \"updated_confidence\": <integer 0-100>\n}"
+        "{\n  \"updated_assessment\": \"<A, B, C, or D>\",\n  \"updated_confidence\": <integer 0-100>\n}\n\n"
+        "IMPORTANT: The value of updated_assessment must be a single letter only — A, B, C, or D. "
+        "Do not include reasoning, diagnosis names, or any explanation inside the JSON field values."
     ),
     "msdialog": (
         "You are an experienced tech support specialist. You have received an answer to your clarifying question.\n\n"
